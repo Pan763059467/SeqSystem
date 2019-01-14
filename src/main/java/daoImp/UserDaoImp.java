@@ -332,4 +332,9 @@ public class UserDaoImp extends DAO<UserEntity> implements UserDao {
         {return false;}
     }
 
+    public int mycollect(int id_user){
+        String sql1="select count(*) from coll_structure where ID_USER=?";
+        int num = Integer.valueOf(getForValue(sql1,id_user).toString());
+        return num;
+    }
 }

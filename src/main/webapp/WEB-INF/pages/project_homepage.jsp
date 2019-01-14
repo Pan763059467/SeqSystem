@@ -84,8 +84,8 @@
             </a>
             <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">文档构件</span>
             <span style="color:black">收藏了</span>
-            <a href="library-Mycollect"><span style="color: #ff0000" class="lzf_a">${sessionScope.Mycollectcount}</span></a>
-            <span style="color:black">个构件库</span>
+            <a href="structure-Mycollect"><span style="color: #ff0000" class="lzf_a">${sessionScope.collectNum}</span></a>
+            <span style="color:black">个构件</span>
         </div>
         <div class="col-md-2 ">
             <a href="user-jmpMessageCenter">

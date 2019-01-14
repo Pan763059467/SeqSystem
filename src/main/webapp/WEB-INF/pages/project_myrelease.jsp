@@ -490,6 +490,46 @@
                     </div>
                 </div>
             </div>
+            <div class="ibox-content" style="margin: -5px 40px 0px 40px">
+                <div class="bootstrap-table">
+                    <select  id="ChooseType"  style="position: absolute;z-index: 1; height: 32px; margin-left: 850px;
+                margin-top: 12px;"  class="choose">
+                        <option name="" disabled  selected="selected" >按构件类型检索</option>
+                        <option name="Choice00">全部</option>
+                        <option name="Choice01">图文</option>
+                        <option name="Choice10">用户</option>
+                        <option name="Choice11">用例</option>
+                        <option name="Choice001">软件接口</option>
+                        <option name="Choice010">通讯接口</option>
+                        <option name="Choice0100">数据集</option>
+                        <option name="Choice0101">运行环境</option>
+                        <option name="Choice0110">数据库</option>
+                        <option name="Choice0111">操作系统</option>
+                        <option name="Choice1000">硬件要求</option>
+                        <option name="Choice1001">WEB服务器</option>
+                    </select>
+
+                    <button id="SearchType" type="submit" style="float:left; height: 32px; margin-left: 970px; margin-top: 12px;" class="btn btn-primary">检索</button>
+
+                    <table id="release" data-toggle="table"
+                           data-classes="table table-no-bordered"
+                           data-click-to-select="true"
+                           data-search="true"
+                           data-show-refresh="true"
+                           data-show-toggle="true"
+                           data-toolbar="#toolbar"
+                           data-query-params="quefryParams"
+                           data-search-align="right"
+                           data-buttons-align="right"
+                           data-pagination="true"
+                           data-halign="center"
+                           data-striped="true"
+                           data-page-size="10"
+                           data-height="600"
+                    >
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -513,46 +553,7 @@
         </div><!-- /.modal -->
     </div>
 
-    <div class="ibox-content">
-        <div class="bootstrap-table">
-            <select  id="ChooseType"  style="position: absolute;z-index: 1; height: 32px; margin-left: 850px;
-                margin-top: 12px;"  class="choose">
-                <option name="" disabled  selected="selected" >按构件类型检索</option>
-                <option name="Choice00">全部</option>
-                <option name="Choice01">图文</option>
-                <option name="Choice10">用户</option>
-                <option name="Choice11">用例</option>
-                <option name="Choice001">软件接口</option>
-                <option name="Choice010">通讯接口</option>
-                <option name="Choice0100">数据集</option>
-                <option name="Choice0101">运行环境</option>
-                <option name="Choice0110">数据库</option>
-                <option name="Choice0111">操作系统</option>
-                <option name="Choice1000">硬件要求</option>
-                <option name="Choice1001">WEB服务器</option>
-            </select>
 
-            <button id="SearchType" type="submit" style="float:left; height: 32px; margin-left: 970px; margin-top: 12px;" class="btn btn-primary">检索</button>
-
-            <table id="release" data-toggle="table"
-                   data-classes="table table-no-bordered"
-                   data-click-to-select="true"
-                   data-search="true"
-                   data-show-refresh="true"
-                   data-show-toggle="true"
-                   data-toolbar="#toolbar"
-                   data-query-params="quefryParams"
-                   data-search-align="right"
-                   data-buttons-align="right"
-                   data-pagination="true"
-                   data-halign="center"
-                   data-striped="true"
-                   data-page-size="10"
-                   data-height="600"
-            >
-            </table>
-        </div>
-    </div>
 </div>
 </body>
 <script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>

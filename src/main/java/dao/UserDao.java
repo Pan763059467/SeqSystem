@@ -30,6 +30,9 @@ public interface UserDao {
 	int nowNews(int id);
 	int Mpoint(int id_rule);
 	int msgNum(int id_user);
+	int mycollect(int id_user); // 查询收藏的构件
+
+
 	List<UserEntity> getOrgAllMem(int user_id,String name);
 	boolean nameAndMail(String name, String email);
 	//找名字
@@ -39,4 +42,6 @@ public interface UserDao {
 	boolean changepwd(String oldpwd, String newpwd, String username);
 	boolean points_enough(int id_user,int point);
 	boolean pay(int id_user,int id_publisher,int point);
+
+
 }

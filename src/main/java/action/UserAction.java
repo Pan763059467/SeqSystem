@@ -303,6 +303,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         user = (UserEntity)session.get("user");
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
+        session.put("collectNum",userDao.mycollect(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
               return "homePage";
     }
@@ -313,6 +314,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
+        session.put("collectNum",userDao.mycollect(user.getId_user()));
         dataMap = new HashMap<String, Object>();
         return "homePage";
     }

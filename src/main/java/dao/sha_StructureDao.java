@@ -10,7 +10,7 @@ public interface sha_StructureDao {
     sha_StructureEntity getview(int id_structure);
 
     boolean deletemycollect(int id_share, int id_user);
-    boolean Collect(int id_user, int id_share, String name);
+    boolean collectTemp(int id_user, int id_share,String name,int points);
     boolean notexist_collect(int id_user, int id_share);
     sha_StructureEntity getOne(int id);
     List<sha_StructureEntity> getMycollect(int id_user);
