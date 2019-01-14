@@ -29,7 +29,36 @@
 </head>
 
 <body class="gray-bg">
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header"><a  href="user-jmpHomePage"><img src="<%=basePath %>/img/logo.png" style="height: 50px;margin: 10px 0px 5px 50px;"> </a></div>
+        <ul class="nav navbar-top-links navbar-right">
+            <a id="yourName" class="dropdown J_tabClose" data-toggle="dropdown">${sessionScope.user.name}<span class="caret"></span></a>
+            <ul  role="menu" class="dropdown-menu dropdown-menu-right">
+                <li  class="J_tabShowActive"><a href="user-jmpMyProfile">个人中心</a>
+                </li>
+                <li class="divider"></li>
+                <li  class="J_tabShowActive"><a href="user-jmpMessageCenter">消息中心</a>
+                </li>
+                <li class="divider"></li>
+                <s:if test='#session.orgManager!="0"'>
+                    <li class="J_tabShowActive"><a href="Organization-jmpOrgManager">机构管理</a>
+                    </li>
+                    <li class="divider"></li>
+                </s:if>
+                <li class="J_tabCloseAll"><a id="exit" class="J_menuItem" >安全退出</a>
+                </li>
+            </ul>
+            <li class="dropdown hidden-xs">
+                <a id="exit1" class="right-sidebar-toggle" aria-expanded="false" >
+                    <img src="<%=basePath %>/img/exit.png">
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
 <div id="page-wrapper" class="white-bg dashbard-1">
+
     <div class=" row wrapper white-bg" style="padding: 5px" id="content-main">
         <ol class="breadcrumb" style="margin-left: 40px">
             <li style="font-size: 15px">

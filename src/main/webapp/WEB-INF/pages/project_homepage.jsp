@@ -43,9 +43,37 @@
 
 </head>
 
-<body onload="newMsg()" class="fixed-sidebar full-height-layout gray-bg">
-<div class="animated fadeInDown">
-    <div class="col-md-12 form-group" style="margin-top:6%">
+<body onload="newMsg()" onload="warn()" class="fixed-sidebar full-height-layout gray-bg">
+    <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header"><a  href="user-jmpHomePage"><img src="<%=basePath %>/img/logo.png" style="height: 50px;margin: 10px 0px 5px 50px;"> </a></div>
+            <ul class="nav navbar-top-links navbar-right">
+                <a id="yourName" class="dropdown J_tabClose" data-toggle="dropdown">${sessionScope.user.name}<span class="caret"></span></a>
+                <ul  role="menu" class="dropdown-menu dropdown-menu-right">
+                    <li  class="J_tabShowActive"><a href="user-jmpMyProfile">个人中心</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li  class="J_tabShowActive"><a href="user-jmpMessageCenter">消息中心</a>
+                    </li>
+                    <li class="divider"></li>
+                    <s:if test='#session.orgManager!="0"'>
+                        <li class="J_tabShowActive"><a href="Organization-jmpOrgManager">机构管理</a>
+                        </li>
+                        <li class="divider"></li>
+                    </s:if>
+                    <li class="J_tabCloseAll"><a id="exit" class="J_menuItem" >安全退出</a>
+                </li>
+                </ul>
+                <li class="dropdown hidden-xs">
+                <a id="exit1" class="right-sidebar-toggle" aria-expanded="false" >
+                    <img src="<%=basePath %>/img/exit.png">
+                </a>
+            </li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <div class="col-md-12 form-group" style="margin-top:6%">
         <div class="col-md-2 col-md-offset-2">
             <a href="user-jmpCurrentProjectList">
                 <img src="<%=basePath %>/img/Home2_change.jpg" style="height:160px; width:160px;border-radius:10%"><br/>
@@ -84,7 +112,13 @@
             </a>
             <span style="display:block;margin:20px 0 0 0;color:#658387;font-size:18px;font-weight:bold">文档构件</span>
             <span style="color:black">收藏了</span>
-            <a href="structure-Mycollect"><span style="color: #ff0000" class="lzf_a">${sessionScope.collectNum}</span></a>
+            <a href="structure-Mycollect"><span style="color: #ff0000" class="lzf_a">
+                <s:if test='#session.collectNum==null'>
+                    <s:property value="0"/>
+                </s:if>
+                <s:else>
+                    <s:property value="#session.collectNum"/>
+                </s:else></span></a>
             <span style="color:black">个构件</span>
         </div>
         <div class="col-md-2 ">
@@ -104,21 +138,11 @@
             <span style="color:black">条邀请</span>
         </div>
     </div>
-
-    <%--<div class="col-md-9 form-group" style="margin-top: 5%">
-        <span class="col-md-6 col-md-offset-4">创建一个项目成为组长，或者接受别人的项目邀请成为组员，就可以参与项目需求文档的编写啦！</span>
-        <span class="col-md-6 col-md-offset-4" style="color: red">需要${sessionScope.Mpoint5}积分创建项目</span>
-        <a href="user-jmpNewproject"><img class="col-md-offset-1" src="<%=basePath %>/img/u7.png"></a>
-        <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="" frameborder="0" data-id="" seamless></iframe>
-        </div>
-    </div>--%>
-
-    <div style="position:absolute; left:1150px; top: 400px">
+        <div style="position:absolute; left:1150px; top: 400px">
         <a href="user-jmpNewproject"><img src="<%=basePath %>/img/new.png" height="60px" width="60px" title="新建项目" alt="新建项目"></a>
     </div>
     <div style="width: 66px;position: fixed;bottom: 20px;right: 25px;font-size: 0;line-height: 0;z-index: 100;">我在右下角 </div>
-</div>
+    </div>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js"></script>
 <%--bootstrap-table--%>
@@ -144,6 +168,37 @@
 <script src="<%=basePath %>/js/mjy.js"></script>
 </body>
 <script>
+    $("#exit").click(function () {
+        swal(
+            {
+                title: "您确认退出吗？",
+                text: "确认请点击退出",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "退出",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                location.href = "login-jmpLogin";
+            })
+    });
+    $("#exit1").click(function () {
+            swal(
+                {
+                    title: "您确认退出吗？",
+                    text: "确认请点击退出",
+                    type: "",
+                    showCancelButton: true,
+                    confirmButtonColor: "#18a689",
+                    confirmButtonText: "退出",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    location.href = "login-jmpLogin";
+                })
+        });
+
     function setCookie(name, value) {
         // var exp = new Date();
         // exp.setTime(exp.getTime() + 24 * 60 * 60 * 1000);
@@ -178,6 +233,25 @@
         var cval = getCookie(name);
         if (cval != null)
             document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+    }
+
+    function warn() {
+        if("${sessionScope.onLine}" === "true"){
+            $.ajax({
+                url: "user-warn",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    swal({
+                        title: "您的账户存在重复登录",
+                        text: "请确认账户安全",
+                        type: "warning",
+                        confirmButtonColor: "#18a689",
+                        confirmButtonText: "OK"
+                    })
+                }
+            })
+        }
     }
 
     function newMsg() {

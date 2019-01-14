@@ -297,15 +297,26 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "replacepasswordPage";
     }
 
-    public String jmpHomePage(){
+    public String jmpHomePage() {
         dataMap = new HashMap<String, Object>();
         userDao = new UserDaoImp();
-        user = (UserEntity)session.get("user");
-        session.put("countnow",userDao.projectNumberNow(user.getId_user()));
-        session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
-        session.put("collectNum",userDao.mycollect(user.getId_user()));
-        session.put("nowNews",userDao.nowNews(user.getId_user()));
-              return "homePage";
+        user = (UserEntity) session.get("user");
+        int orgManager = userDao.orgManager(user.getId_user());
+        session.put("user_name", user.getName());
+        session.put("orgManager", orgManager);
+        int Mpoint1 = userDao.Mpoint(1);
+        int Mpoint2 = userDao.Mpoint(2);
+        int Mpoint3 = userDao.Mpoint(3);
+        int Mpoint5 = userDao.Mpoint(5);
+        session.put("Mpoint1", Mpoint1);
+        session.put("Mpoint2", Mpoint2);
+        session.put("Mpoint3", Mpoint3);
+        session.put("Mpoint5", Mpoint5);
+        session.put("countnow", userDao.projectNumberNow(user.getId_user()));
+        session.put("counthistory", userDao.projectNumberHistory(user.getId_user()));
+        session.put("collectNum", userDao.mycollect(user.getId_user()));
+        session.put("nowNews", userDao.nowNews(user.getId_user()));
+        return "homePage";
     }
 
     public String jmpHomepage(){
@@ -317,24 +328,6 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("collectNum",userDao.mycollect(user.getId_user()));
         dataMap = new HashMap<String, Object>();
         return "homePage";
-    }
-
-
-    public String jmpTemp() {
-        userDao = new UserDaoImp();
-        user = (UserEntity)session.get("user");
-        int orgManager=userDao.orgManager(user.getId_user());
-        session.put("user_name",user.getName());
-        session.put("orgManager",orgManager);
-        int Mpoint1=userDao.Mpoint(1);
-        int Mpoint2=userDao.Mpoint(2);
-        int Mpoint3=userDao.Mpoint(3);
-        int Mpoint5=userDao.Mpoint(5);
-        session.put("Mpoint1",Mpoint1);
-        session.put("Mpoint2",Mpoint2);
-        session.put("Mpoint3",Mpoint3);
-        session.put("Mpoint5",Mpoint5);
-        return "tempPage";
     }
 
     private int id_share;

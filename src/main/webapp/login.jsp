@@ -99,7 +99,7 @@
                                 setCookie("msgNum"+"${sessionScope.user_name}",${sessionScope.msgNum});
                             }
                             showtoast("success", "登录成功", "操作成功");
-                            location.href = "user-jmpTemp";
+                            location.href = "user-jmpHomePage";
                         }
                         else{
                             showtoast("error", "账号已封停", "请联系管理员");
