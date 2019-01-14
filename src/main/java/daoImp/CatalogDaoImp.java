@@ -1,9 +1,13 @@
 package daoImp;
 
+import com.opensymphony.xwork2.ActionContext;
 import dao.CatalogDao;
 import dao.DAO;
 import entity.CatalogEntity;
+import entity.UserEntity;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -12,6 +16,10 @@ import java.util.List;
  * @author MJY
  */
 public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
+    UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
+    int ID_User = user.getId_user();
+    Date createDate = new Date(new java.util.Date().getTime());
+    Timestamp time = new Timestamp(new java.util.Date().getTime());
     @Override
     public List<CatalogEntity> getAllIndex(int id_document) {
         String sql="select title,first_index,second_index,third_index,fourth_index from CATALOG where id_document=? ORDER BY first_index asc,second_index asc,third_index asc,fourth_index asc";
@@ -235,13 +243,31 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     }
 
     @Override
-    public void saveLib(int id_lib, String content) {
-        String sql = "insert into STRUCTURE(ID_LIBRARY,CONTENT) value(?,?)";
-        try{
-            update(sql,id_lib,content);
+    public void saveLib(int id_template,String roleName,String content) {
+        String sql;
+        if (id_template == 1) {
+            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",'图文','" + createDate + "',0,?,?);";
+            try {
+                update(sql, id_template, content);
 
-        }catch (Exception e){
+            } catch (Exception e) {
+            }
+        } else if (id_template == 2) {
+            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",?,'" + createDate + "',0,?,?);";
+            try {
+                update(sql, roleName,id_template,content);
+
+            } catch (Exception e) {
+            }
+        } else {
+            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",?,'" + createDate + "',0,?,?);";
+            try {
+                update(sql,roleName,id_template,content);
+
+            } catch (Exception e) {
+            }
         }
+
     }
 
 }

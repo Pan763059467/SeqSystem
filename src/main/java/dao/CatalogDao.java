@@ -9,10 +9,10 @@ import java.util.List;
  *
  * @author MJY
  */
-public interface CatalogDao  {
+public interface CatalogDao {
 List<CatalogEntity> getAllIndex(int id_document);
 
-void insert(int id_template,int id_document,String title,int first,int second,int third,int fourth);
+void insert(int id_template, int id_document, String title, int first, int second, int third, int fourth);
 
 void update(int id_document, int first);
 
@@ -38,17 +38,17 @@ void update(int id_document, int first, int second);
 
     void down(int id_document, int first, int second, int third, int fourth);
 
-    void newCatalog(int id_document,String title,int id_template);
+    void newCatalog(int id_document, String title, int id_template);
 
-    CatalogEntity getOne(int id_document,int first,int second,int third,int fourth);
+    CatalogEntity getOne(int id_document, int first, int second, int third, int fourth);
 
-    int getIdCatalog(int id_document,int first,int second,int third,int fourth);
+    int getIdCatalog(int id_document, int first, int second, int third, int fourth);
 
-    void rename(String title,int id_document,int first,int second,int third,int fourth);
+    void rename(String title, int id_document, int first, int second, int third, int fourth);
 
     int getRoleCount(int id_document);
 
-    void saveContent(int id_catalog,String content);
+    void saveContent(int id_catalog, String content);
 
     List<CatalogEntity> getAllRole(int id_document);
 
@@ -60,5 +60,6 @@ void update(int id_document, int first, int second);
 
     List<CatalogEntity> getAllByDocument(int id_document);
 
-    void saveLib(int id_lib,String content);
+    void saveLib(int id_template, String content, String roleName);
+
 }
