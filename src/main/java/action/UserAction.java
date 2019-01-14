@@ -1,5 +1,6 @@
 package action;
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -302,6 +303,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         user = (UserEntity)session.get("user");
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
+        session.put("collectNum",userDao.mycollect(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
               return "homePage";
     }
@@ -312,6 +314,7 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         session.put("countnow",userDao.projectNumberNow(user.getId_user()));
         session.put("counthistory",userDao.projectNumberHistory(user.getId_user()));
         session.put("nowNews",userDao.nowNews(user.getId_user()));
+        session.put("collectNum",userDao.mycollect(user.getId_user()));
         dataMap = new HashMap<String, Object>();
         return "homePage";
     }
@@ -334,6 +337,25 @@ public class UserAction extends ActionSupport implements RequestAware, SessionAw
         return "tempPage";
     }
 
+    private int id_share;
+    public  int getId_share(){return id_share;}
+    public void  setId_share(int id_share){this.id_share=id_share;};
+    public String pay(){
+        dataMap = new HashMap<String, Object>();
+        UserEntity seesionUser = (UserEntity) ActionContext.getContext().getSession().get("user");
+        int id_user = seesionUser.getId_user();
+        int point=user.getPoints();
+        boolean result;
+        userDao = new UserDaoImp();
+        result=userDao.points_enough(id_user,point);
+
+        if(result)
+        {userDao.pay(id_user,id_share,point);}
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+        dataMap.put("res",json);
+        return  SUCCESS;
+    }
     public String jmpSysManager1(){
         return "SysManager1Page";
     }

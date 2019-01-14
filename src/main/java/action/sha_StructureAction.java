@@ -88,20 +88,26 @@ public class sha_StructureAction extends ActionSupport implements RequestAware, 
 
     public String collect(){
         dataMap = new HashMap<String, Object>();
+        sha_StructureDao = new sha_StructureDaoImp();
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int id_user = user.getId_user();
-        sha_StructureDao = new sha_StructureDaoImp();
-        int id_share=sha_Structure.getID_share();
-        String name=sha_Structure.getName();
-        boolean result;
-        result=sha_StructureDao.notexist_collect(id_user,id_share);
-        if(result)
-        {sha_StructureDao.Collect(id_user,id_share,name);}
-        Gson gson = new Gson();
-        String json = gson.toJson(result);
-        dataMap.put("res",json);
+        int point = user.getPoints();
+        int tmpPoint = point - sha_Structure.getPurchasePoint();
+        //System.out.println(id_user+"qq"+sha_Structure.getID_share()+"zz"+tmpPoint+"dd"+point+"ttz"+sha_Structure.getPurchasePoint());
+        if(sha_Structure.getPurchasePoint() <= point ){
+            boolean res = sha_StructureDao.collectTemp(id_user,sha_Structure.getID_share(),sha_Structure.getName(),tmpPoint);
+            if (res){
+                user.setPoints(tmpPoint);
+            }
+            dataMap.put("res",res);
+            dataMap.put("point",true);
+        }else{
+            dataMap.put("point",false);
+            dataMap.put("res",false);
+        }
         return SUCCESS;
     }
+
 
 
 

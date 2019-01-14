@@ -482,7 +482,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-    <div class="ibox-content">
+    <div class="ibox-content" style="margin: -5px 40px 0px 40px">
         <div class="bootstrap-table">
             <select  id="ChooseType"  style="position: absolute;z-index: 1; height: 32px; margin-left: 800px;
                 margin-top: 12px;"  class="choose">
@@ -891,89 +891,52 @@
                         })
                 }
                 else {
-                    swal(
-                        {
-                            title: "您确认收藏该构件吗？",
-                            text: "确认请按确定键",
-                            type: "",
-                            showCancelButton: true,
-                            confirmButtonColor: "#18a689",
-                            confirmButtonText: "确定",
-                            cancelButtonText: "取消",
-                            closeOnConfirm: false
-                        }, function () {
-                            //var r=confirm(conf);
-                            var point=parseInt(row.PurchasePoint);
-                            var ids=parseInt(row.id_structure);
-                            //if(r==true) {
-                            $.ajax(
-                                {
-                                    type: "GET",
-                                    url: "sha_structure-collect",
-                                    data: {ID_share: id, name: thisname},
-                                    dataType: "json",
-                                    success: function (json) {
-                                        var b = JSON.parse(json.res);
-                                        if (b) {
-                                            $.ajax(
-                                                {
-                                                    type: "Post",
-                                                    url: "user-pay",
-                                                    data: {points: point, id_share: id},
-                                                    dataType: "json",
-                                                    success: function (json) {
-                                                        var b = JSON.parse(json.res);
-                                                        if (b) {
-                                                            swal({
-                                                                title: "收藏成功",
-                                                                type: "success"
-                                                            }, function (isConfirm) {
-                                                                window.location.reload();
-                                                            });
-                                                        }
-                                                        else {
-                                                            swal({
-                                                                text: "积分不足!",
-                                                                type: "warning",
-                                                                showCancelButton: false
-                                                            });
-                                                            $.ajax(
-                                                                {
-                                                                    type: "GET",
-                                                                    url: "sha_structure-Delete_collect",
-                                                                    data: {id_structure: ids},
-                                                                    dataType: "json",
-                                                                    success: function () {
-                                                                    },
-                                                                    error: function () {
-                                                                        swal({
-                                                                            icon: "error"
-                                                                        });
-                                                                    }
-                                                                }
-                                                            )
-                                                        }
-                                                    },
-                                                    error: function () {
-                                                        swal({
-                                                            icon: "error"
-                                                        });
-                                                    }
-                                                }
-                                            );
-                                        }
-                                        else {
-                                            swal("禁止重复收藏！！！");
-                                        }
-                                    },
-                                    error: function () {
+                    var conf = "确定要收藏吗？需要消耗"+row.PurchasePoint+"点积分";
+                    var r=confirm(conf);
+                    if(r) {
+                        $.ajax({
+                            url: "sha_structure-collect",
+                            data: {ID_share: id, PurchasePoint: row.PurchasePoint, name: row.name},
+                            dataType: "json",
+                            type: "Post",
+                            async: "false",
+                            success: function (result) {
+                                if (result.res === true) {
+                                    swal({
+                                        title: "收藏成功",
+                                        type: "success"
+                                    }, function () {
+                                        window.location.reload();
+                                    });
+                                }
+                                else {
+                                    if (result.points) {
                                         swal({
-                                            icon: "error"
-                                        });
+                                            title: "服务器异常",
+                                            type: "error",
+                                            confirmButtonColor: "#18a689",
+                                            confirmButtonText: "OK"
+                                        })
+                                    }
+                                    else {
+                                        swal({
+                                            title: "积分不足请充值",
+                                            type: "error",
+                                            confirmButtonColor: "#18a689",
+                                            confirmButtonText: "OK"
+                                        })
                                     }
                                 }
-                            )
+                            },
+                            error: function (result) {
+                                showtoast("error", "收藏失败", "服务器异常");
+                            }
                         })
+                    }
+                    //   }
+
+
+                    //   )
                 }
             }
     };
