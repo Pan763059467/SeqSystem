@@ -557,6 +557,37 @@
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 <script src="<%=basePath %>/js/plugins/sweetalert/sweetalert.min.js"></script>
 <script>
+    $("#exit").click(function () {
+        swal(
+            {
+                title: "您确认退出吗？",
+                text: "确认请点击退出",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "退出",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                location.href = "login-jmpLogin";
+            })
+    });
+    $("#exit1").click(function () {
+        swal(
+            {
+                title: "您确认退出吗？",
+                text: "确认请点击退出",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "退出",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                location.href = "login-jmpLogin";
+            })
+    });
+
     var evalrow=1;
     $('#common').bootstrapTable({
             columns: [
