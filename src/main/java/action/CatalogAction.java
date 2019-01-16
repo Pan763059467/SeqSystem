@@ -2,13 +2,17 @@ package action;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.itextpdf.text.DocumentException;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import dao.*;
-import daoImp.*;
+import dao.CatalogDao;
+import dao.TemplateDao;
+import dao.UsableDao;
+import dao.securityDao;
+import daoImp.CatalogDaoImp;
+import daoImp.TemplateDaoImp;
+import daoImp.UsableDaoImp;
+import daoImp.securityDaoImp;
 import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -35,6 +39,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private Map<String, Object> dataMap;
     private int documentId;
     private CatalogEntity catalogEntity;
+
     private String catalogIndex;
     private int place;
     private String title;
@@ -46,7 +51,6 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private  int projectId;
     private int state;
     private int rank;
-    //3
     private int index;
     private int layer;
     private String funName;
@@ -59,6 +63,39 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String funUsableList;
     private InputStream pdfStream;
     private InputStream rtfStream;
+    private String appname;
+    private String apptype;
+    private String appaddress;
+    private String appusage;
+    private String communname;
+    private String communabb;
+    private String communtype;
+    private String commundescribe;
+    private String datatype;
+    private String dataempty;
+    private String dataconstraint;
+    private String dataexplain;
+    private String dataname;
+    private String  environmenttype;
+    private String  environmentconfigure;
+    private String maindatabase;
+    private String databasetype;
+    private String databaseedition;
+    private String databasesummary;
+    private String systemname;
+    private String systemtype;
+    private String systemedition;
+    private String systemframework;
+    private String systemsummary;
+    private String hardwarename;
+    private String hardwaretype;
+    private String hardwarefun;
+    private String hardwarescene;
+    private String webmain;
+    private String webedition;
+    private String websummary;
+
+
     public String getIndex(){
         dataMap = new HashMap<String, Object>();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -172,11 +209,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogEntity catalogEntity = catalogDao.getOne(documentId, first, second, third, fourth);
         TemplateDao templateDao = new TemplateDaoImp();
         TemplateEntity templateEntity = templateDao.getTemplate(catalogEntity.getId_template());
-        ProDiscussDao proDiscussDao=new ProDiscussDaoImp();
-        int catalogDisNum=proDiscussDao.getCatalogDisNum(catalogEntity.getId_catalog());
         Gson gson = new Gson();
         dataMap = new HashMap<>();
-        dataMap.put("catalogDisNum",catalogDisNum);
 //        session.put("LibType",catalogEntity.getId_template());
 //        int q = (int) session.get("LibType");
 //        System.out.println(q+"@");
@@ -200,11 +234,44 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
                 dataMap.put("entity", entity);
                 dataMap.put("roleList", roleList);
         }
+        else if(catalogEntity.getId_template() == 4){
+            appEntity entity = gson.fromJson(catalogEntity.getContent(), appEntity.class);
+            dataMap.put("entity", entity);
+        }
+
+        else if(catalogEntity.getId_template() == 5){
+            communEntity entity = gson.fromJson(catalogEntity.getContent(), communEntity.class);
+            dataMap.put("entity", entity);
+        }
+
+        else if(catalogEntity.getId_template() == 6){
+            dataEntity entity = gson.fromJson(catalogEntity.getContent(), dataEntity.class);
+            dataMap.put("entity", entity);
+        }
+        else if(catalogEntity.getId_template() == 7){
+            environmentEntity entity = gson.fromJson(catalogEntity.getContent(), environmentEntity.class);
+            dataMap.put("entity", entity);
+        }
+        else if(catalogEntity.getId_template() == 8){
+            databaseEntity entity = gson.fromJson(catalogEntity.getContent(), databaseEntity.class);
+            dataMap.put("entity", entity);
+        }
+        else if(catalogEntity.getId_template() == 9){
+            systemEntity entity = gson.fromJson(catalogEntity.getContent(), systemEntity.class);
+            dataMap.put("entity", entity);
+        }
+        else if(catalogEntity.getId_template() == 10){
+            hardwareEntity entity = gson.fromJson(catalogEntity.getContent(), hardwareEntity.class);
+            dataMap.put("entity", entity);
+        }
+        else if(catalogEntity.getId_template() == 11){
+            webmainEntity entity = gson.fromJson(catalogEntity.getContent(), webmainEntity.class);
+            dataMap.put("entity", entity);
+        }
             dataMap.put("template", templateEntity);
             //这个包括目录
             dataMap.put("catalogEntity", catalogEntity);
         UserEntity seesionUser=(UserEntity)session.get("user");
-        LibraryDao libraryDao = new LibraryDaoImp();
 //        List<LibraryEntity> list = libraryDao.getTypeOfOneLib(seesionUser.getId_user(),catalogEntity.getId_template());
 //        ActionContext.getContext().getValueStack().set("libList",list);
 //        System.out.println(list);
@@ -228,6 +295,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("roleCount",catalogDao.getRoleCount(documentId));
         return "Re";
     }
+
     public String saveTemplateOne(){
         CatalogDao catalogDao=new CatalogDaoImp();
         CommonStructureEntity structureEntity=new CommonStructureEntity(content);
@@ -240,9 +308,12 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         CommonStructureEntity structureEntity=new CommonStructureEntity(content);
         Gson gson = new Gson();
-        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        int id_template=1;
+        catalogDao.saveLib(id_template,content,gson.toJson(structureEntity));
+        System.out.println(id_template);
         return "Re";
     }
+
 
     public  String saveTemplateTwo(){
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -256,8 +327,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
         Gson gson = new Gson();
-        System.out.println(gson.toJson(structureEntity));
-        catalogDao.saveLib(id_lib,gson.toJson(structureEntity));
+        System.out.println(content);
+        int id_template=2;
+        catalogDao.saveLib(id_template,content,gson.toJson(structureEntity));
         return "Re";
     }
 
@@ -285,10 +357,75 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         List<FunRole> funRoles;
         funRoles=gson.fromJson(funRoleList,type);
         FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
-        catalogDao.saveLib(id_lib,gson.toJson(funStructureEntity));
+        int id_template=3;
+        catalogDao.saveLib(id_template,funName,gson.toJson(funStructureEntity));
         return "Re";
     }
 
+    public String saveTemplateFour(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        appEntity structureEntity=new appEntity(appname,apptype,appaddress,appusage);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public String saveTemplateFive(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+
+        communEntity structureEntity=new communEntity(communname,communabb,communtype,commundescribe);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateSix(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        dataEntity structureEntity=new dataEntity(dataname,datatype,dataempty,dataconstraint,dataexplain);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateSeven(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        environmentEntity structureEntity=new environmentEntity(environmenttype,environmentconfigure);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateEight(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        databaseEntity structureEntity=new databaseEntity(maindatabase,databasetype,databaseedition,databasesummary);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateNine(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        systemEntity structureEntity=new systemEntity(systemname,systemtype,systemedition,systemframework,systemsummary);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateTen(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        hardwareEntity structureEntity=new hardwareEntity(hardwarename,hardwaretype,hardwarefun,hardwarescene);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
+
+    public  String saveTemplateEleven(){
+        CatalogDao catalogDao=new CatalogDaoImp();
+        webmainEntity structureEntity=new webmainEntity(webmain,webedition,websummary);
+        Gson gson = new Gson();
+        catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
+        return "Re";
+    }
     public String getUsable(){
         UsableDao usableDao=new UsableDaoImp();
         List<UsableEntity> usableEntityList=usableDao.getUsable();
@@ -486,6 +623,124 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         this.layer = layer;
     }
 
+    public void setAppname(String appname) {
+        this.appname = appname;
+    }
+
+    public void setApptype(String apptype) {
+        this.apptype = apptype;
+    }
+
+    public void setAppaddress(String appaddress) {
+        this.appaddress = appaddress;
+    }
+
+    public void setAppusage(String appusage) {
+        this.appusage = appusage;
+    }
+
+    public void setCommunname(String communname) {
+        this.communname = communname;
+    }
+    public void setCommunabb(String communabb) {
+        this.communabb = communabb;
+    }
+
+    public void setCommuntype(String communtype) {
+        this.communtype = communtype;
+    }
+
+    public void setCommundescribe(String commundescribe) {
+        this.commundescribe = commundescribe;
+    }
+
+    public void setDataname(String dataname) {
+        this.dataname = dataname;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
+    }
+
+    public void setDataempty(String dataempty) {
+        this.dataempty = dataempty;
+    }
+
+    public void setDataconstraint(String dataconstraint) {
+        this.dataconstraint = dataconstraint;
+    }
+
+    public void setDataexplain(String dataexplain) {
+        this.dataexplain = dataexplain;
+    }
+    public void setEnvironmenttype(String environmenttype) {
+        this.environmenttype = environmenttype;
+    }
+    public void setEnvironmentconfigure(String environmentconfigure) {
+        this.environmentconfigure = environmentconfigure;
+    }
+
+    public void setMaindatabase(String maindatabase) {
+        this.maindatabase = maindatabase;
+    }
+
+    public void setDatabasetype(String databasetype) {
+        this.databasetype = databasetype;
+    }
+
+    public void setDatabaseedition(String databaseedition) {
+        this.databaseedition = databaseedition;
+    }
+
+    public void setDatabasesummary(String databasesummary) {
+        this.databasesummary = databasesummary;
+    }
+
+    public void setSystemname(String systemname) {
+        this.systemname = systemname;
+    }
+
+    public void setSystemtype(String systemtype) {
+        this.systemtype = systemtype;
+    }
+
+    public void setSystemedition(String systemedition) {
+        this.systemedition = systemedition;
+    }
+
+    public void setSystemframework(String systemframework) {
+        this.systemframework = systemframework;
+    }
+
+    public void setSystemsummary(String systemsummary) {
+        this.systemsummary = systemsummary;
+    }
+
+    public void setHardwarename(String hardwarename) {
+        this.hardwarename = hardwarename;
+    }
+    public void setHardwaretype(String hardwaretype) {
+        this.hardwaretype = hardwaretype;
+    }
+    public void setHardwarefun(String hardwarefun) {
+        this.hardwarefun = hardwarefun;
+    }
+
+    public void setHardwarescene(String hardwarescene) {
+        this.hardwarescene = hardwarescene;
+    }
+
+    public void setWebmain(String webmain) {
+        this.webmain = webmain;
+    }
+
+    public void setWebedition(String webedition) {
+        this.webedition = webedition;
+    }
+
+    public void setWebsummary(String websummary) {
+        this.websummary = websummary;
+    }
     @Override
     public void prepare() throws Exception {
 

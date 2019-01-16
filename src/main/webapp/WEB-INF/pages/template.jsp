@@ -63,7 +63,7 @@
                 </button>
                 <h4 class="modal-title">封装构件</h4>
             </div>
-            <div class="modal-body col-md-12" style="height: 300px" >
+                <div class="modal-body col-md-12" style="height: 300px" >
                 <br>
                 <br>
                 <br>
@@ -89,7 +89,7 @@
                 <s:if test='#session.project.state==0'>
                     <a href="user-jmpCompletedProjectList"><span class="lzf_b" style="color:#658387">历史项目</span></a>
                 </s:if>
-                >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
+                 >> <a href="project-jmpProjectInfo"><span class="lzf_b" style="color:#658387">项目信息</span></a> >>
                 需求文档
             </strong>
         </li>
@@ -110,6 +110,7 @@
                     <p id="view_common_content">
                         <!--构件内容-->
                     </p>
+
                 </div>
             </div>
         </div>
@@ -153,9 +154,9 @@
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span> </button>
-                <h4 class="modal-title" id="Viewfun_name">
-                    <!--构件名称-->
-                </h4>
+                    <h4 class="modal-title" id="Viewfun_name">
+                        <!--构件名称-->
+                    </h4>
             </div>
             <div class="modal-body">
                 <div class="form-group" style="word-break:break-all;"><label>优先级</label>
@@ -500,19 +501,19 @@
 
                                 <li class="li_head black" style="text-align: left">
                                     <button class="btn btn-outline btn-success btn-xs"  onclick="window.location.href='project-jmpProjectInfo'" ><i class="fa fa-home"></i></button>
-                                    <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
+                                 <strong class="font-bold col-md-offset-2  " style="text-align: center">需求开发文档</strong>
                                     <input style="display: none" value="${requestScope.documentId}" id="documentId">
                                     <input style="display: none" value="${requestScope.projectId}" id="projectId">
                                     <input style="display: none" value="${requestScope.state}" id="state">
                                 </li>
                                 <li class="li_fun">
                                     <s:if test="#request.rank!=5&&#request.state==0">
-                                        <span class="li_rename li_fa fa col-md-offset-1  fa-pencil-square-o black"   title="重命名" data-toggle="modal" data-target="#myModal3"></span>
-                                        <span class="li_add li_fa fa col-md-offset-1  fa-plus black"   title="新增目录"></span>
-                                        <span class="li_add_hidden li_fa fa col-md-offset-1  fa-plus black" style="display: none" data-toggle="modal" data-target="#myModal"></span>
-                                        <span class="li_up li_fa fa col-md-offset-1  fa-arrow-up black" title="上移目录"></span>
-                                        <span class="li_down fa li_fa col-md-offset-1  fa-arrow-down black" title="下移目录"></span>
-                                        <span class="li_delete li_fa fa col-md-offset-1  fa-times showtoastr black" title="删除目录"></span>
+                                    <span class="li_rename li_fa fa col-md-offset-1  fa-pencil-square-o black"   title="重命名" data-toggle="modal" data-target="#myModal3"></span>
+                                    <span class="li_add li_fa fa col-md-offset-1  fa-plus black"   title="新增目录"></span>
+                                    <span class="li_add_hidden li_fa fa col-md-offset-1  fa-plus black" style="display: none" data-toggle="modal" data-target="#myModal"></span>
+                                    <span class="li_up li_fa fa col-md-offset-1  fa-arrow-up black" title="上移目录"></span>
+                                    <span class="li_down fa li_fa col-md-offset-1  fa-arrow-down black" title="下移目录"></span>
+                                    <span class="li_delete li_fa fa col-md-offset-1  fa-times showtoastr black" title="删除目录"></span>
                                     </s:if>
 
                                     <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -639,12 +640,12 @@
                                         <div class="sk-bounce2"></div>
                                         <div class="sk-bounce3"></div>
                                     </div>
-                                    <%--<li class="li_head black">--%>
-                                    <%--<button class="btn btn-primary  btn-xs"  data-toggle="modal" data-target="#myModal2">新建目录</button>--%>
-                                    <%--</li>--%>
+                                        <%--<li class="li_head black">--%>
+                                            <%--<button class="btn btn-primary  btn-xs"  data-toggle="modal" data-target="#myModal2">新建目录</button>--%>
+                                        <%--</li>--%>
 
                                 </div>
-                            </div>
+                        </div>
 
                         </ul>
                     </div>
@@ -659,15 +660,15 @@
                 <div class="row">
                     <div class="ibox float-e-margins">
                         <div class="catalogNoneContent" style="text-align: center">
-                            <img src="<%=basePath %>/img/logo.png" style="height: 50%;width: 50%;margin: 10px 0px 5px 50px;"></div>
+                        <img src="<%=basePath %>/img/logo.png" style="height: 50%;width: 50%;margin: 10px 0px 5px 50px;"></div>
                         <div class="ibox-title catalogNotNoneContent" style="display:none;">
                             <s:if test="#request.rank!=5&&#request.state==0">
-                                <div class="ibox-tools ">
-                                    <i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>
-                                    <button id="" class="btn btn-primary btn-xs m-l-sm" data-toggle="modal" data-target="#Encapsulation" type="button" onclick="packageLib()">封装</button>
-                                    <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
-                                    <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
-                                </div>
+                            <div class="ibox-tools ">
+                                <%--<i class="fa fa-commenting modal-icon discussButton" id="discussButton" style="color: #6D8389" onclick="disReload()"  data-toggle="modal" data-target="#myModal1" > </i>--%>
+                                <button id="libsave" class="btn btn-primary btn-xs m-l-sm" data-toggle="modal" data-target="#Encapsulation" type="button" onclick="packageLib()" style="display:none">封装</button>
+                                <button id="edit" class="btn btn-primary btn-xs m-l-sm" onclick="temp_edit()" type="button">编辑</button>
+                                <button id="save" class="btn btn-primary  btn-xs m-l-sm" onclick="temp_save()" type="button" style="display:none;">保存</button>
+                            </div>
                             </s:if>
                         </div>
                         <div class="ibox-content form-horizontal content catalogNotNoneContent" style="display:none">
@@ -711,25 +712,25 @@
                             </div>
                             <!--自己的留言结束-->
                             <div class="allDiscuss">
-                                <!--一行留言-->
-                                <div class="row">
-                                    <div class="ibox float-e-margins " style="margin-bottom: 10px">
-                                        <div class="ibox-title">
-                                            <h5></h5>
-                                            <input style="display: none" class="id_dis">
-                                            <button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
-                                            <%--<div class="ibox-tools">--%>
+                            <!--一行留言-->
+                            <div class="row">
+                                <div class="ibox float-e-margins " style="margin-bottom: 10px">
+                                    <div class="ibox-title">
+                                        <h5></h5>
+                                        <input style="display: none" class="id_dis">
+                                        <button  class="btn btn-danger  btn-xs col-lg-push-1 m-l-sm deleteDis"  type="button" style="margin-top: -3px">删除</button>
+                                        <%--<div class="ibox-tools">--%>
                                             <%--<i class="fa fa-file-text-o " style="color: #26d7d9"  title="下载"> 附件：内容摘要.doc</i>--%>
-                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class=" wrapper">
                                         </div>
-                                        <div class="ibox-content">
-                                            <div class=" wrapper">
-                                            </div>
 
-                                        </div>
                                     </div>
                                 </div>
-                                <!--一行留言结束-->
+                            </div>
+                            <!--一行留言结束-->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -743,38 +744,38 @@
             <s:if test="#request.state==0">
             <div class="col-sm-3" >
                 <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>收藏构件</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
+                <div class="ibox-title">
+                    <h5>收藏构件</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
                     </div>
-                    <div class="ibox-content form-horizontal">
-                        <div class="bootstrap-table">
-                            <table  id="template" data-toggle="table" style="display: none;"
-                                    data-classes="table table-no-bordered"
-                                    data-click-to-select="true"
-                                    data-search="true"
-                                    data-show-toggle="true"
-                                    data-toolbar="#toolbar"
-                                    data-query-params="quefryParams"
-                                    data-search-align="right"
-                                    data-buttons-align="right"
-                                    data-pagination="true"
-                                    data-halign="center"
-                                    data-striped="true"
-                                    data-page-size="5"
-                                    data-height="600"
-                                    height="100"
-                            >
-                                <thead>
-                                <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
-                                </thead>
-                            </table>
-                            <!--构件库中间部分开始-->
-                            <!--     <div class="form-group">
+                </div>
+                  <div class="ibox-content form-horizontal">
+                    <div class="bootstrap-table">
+                       <table  id="template" data-toggle="table" style="display: none;"
+                               data-classes="table table-no-bordered"
+                               data-click-to-select="true"
+                               data-search="true"
+                               data-show-toggle="true"
+                               data-toolbar="#toolbar"
+                               data-query-params="quefryParams"
+                               data-search-align="right"
+                               data-buttons-align="right"
+                               data-pagination="true"
+                               data-halign="center"
+                               data-striped="true"
+                               data-page-size="5"
+                               data-height="600"
+                               height="100"
+                        >
+                            <thead>
+                            <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                            </thead>
+                        </table>
+                    <!--构件库中间部分开始-->
+               <!--     <div class="form-group">
                         <%--<label style="padding-left: 15px">选择构建类型</label>--%>
                         <%--<select class="form-control" name="structType" id="structType">--%>
                             <%--<option  selected disabled>请选择构建库类型</option>--%>
@@ -798,19 +799,19 @@
                                 该构件库为空
                             </div>
                     </div>    -->
-                            <!--   <table   >
-                               <thead>
-                               <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
-                               </thead>
+                     <!--   <table   >
+                        <thead>
+                        <tr><th class="col-sm-6 text-muted">构件名</th><th class="col-sm-6 text-muted"> 操作</th></tr>
+                        </thead>
 
-                           </table>   -->
-                            <h6>
-                                <small>.</small>
-                            </h6>
+                    </table>   -->
+                  <h6>
+                        <small>.</small>
+                    </h6>
 
-                        </div>
                     </div>
                 </div>
+            </div>
 
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -881,12 +882,13 @@
                         </div>
                     </div>
                 </div>
-                </s:if>
-                <!--右侧部分结束-->
-            </div>
+            </s:if>
+            <!--右侧部分结束-->
         </div>
-
     </div>
+
+</div>
+</div>
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
@@ -918,16 +920,16 @@
 <script>
     var count;
     function packageLib() {
-        $("#libraryOneList").empty();
-        $("#libraryOneList").append(content);
-        $(".oneLibraryDiv").show();
-        $("#noneOneLibrary").hide();
-        $("#new").hide();
-        $("#name1").hide();
-        $("#mention1").hide();
-        $("#new-button").hide();
-        $("#edit-button").show();
-        $("#hint").show();
+                    $("#libraryOneList").empty();
+                    $("#libraryOneList").append(content);
+                    $(".oneLibraryDiv").show();
+                    $("#noneOneLibrary").hide();
+                    $("#new").hide();
+                    $("#name1").hide();
+                    $("#mention1").hide();
+                    $("#new-button").hide();
+                    $("#edit-button").show();
+                    $("#hint").show();
     }
 
 </script>
@@ -947,7 +949,7 @@
                 async: "false",
                 success:function(json){
                     var proList = JSON.parse(json.res);
-                    // var tem=JSON.parse(proList.content);
+                   // var tem=JSON.parse(proList.content);
                     $('#template').bootstrapTable('load',proList);
                 },
                 error:function(){
@@ -977,8 +979,8 @@
         );
     });
 
-    // nowTemplate_jsp = nowCatalog.id_template;
-    // $( '#qiliangqifei' ).bootstrapTable( { height: 260 } );
+   // nowTemplate_jsp = nowCatalog.id_template;
+   // $( '#qiliangqifei' ).bootstrapTable( { height: 260 } );
     $('#template').bootstrapTable({
             height:260,
             columns: [
@@ -1009,219 +1011,219 @@
     window.actionEvents = {
         'click .useStructure2':
 
-            function(id_template, obj, row, index)
+        function(id_template, obj, row, index)
+        {
+        var id = parseInt(row.id_structure);
+        if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
+            showtoast("warning", "加载失败", "与模板类型不匹配");
+            return;
+        }
+        swal(
             {
-                var id = parseInt(row.id_structure);
-                alert(row.id_template);
-                if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
-                    showtoast("warning", "加载失败", "与模板类型不匹配");
-                    return;
+                title: "引用构件将覆盖原有内容",
+                text: "请谨慎选择",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "引用",
+                cancelButtonText: "取消",
+            }, function () {
+                $("div.hidenTh").show();
+                var tem=JSON.parse(row.content);
+                if (row.id_template == "1") {
+                    loadTemplateOne(tem)
                 }
-                swal(
-                    {
-                        title: "引用构件将覆盖原有内容",
-                        text: "请谨慎选择",
-                        type: "",
-                        showCancelButton: true,
-                        confirmButtonColor: "#18a689",
-                        confirmButtonText: "引用",
-                        cancelButtonText: "取消",
-                    }, function () {
-                        $("div.hidenTh").show();
-                        var tem=JSON.parse(row.content);
-                        if (row.id_template == "1") {
-                            loadTemplateOne(tem)
-                        }
-                        else if (row.id_template == "2") {
-                            loadTemplateTwo(tem)
-                        }
-                        else if (row.id_template == "3") {
-                            var end = $(".funTable tbody").children(".end");
-                            $(".funTable tbody").html(end)
-                            $(".funTable tfoot").html("");
-                            loadTemplateThree(tem)
-                        }
-                        else if(row.id_template == "4"){
-                            loadTemplateFour(tem)
-                        }
-                        else if(row.id_template == "5"){
-                            // var end = $(".funTable tbody").children(".end");
-                            //  $(".funTable tbody").html(end)
-                            //   $(".funTable tfoot").html("");
-                            loadTemplateFive(tem)
-                        }
-                        else if(row.id_template=="6"){
-                            loadTemplateSix(tem)
-                        }
-                        else if(row.id_template=="7"){
-                            loadTemplateSeven(tem)
-                        }
-                        else if(row.id_template=="8"){
-                            loadTemplateEight(tem)
-                        }
-                        else if(row.id_template == "9"){
-                            //       var end = $(".funTable tbody").children(".end");
-                            //       $(".funTable tbody").html(end)
-                            //      $(".funTable tfoot").html("");
-                            loadTemplateNine(tem)
-                        }
-                        else if(row.id_template == "10"){
-                            //    var end = $(".funTable tbody").children(".end");
-                            //     $(".funTable tbody").html(end)
-                            //     $(".funTable tfoot").html("");
-                            loadTemplateTen(tem)
-                        }
-                        else if(row.id_template=="11"){
-                            loadTemplateEleven(tem)
-                        }
-                    })
-            },
-        'click .seeStructure2':
-            function (id_template, obj, row, index) {
-                var id = row.id_structure;
-                var temp = row.id_template;
-                var tem = JSON.parse(row.content);
-                console.log(tem);
-                var id_template = temp;
-                if ( row.id_template == "1" )
-                {
-                    $('#viewcommon').modal('toggle');
-                    $('#Viewcommon_name').text("构件"+row.name);
-                    $('#view_common_content').text(tem.content);
-                    //swal({title:"图文构件:"+pro.name, text:"tem.content" })
+                else if (row.id_template == "2") {
+                    loadTemplateTwo(tem)
                 }
-                else if ( temp == "2" )
-                {
-                    console.log(tem.roleName);
-                    $('#viewuser').modal('toggle');
-                    $('#Viewuser_name').text("构件"+row.name);
-                    $('#view_user_rolename').text(tem.roleName);
-                    $('#view_user_describe').text(tem.describe);
-                    $('#view_user_permissions').text(tem.permissions);
-                    /*swal(
+                else if (row.id_template == "3") {
+                    var end = $(".funTable tbody").children(".end");
+                    $(".funTable tbody").html(end)
+                    $(".funTable tfoot").html("");
+                    loadTemplateThree(tem)
+                }
+                else if(row.id_template == "4"){
+                    loadTemplateFour(tem)
+                }
+                else if(row.id_template == "5"){
+                    // var end = $(".funTable tbody").children(".end");
+                    //  $(".funTable tbody").html(end)
+                    //   $(".funTable tfoot").html("");
+                    loadTemplateFive(tem)
+                }
+                else if(row.id_template=="6"){
+                    loadTemplateSix(tem)
+                }
+                else if(row.id_template=="7"){
+                    loadTemplateSeven(tem)
+                }
+                else if(row.id_template=="8"){
+                    loadTemplateEight(tem)
+                }
+                else if(row.id_template == "9"){
+                    //       var end = $(".funTable tbody").children(".end");
+                    //       $(".funTable tbody").html(end)
+                    //      $(".funTable tfoot").html("");
+                    loadTemplateNine(tem)
+                }
+                else if(row.id_template == "10"){
+                    //    var end = $(".funTable tbody").children(".end");
+                    //     $(".funTable tbody").html(end)
+                    //     $(".funTable tfoot").html("");
+                    loadTemplateTen(tem)
+                }
+                else if(row.id_template=="11"){
+                    loadTemplateEleven(tem)
+                }
+            })
+    },
+    'click .seeStructure2':
+        function (id_template, obj, row, index) {
+            var id = row.id_structure;
+            var temp = row.id_template;
+                        var tem = JSON.parse(row.content);
+
+                        var id_template = temp;
+                        if ( row.id_template == "1" )
                         {
-                            title:"构件名称："+ pro.name,
-                            text:"<div align=left><b>用户名：</b>"+ tem.roleName+"</div>"
-                                +"<div align=left><b>用户描述：</b>"+ tem.describe+"</div>"
-                                +"<div align=left><b>用户权限：</b>"+ tem.permissions+"</div>",
-                            html:true
-                        })*/
-                }
-                else if( row.id_template == "3" )
-                {
-                    var priority;
-                    if ( tem.priority == 1 ){
-                        priority = "高"
-                    }else if( tem.priority == 2 ){
-                        priority = "中"
-                    }
-                    else if( tem.priority == 3 ) {
-                        priority = "低"
-                    }
-                    var funRoleList = "";
-                    var tmp1 = tem.funRoleList.length;
-                    for(var num = 0;num < tmp1; num++){
-                        funRoleList+="<div>角色："+tem.funRoleList[num].roleName+"</div>"
-                            +"<div>描述："+tem.funRoleList[num].roleDescribe+"</div>"
-                        if(tem.funRoleList[num].usableName!=null){
-                            funRoleList+="<div>"+tem.funRoleList[num].usableName+"</div>"
-                                +"<div>"+tem.funRoleList[num].usablePara+"</div>"
+                            $('#viewcommon').modal('toggle');
+                            $('#Viewcommon_name').text("构件"+row.name);
+                            $('#view_common_content').text(tem.content);
+                          //  $("#describe").summernote("code",content);
+                            //swal({title:"图文构件:"+pro.name, text:"tem.content" })
                         }
-                    }
-                    var funUsableList ="";
-                    var tmp2 = tem.funUsableList.length;
-                    for(var num = 0;num < tmp2; num++){
-                        funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
-                            +"<div>"+tem.funUsableList[num].usablePara+"</div>"
-                    }
-                    $('#viewfun').modal('toggle');
-                    $('#Viewfun_name').text("构件"+row.name);
-                    $('#view_fun_priority').text(priority);
-                    $('#view_fun_describe').text(tem.describe);
-                    document.getElementById("view_fun_role").innerHTML = funRoleList;
-                    document.getElementById("view_fun_usable").innerHTML = funUsableList;
-                    $('#view_fun_input').text(tem.input);
-                    $('#view_fun_output').text(tem.output);
-                    $('#view_fun_basic').text(tem.basic);
-                    $('#view_fun_alter').text(tem.alternative);
+                        else if ( temp == "2" )
+                        {
+                             console.log(tem.roleName);
+                            $('#viewuser').modal('toggle');
+                            $('#Viewuser_name').text("构件"+row.name);
+                            $('#view_user_rolename').text(tem.roleName);
+                            $('#view_user_describe').text(tem.describe);
+                            $('#view_user_permissions').text(tem.permissions);
+                            /*swal(
+                                {
+                                    title:"构件名称："+ pro.name,
+                                    text:"<div align=left><b>用户名：</b>"+ tem.roleName+"</div>"
+                                        +"<div align=left><b>用户描述：</b>"+ tem.describe+"</div>"
+                                        +"<div align=left><b>用户权限：</b>"+ tem.permissions+"</div>",
+                                    html:true
+                                })*/
+                        }
+                        else if( row.id_template == "3" )
+                        {
+                            var priority;
+                            if ( tem.priority == 1 ){
+                                priority = "高"
+                            }else if( tem.priority == 2 ){
+                                priority = "中"
+                            }
+                            else if( tem.priority == 3 ) {
+                                priority = "低"
+                            }
+                            var funRoleList = "";
+                            var tmp1 = tem.funRoleList.length;
+                            for(var num = 0;num < tmp1; num++){
+                                funRoleList+="<div>角色："+tem.funRoleList[num].roleName+"</div>"
+                                    +"<div>描述："+tem.funRoleList[num].roleDescribe+"</div>"
+                                if(tem.funRoleList[num].usableName!=null){
+                                    funRoleList+="<div>"+tem.funRoleList[num].usableName+"</div>"
+                                        +"<div>"+tem.funRoleList[num].usablePara+"</div>"
+                                }
+                            }
+                            var funUsableList ="";
+                            var tmp2 = tem.funUsableList.length;
+                            for(var num = 0;num < tmp2; num++){
+                                funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
+                                    +"<div>"+tem.funUsableList[num].usablePara+"</div>"
+                            }
+                            $('#viewfun').modal('toggle');
+                            $('#Viewfun_name').text("构件"+row.name);
+                            $('#view_fun_priority').text(priority);
+                            $('#view_fun_describe').text(tem.describe);
+                            document.getElementById("view_fun_role").innerHTML = funRoleList;
+                            document.getElementById("view_fun_usable").innerHTML = funUsableList;
+                            $('#view_fun_input').text(tem.input);
+                            $('#view_fun_output').text(tem.output);
+                            $('#view_fun_basic').text(tem.basic);
+                            $('#view_fun_alter').text(tem.alternative);
 
 
-                }
-                else if ( row.id_template == "4")
-                {
-                    $('#viewapp').modal('toggle');
-                    $('#Viewapp_name').text("构件"+row.name);
-                    $('#view_app_name').text(tem.appname);
-                    $('#view_app_type').text(tem.apptype);
-                    $('#view_app_address').text(tem.appaddress);
-                    $('#view_app_usage').text(tem.appusage);
-                }
-                else if ( row.id_template == "5")
-                {
-                    $('#viewcommun').modal('toggle');
-                    $('#Viewcommun_name').text("构件"+row.name);
-                    $('#view_commun_name').text(tem.communname);
-                    $('#view_commun_abb').text(tem.communabb);
-                    $('#view_commun_type').text(tem.communtype);
-                    $('#view_commun_describe').text(tem.commundescribe);
-                }
-                else if ( row.id_template == "6" )
-                {
-                    $('#viewdata').modal('toggle');
-                    $('#Viewdata_name').text("构件"+row.name);
-                    $('#view_data_name').text(tem.dataname);
-                    $('#view_data_type').text(tem.datatype);
-                    if(tem.dataempty==0) {$('#view_data_empty').text("是");}
-                    else {$('#view_data_empty').text("否");}
-                    $('#view_data_constraint').text(tem.dataconstraint);
-                    $('#view_data_explain').text(tem.dataexplain);
-                }
-                else if ( row.id_template == "7" )
-                {
-                    $('#viewenvironment').modal('toggle');
-                    $('#Viewenvironment_name').text("构件"+row.name);
-                    $('#view_environment_type').text(tem.environmenttype);
-                    $('#view_environment_configure').text(tem.environmentconfigure);
-                }
-                else if ( row.id_template == "8" )
-                {
-                    $('#viewdatabase').modal('toggle');
-                    $('#Viewdatabase_name').text("构件"+row.name);
-                    $('#view_database_main').text(tem.maindatabase);
-                    if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
-                    else {$('#view_database_type').text("关系型");}
-                    $('#view_database_edition').text(tem.databaseedition);
-                    $('#view_database_summary').text(tem.databasesummary);
-                }
-                else if ( row.id_template == "9")
-                {
-                    $('#viewsystem').modal('toggle');
-                    $('#Viewsystem_name').text("构件"+row.name);
-                    $('#view_system_name').text(tem.systemname);
-                    $('#view_system_type').text(tem.systemtype);
-                    $('#view_system_edition').text(tem.systemedition);
-                    $('#view_system_framework').text(tem.systemframework);
-                    $('#view_system_summary').text(tem.systemsummary);
-                }
-                else if ( row.id_template == "10")
-                {
-                    $('#viewhardware').modal('toggle');
-                    $('#Viewhardware_name').text("构件"+row.name);
-                    $('#view_hardware_name').text(tem.hardwarename);
-                    $('#view_hardware_type').text(tem.hardwaretype);
-                    $('#view_hardware_fun').text(tem.hardwarefun);
-                    $('#view_hardware_scene').text(tem.hardwarescene);
-                }
-                else if ( row.id_template == "11" )
-                {
-                    $('#viewweb').modal('toggle');
-                    $('#Viewweb_name').text("构件"+row.name);
-                    $('#view_web_main').text(tem.webmain);
-                    $('#view_web_edition').text(tem.webedition);
-                    $('#view_web_summary').text(tem.websummary);
-                }
+                        }
+                        else if ( row.id_template == "4")
+                        {
+                            $('#viewapp').modal('toggle');
+                            $('#Viewapp_name').text("构件"+row.name);
+                            $('#view_app_name').text(tem.appname);
+                            $('#view_app_type').text(tem.apptype);
+                            $('#view_app_address').text(tem.appaddress);
+                            $('#view_app_usage').text(tem.appusage);
+                        }
+                        else if ( row.id_template == "5")
+                        {
+                            $('#viewcommun').modal('toggle');
+                            $('#Viewcommun_name').text("构件"+row.name);
+                            $('#view_commun_name').text(tem.communname);
+                            $('#view_commun_abb').text(tem.communabb);
+                            $('#view_commun_type').text(tem.communtype);
+                            $('#view_commun_describe').text(tem.commundescribe);
+                        }
+                        else if ( row.id_template == "6" )
+                        {
+                            $('#viewdata').modal('toggle');
+                            $('#Viewdata_name').text("构件"+row.name);
+                            $('#view_data_name').text(tem.dataname);
+                            $('#view_data_type').text(tem.datatype);
+                            if(tem.dataempty==0) {$('#view_data_empty').text("是");}
+                            else {$('#view_data_empty').text("否");}
+                            $('#view_data_constraint').text(tem.dataconstraint);
+                            $('#view_data_explain').text(tem.dataexplain);
+                        }
+                        else if ( row.id_template == "7" )
+                        {
+                            $('#viewenvironment').modal('toggle');
+                            $('#Viewenvironment_name').text("构件"+row.name);
+                            $('#view_environment_type').text(tem.environmenttype);
+                            $('#view_environment_configure').text(tem.environmentconfigure);
+                        }
+                        else if ( row.id_template == "8" )
+                        {
+                            $('#viewdatabase').modal('toggle');
+                            $('#Viewdatabase_name').text("构件"+row.name);
+                            $('#view_database_main').text(tem.maindatabase);
+                            if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
+                            else {$('#view_database_type').text("关系型");}
+                            $('#view_database_edition').text(tem.databaseedition);
+                            $('#view_database_summary').text(tem.databasesummary);
+                        }
+                        else if ( row.id_template == "9")
+                        {
+                            $('#viewsystem').modal('toggle');
+                            $('#Viewsystem_name').text("构件"+row.name);
+                            $('#view_system_name').text(tem.systemname);
+                            $('#view_system_type').text(tem.systemtype);
+                            $('#view_system_edition').text(tem.systemedition);
+                            $('#view_system_framework').text(tem.systemframework);
+                            $('#view_system_summary').text(tem.systemsummary);
+                        }
+                        else if ( row.id_template == "10")
+                        {
+                            $('#viewhardware').modal('toggle');
+                            $('#Viewhardware_name').text("构件"+row.name);
+                            $('#view_hardware_name').text(tem.hardwarename);
+                            $('#view_hardware_type').text(tem.hardwaretype);
+                            $('#view_hardware_fun').text(tem.hardwarefun);
+                            $('#view_hardware_scene').text(tem.hardwarescene);
+                        }
+                        else if ( row.id_template == "11" )
+                        {
+                            $('#viewweb').modal('toggle');
+                            $('#Viewweb_name').text("构件"+row.name);
+                            $('#view_web_main').text(tem.webmain);
+                            $('#view_web_edition').text(tem.webedition);
+                            $('#view_web_summary').text(tem.websummary);
+                        }
 
-            }
+        }
 
     }
 
@@ -1261,7 +1263,6 @@
             function(id_template, obj, row, index)
             {
                 var id = parseInt(row.id_structure);
-                alert(row.id_template);
                 if (typeof (nowCatalog) == "undefined" || nowCatalog.id_template != row.id_template) {
                     showtoast("warning", "加载失败", "与模板类型不匹配");
                     return;
@@ -1293,9 +1294,9 @@
                             loadTemplateFour(tem)
                         }
                         else if(row.id_template == "5"){
-                            // var end = $(".funTable tbody").children(".end");
-                            //  $(".funTable tbody").html(end)
-                            //   $(".funTable tfoot").html("");
+                           // var end = $(".funTable tbody").children(".end");
+                          //  $(".funTable tbody").html(end)
+                         //   $(".funTable tfoot").html("");
                             loadTemplateFive(tem)
                         }
                         else if(row.id_template=="6"){
@@ -1308,15 +1309,15 @@
                             loadTemplateEight(tem)
                         }
                         else if(row.id_template == "9"){
-                            //       var end = $(".funTable tbody").children(".end");
-                            //       $(".funTable tbody").html(end)
-                            //      $(".funTable tfoot").html("");
+                     //       var end = $(".funTable tbody").children(".end");
+                     //       $(".funTable tbody").html(end)
+                      //      $(".funTable tfoot").html("");
                             loadTemplateNine(tem)
                         }
                         else if(row.id_template == "10"){
-                            //    var end = $(".funTable tbody").children(".end");
-                            //     $(".funTable tbody").html(end)
-                            //     $(".funTable tfoot").html("");
+                        //    var end = $(".funTable tbody").children(".end");
+                       //     $(".funTable tbody").html(end)
+                       //     $(".funTable tfoot").html("");
                             loadTemplateTen(tem)
                         }
                         else if(row.id_template=="11"){
@@ -1345,6 +1346,7 @@
                                 $('#viewcommon').modal('toggle');
                                 $('#Viewcommon_name').text("构件"+pro.name);
                                 $('#view_common_content').text(tem.content);
+                               // $("#describe").summernote("code",content);
                                 //swal({title:"图文构件:"+pro.name, text:"tem.content" })
                             }
                             else if ( id_template == "2" )
@@ -1586,138 +1588,146 @@
 
 
     lib_save=function (){
-        var id_template = nowCatalog.id_template;
-        if (id_template == "1") {//图文
-            var describe=$("#describe").summernote('code');
-            if(describe.length>2000){
-                swal("您输入内容过长，请重新输入");
-            }
-            else if(describe.length<10){
-                swal("请补充内容");
-            }
-            else {
+                var id_template = nowCatalog.id_template;
+                if (id_template == "1") {//图文
+                    var describe=$("#describe").summernote('code');
+                    if(describe.length>2000){
+                        swal("您输入内容过长，请重新输入");
+                    }
+                    else if(describe.length<10){
+                        swal("请补充内容");
+                    }
+                    else {
 
-                $.ajax({
-                    url: "catalog-saveLibOne",
-                    data: {id_template: id_template, content: describe},
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        swal("构件封装成功!", "可直接引用该构件", "success");
-                        $('button#cancel-button').click();
-                    },
-                    error: function (result) {
-                        showtoast("dangerous", "封装失败", "构件封装失败")
+                        $.ajax({
+                            url: "catalog-saveLibOne",
+                            data: {id_template: id_template, content: describe},
+                            dataType: "json",
+                            type: "Post",
+                            async: "false",
+                            success: function (result) {
+                                alert("构件封装成功!");
+                               // swal("构件封装成功!", "可直接引用该构件", "success");
+                                $('button#cancel-button').click();
+                                window.location.reload();
+                            },
+                            error: function (result) {
+                                showtoast("dangerous", "封装失败", "构件封装失败")
+                            }
+                        })
                     }
-                })
-            }
-        }
-        else if (id_template == "2") {//角色
-            var roleName=$("input#roleName").val();
-            var describe=$("#describe").summernote('code');
-            var permissions=$("#permissions").summernote('code');
-            // alert(roleName.length+describe.length+permissions.length);
-            if(roleName.length+describe.length+permissions.length>3000) {
-                swal("您输入内容过长，请重新输入");
-            }
-            else if(roleName.length==0){
-                swal("请输入角色名");
-            }
-            else {
-                $.ajax({
-                    url: "catalog-saveLibTwo",
-                    data: {
-                        id_template: id_template,
-                        content: roleName,
-                        describe: describe,
-                        permissions: permissions
-                    },
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        swal("构件封装成功!", "可直接引用该构件", "success");
-                        $('button#cancel-button').click();
-                    },
-                    error: function (result) {
-                        showtoast("dangerous", "封装失败", "构件封装失败")
-                    }
-                })
-            }
-        }
-        else  if(id_template == "3"){
-            var funName=$("input#funName").val();
-            var priority=$("select#priority").val();
-            var describe=$("#describe").summernote('code');
-            var inDiv=$("#in").summernote('code');
-            var outDiv=$("#out").summernote('code');
-            var basic=$("#basic").summernote('code');
-            var alternative=$("#alternative").summernote('code');
-            var  funRoleList="[{";
-            var roleName,roleDescribe,usableName,usablePara,last="";
-            $(".funTable tbody").find("tr").each(function () {
-                if ($(this).hasClass("funTr")){//开头
-                    if (last!=""){//第一次，没有,
-                        funRoleList+="},{"
-                    }
-                    roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
-                    // alert($(this).children("th").eq(2).children(".roleDescribe"))
-                    roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
-                    funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
-                    last="funTr";
                 }
-                else if ($(this).hasClass("usableTr")){//开头
-                    usableName=$(this).children("th:first-child").text();
-                    usablePara=$(this).children("th").eq(1).text();
-                    funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
-                    last="usableTr";
+                else if (id_template == "2") {//角色
+                    var roleName=$("input#roleName").val();
+                    var describe=$("#describe").summernote('code');
+                    var permissions=$("#permissions").summernote('code');
+                   // alert(roleName.length+describe.length+permissions.length);
+                    if(roleName.length+describe.length+permissions.length>3000) {
+                        swal("您输入内容过长，请重新输入");
+                    }
+                    else if(roleName.length==0){
+                        swal("请输入角色名");
+                    }
+                    else {
+                        $.ajax({
+                            url: "catalog-saveLibTwo",
+                            data: {
+                                id_template: id_template,
+                                content: roleName,
+                                describe: describe,
+                                permissions: permissions
+                            },
+                            dataType: "json",
+                            type: "Post",
+                            async: "false",
+                            success: function (result) {
+                                alert("构件封装成功!");
+                                //swal("构件封装成功!", "可直接引用该构件", "success");
+                                $('button#cancel-button').click();
+                                window.location.reload();
+                                $("#edit").attr("style","display:show");
+                            },
+                            error: function (result) {
+                                showtoast("dangerous", "封装失败", "构件封装失败")
+                            }
+                        })
+                    }
                 }
-            })
-            funRoleList+="}]";
+                else  if(id_template == "3"){
+                    var funName=$("input#funName").val();
+                    var priority=$("select#priority").val();
+                    var describe=$("#describe").summernote('code');
+                    var inDiv=$("#in").summernote('code');
+                    var outDiv=$("#out").summernote('code');
+                    var basic=$("#basic").summernote('code');
+                    var alternative=$("#alternative").summernote('code');
+                    var  funRoleList="[{";
+                    var roleName,roleDescribe,usableName,usablePara,last="";
+                    $(".funTable tbody").find("tr").each(function () {
+                        if ($(this).hasClass("funTr")){//开头
+                            if (last!=""){//第一次，没有,
+                                funRoleList+="},{"
+                            }
+                            roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
+                            // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                            roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
+                            funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
+                            last="funTr";
+                        }
+                        else if ($(this).hasClass("usableTr")){//开头
+                            usableName=$(this).children("th:first-child").text();
+                            usablePara=$(this).children("th").eq(1).text();
+                            funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
+                            last="usableTr";
+                        }
+                    })
+                    funRoleList+="}]";
 
-            var funUsableList="[",usableName,usablePara,first="yes";
-            $(".funTable tfoot").find("tr").each(function () {
-                if (first=="yes"){//第一次，没有,
-                    funUsableList+="{"
-                }
-                else   funUsableList+=",{"
-                usableName=$(this).children("th:first-child").text();
-                usablePara=$(this).children("th").eq(1).text();
-                funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
-                first="no";
-            })
-            funUsableList+="]";
-            alert(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length);
+                    var funUsableList="[",usableName,usablePara,first="yes";
+                    $(".funTable tfoot").find("tr").each(function () {
+                        if (first=="yes"){//第一次，没有,
+                            funUsableList+="{"
+                        }
+                        else   funUsableList+=",{"
+                        usableName=$(this).children("th:first-child").text();
+                        usablePara=$(this).children("th").eq(1).text();
+                        funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+                        first="no";
+                    })
+                    funUsableList+="]";
+                //    alert(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length);
 
-            if(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length>6000){
-                swal("您输入内容过长，请重新输入")
-            }
-            else if(funName.length==0){
-                swal("请输入功能点名称");
-            }
-            else {
-                $.ajax({
-                    url: "catalog-saveLibThree",
-                    data: {
-                        id_template: id_template, funName: funName, priority: priority, content: describe,
-                        inDiv: inDiv, outDiv: outDiv, basic: basic, alternative: alternative,
-                        funRoleList: funRoleList, funUsableList: funUsableList
-                    },
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        swal("构件封装成功!", "可在对应构件库引用该构件", "success");
-                        $('button#cancel-button').click();
-                    },
-                    error: function (result) {
-                        showtoast
-                        ("dangerous", "封装失败", "构件封装失败")
+                    if(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length>6000){
+                        swal("您输入内容过长，请重新输入")
                     }
-                })
+                    else if(funName.length==0){
+                        swal("请输入功能点名称");
+                    }
+                    else {
+                        $.ajax({
+                            url: "catalog-saveLibThree",
+                            data: {
+                                id_template: id_template, funName: funName, priority: priority, content: describe,
+                                inDiv: inDiv, outDiv: outDiv, basic: basic, alternative: alternative,
+                                funRoleList: funRoleList, funUsableList: funUsableList
+                            },
+                            dataType: "json",
+                            type: "Post",
+                            async: "false",
+                            success: function (result) {
+                                alert("构件封装成功!");
+                               // swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                                $('button#cancel-button').click();
+                                window.location.reload();
+                                $("#edit").attr("style","display:show");
+                            },
+                            error: function (result) {
+                                showtoast
+                                ("dangerous", "封装失败", "构件封装失败")
+                            }
+                        })
+                    }
+                }
+                // $(".dis").attr("disabled","true");
             }
-        }
-        // $(".dis").attr("disabled","true");
-    }
 </script>
