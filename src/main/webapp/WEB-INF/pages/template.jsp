@@ -1275,7 +1275,7 @@
                         showCancelButton: true,
                         confirmButtonColor: "#18a689",
                         confirmButtonText: "引用",
-                        cancelButtonText: "取消",
+                        cancelButtonText: "取消"
                     }, function () {
                         var tem=JSON.parse(row.content);
                         if (row.id_template == "1") {

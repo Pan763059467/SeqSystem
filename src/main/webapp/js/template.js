@@ -61,7 +61,7 @@ function disReload() {
 //目录点击事件
 $(document).on("click",".dic",function () {
     $("#edit").attr("style","display:show");
-    //editable=false;
+    editable=false;
     nowClick=$(this);
     var catalogIndex=$(nowClick).children("span.catalogIndex").text();
 
@@ -102,7 +102,7 @@ $(document).on("click",".dic",function () {
                 loadTemplateThree(entity);
             }
             else if(template.id_template=="2"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateTwo(entity);
             }
             else if (template.id_template=="1"){
@@ -110,41 +110,41 @@ $(document).on("click",".dic",function () {
                 loadTemplateOne(entity)
             }
             else if(template.id_template == "4"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateFour(entity)
             }
             else if(template.id_template == "5"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateFive(entity)
             }
             else if(template.id_template=="6"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateSix(entity)
             }
             else if(template.id_template=="7"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateSeven(entity)
             }
             else if(template.id_template=="8"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateEight(entity)
             }
             else if(template.id_template == "9"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 //       var end = $(".funTable tbody").children(".end");
                 //       $(".funTable tbody").html(end)
                 //      $(".funTable tfoot").html("");
                 loadTemplateNine(entity)
             }
             else if(template.id_template == "10"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 //    var end = $(".funTable tbody").children(".end");
                 //     $(".funTable tbody").html(end)
                 //     $(".funTable tfoot").html("");
                 loadTemplateTen(entity)
             }
             else if(template.id_template=="11"){
-                $("#libsave").hide();
+                $("#libsave").show();
                 loadTemplateEleven(entity)
             }
             $("#libraryUserList").empty();
@@ -162,7 +162,7 @@ $(document).on("click",".dic",function () {
             showtoast("dangerous","失败","获取失败")
         }
     })
-})
+});
 
 //加载模板1的内容
 function loadTemplateOne(entity) {
@@ -375,6 +375,7 @@ function loadTemplateEight(entity) {
     var databaseedition = entity.databaseedition;
     var databasesummary = entity.databasesummary;
     $("input#maindatabase").val(maindatabase);
+    $("select#databasetype").val(entity.databasetype);
   //  $("input#databaseedition").val(databaseedition);
    // if($("#dataname").val()==null){
        // $("#maindatabase").prepend("<option selected disabled>未定义</option>>")
@@ -385,14 +386,9 @@ function loadTemplateEight(entity) {
     }
     else {
         $("#databasesummary").html(databasesummary);
-        $("#databasesummary").html(databaseedition);
+        $("#databaseedition").html(databaseedition);
     }
-    if (databasetype == 0) {
-        document.getElementById("databasetype")[0].selected = true;
-    }
-    else if (databasetype == 1) {
-        document.getElementById("databasetype")[1].selected = true;
-    }
+
 }
 
 function loadTemplateNine(entity){
