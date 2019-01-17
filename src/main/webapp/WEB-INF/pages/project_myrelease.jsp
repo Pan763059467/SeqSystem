@@ -19,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>主页</title>
+    <title>我的发布</title>
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -583,22 +583,11 @@
 
 </div>
 </body>
-<script src="<%=basePath%>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath%>/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="<%=basePath%>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="<%=basePath%>/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="<%=basePath%>/js/plugins/layer/layer.min.js"></script>
-<script src="<%=basePath%>/js/hplus.min.js?v=4.1.0"></script>
-<script type="text/javascript" src="<%=basePath%>/js/contabs.min.js"></script>
-<script src="<%=basePath%>/js/plugins/pace/pace.min.js"></script>
-<script src="<%=basePath%>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
+<script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
-<script src="<%=basePath%>/js/plugins/toastr/toastr.min.js"></script>
-<script src="<%=basePath%>/js/mjy.js"></script>
-<script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
-<script src="<%=basePath%>/js/plugins/suggest/bootstrap-suggest.min.js"></script>
-<script src="<%=basePath%>/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=basePath %>/js/plugins/sweetalert/sweetalert.min.js"></script>
 <script>
     $("#exit").click(function () {
         swal(

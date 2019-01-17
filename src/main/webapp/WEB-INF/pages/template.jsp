@@ -891,7 +891,6 @@
 </div>
 </body>
 <script src="<%=basePath %>/js/jquery.min.js?v=2.1.4"></script>
-<script src="<%=basePath %>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="<%=basePath %>/js/content.min.js?v=1.0.0"></script>
 <script src="<%=basePath %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>

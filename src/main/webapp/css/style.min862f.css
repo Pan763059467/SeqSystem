@@ -54,7 +54,7 @@ a:focus {
 }
 
 .navbar-default .nav > li > a:focus, .navbar-default .nav > li > a:hover {
-    background-color: #6D8389;
+    background-color: #FFE0B3;
     color: #000
 }
 
