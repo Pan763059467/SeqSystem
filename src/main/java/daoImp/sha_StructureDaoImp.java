@@ -65,6 +65,26 @@ public class sha_StructureDaoImp extends DAO<sha_StructureEntity> implements sha
         {return true;}
     }
 
+    public boolean Collect(int id_user,int id_share,String name)
+    {
+        String sql="select * from sha_structure where id_share=?";
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        DateFormat d1 = DateFormat.getDateInstance();
+        sha_StructureEntity sha_Structure1=get(sql,id_share);
+        sql="insert into coll_structure(ID_USER,ID_share,PurchaseTime,ID_STRUCTURE,PurchasePoint,ReleaseTime,ID_TEMPLATE,NAME,CONTENT) value(?,?,?,?,?,?,?,?,?)";
+        update(sql,id_user,id_share,d1.format(now),sha_Structure1.getId_structure(),sha_Structure1.getPurchasePoint(),sha_Structure1.getReleaseTime(),sha_Structure1.getId_template(),name,sha_Structure1.getContent());
+        return true;
+    }
+
+
+ public sha_StructureEntity getOne(int id)
+    {
+        String sql="select * from pri_structure where ID_STRUCTURE=?";
+        sha_StructureEntity sha_Structure1=get(sql,id);
+        return sha_Structure1;
+    }
+
     public boolean collectTemp(int id_user,int id_share,String name,int points)
     {
         String sql1 = "select * from sha_structure where id_share=?";
@@ -77,14 +97,6 @@ public class sha_StructureDaoImp extends DAO<sha_StructureEntity> implements sha
         update(sql2,id_user,id_share,now,sha_Structure1.getId_structure(),sha_Structure1.getPurchasePoint(),sha_Structure1.getReleaseTime(),sha_Structure1.getId_template(),name,sha_Structure1.getContent());
         update(sql3,points,id_user);
         return true;
-    }
-
-
-    public sha_StructureEntity getOne(int id)
-    {
-        String sql="select * from pri_structure where ID_STRUCTURE=?";
-        sha_StructureEntity sha_Structure1=get(sql);
-        return sha_Structure1;
     }
 
 
