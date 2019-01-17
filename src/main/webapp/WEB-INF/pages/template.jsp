@@ -1087,7 +1087,7 @@
                         if ( row.id_template == "1" )
                         {
                             $('#viewcommon').modal('toggle');
-                            $('#Viewcommon_name').text("构件"+row.name);
+                            $('#Viewcommon_name').text("构件 - "+row.name);
                             $('#view_common_content').text(tem.content);
                           //  $("#describe").summernote("code",content);
                             //swal({title:"图文构件:"+pro.name, text:"tem.content" })
@@ -1096,7 +1096,7 @@
                         {
                              console.log(tem.roleName);
                             $('#viewuser').modal('toggle');
-                            $('#Viewuser_name').text("构件"+row.name);
+                            $('#Viewuser_name').text("构件 - "+row.name);
                             $('#view_user_rolename').text(tem.roleName);
                             $('#view_user_describe').text(tem.describe);
                             $('#view_user_permissions').text(tem.permissions);
@@ -1137,7 +1137,7 @@
                                     +"<div>"+tem.funUsableList[num].usablePara+"</div>"
                             }
                             $('#viewfun').modal('toggle');
-                            $('#Viewfun_name').text("构件"+row.name);
+                            $('#Viewfun_name').text("构件 - "+row.name);
                             $('#view_fun_priority').text(priority);
                             $('#view_fun_describe').text(tem.describe);
                             document.getElementById("view_fun_role").innerHTML = funRoleList;
@@ -1152,7 +1152,7 @@
                         else if ( row.id_template == "4")
                         {
                             $('#viewapp').modal('toggle');
-                            $('#Viewapp_name').text("构件"+row.name);
+                            $('#Viewapp_name').text("构件 - "+row.name);
                             $('#view_app_name').text(tem.appname);
                             $('#view_app_type').text(tem.apptype);
                             $('#view_app_address').text(tem.appaddress);
@@ -1161,7 +1161,7 @@
                         else if ( row.id_template == "5")
                         {
                             $('#viewcommun').modal('toggle');
-                            $('#Viewcommun_name').text("构件"+row.name);
+                            $('#Viewcommun_name').text("构件 - "+row.name);
                             $('#view_commun_name').text(tem.communname);
                             $('#view_commun_abb').text(tem.communabb);
                             $('#view_commun_type').text(tem.communtype);
@@ -1170,7 +1170,7 @@
                         else if ( row.id_template == "6" )
                         {
                             $('#viewdata').modal('toggle');
-                            $('#Viewdata_name').text("构件"+row.name);
+                            $('#Viewdata_name').text("构件 - "+row.name);
                             $('#view_data_name').text(tem.dataname);
                             $('#view_data_type').text(tem.datatype);
                             if(tem.dataempty==0) {$('#view_data_empty').text("是");}
@@ -1181,14 +1181,14 @@
                         else if ( row.id_template == "7" )
                         {
                             $('#viewenvironment').modal('toggle');
-                            $('#Viewenvironment_name').text("构件"+row.name);
+                            $('#Viewenvironment_name').text("构件 - "+row.name);
                             $('#view_environment_type').text(tem.environmenttype);
                             $('#view_environment_configure').text(tem.environmentconfigure);
                         }
                         else if ( row.id_template == "8" )
                         {
                             $('#viewdatabase').modal('toggle');
-                            $('#Viewdatabase_name').text("构件"+row.name);
+                            $('#Viewdatabase_name').text("构件 - "+row.name);
                             $('#view_database_main').text(tem.maindatabase);
                             if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
                             else {$('#view_database_type').text("关系型");}
@@ -1198,7 +1198,7 @@
                         else if ( row.id_template == "9")
                         {
                             $('#viewsystem').modal('toggle');
-                            $('#Viewsystem_name').text("构件"+row.name);
+                            $('#Viewsystem_name').text("构件 - "+row.name);
                             $('#view_system_name').text(tem.systemname);
                             $('#view_system_type').text(tem.systemtype);
                             $('#view_system_edition').text(tem.systemedition);
@@ -1208,7 +1208,7 @@
                         else if ( row.id_template == "10")
                         {
                             $('#viewhardware').modal('toggle');
-                            $('#Viewhardware_name').text("构件"+row.name);
+                            $('#Viewhardware_name').text("构件 - "+row.name);
                             $('#view_hardware_name').text(tem.hardwarename);
                             $('#view_hardware_type').text(tem.hardwaretype);
                             $('#view_hardware_fun').text(tem.hardwarefun);
@@ -1217,7 +1217,7 @@
                         else if ( row.id_template == "11" )
                         {
                             $('#viewweb').modal('toggle');
-                            $('#Viewweb_name').text("构件"+row.name);
+                            $('#Viewweb_name').text("构件 - "+row.name);
                             $('#view_web_main').text(tem.webmain);
                             $('#view_web_edition').text(tem.webedition);
                             $('#view_web_summary').text(tem.websummary);
@@ -1344,7 +1344,7 @@
                             if ( id_template == "1" )
                             {
                                 $('#viewcommon').modal('toggle');
-                                $('#Viewcommon_name').text("构件"+pro.name);
+                                $('#Viewcommon_name').text("构件 - "+pro.name);
                                 $('#view_common_content').text(tem.content);
                                // $("#describe").summernote("code",content);
                                 //swal({title:"图文构件:"+pro.name, text:"tem.content" })
@@ -1352,7 +1352,7 @@
                             else if ( id_template == "2" )
                             {
                                 $('#viewuser').modal('toggle');
-                                $('#Viewuser_name').text("构件"+pro.name);
+                                $('#Viewuser_name').text("构件 - "+pro.name);
                                 $('#view_user_rolename').text(tem.roleName);
                                 $('#view_user_describe').text(tem.describe);
                                 $('#view_user_permissions').text(tem.permissions);
@@ -1393,7 +1393,7 @@
                                         +"<div>"+tem.funUsableList[num].usablePara+"</div>"
                                 }
                                 $('#viewfun').modal('toggle');
-                                $('#Viewfun_name').text("构件"+pro.name);
+                                $('#Viewfun_name').text("构件 - "+pro.name);
                                 $('#view_fun_priority').text(priority);
                                 $('#view_fun_describe').text(tem.describe);
                                 document.getElementById("view_fun_role").innerHTML = funRoleList;
@@ -1407,7 +1407,7 @@
                             else if ( id_template == "4")
                             {
                                 $('#viewapp').modal('toggle');
-                                $('#Viewapp_name').text("构件"+pro.name);
+                                $('#Viewapp_name').text("构件 - "+pro.name);
                                 $('#view_app_name').text(tem.appname);
                                 $('#view_app_type').text(tem.apptype);
                                 $('#view_app_address').text(tem.appaddress);
@@ -1416,7 +1416,7 @@
                             else if ( id_template == "5")
                             {
                                 $('#viewcommun').modal('toggle');
-                                $('#Viewcommun_name').text("构件"+pro.name);
+                                $('#Viewcommun_name').text("构件 - "+pro.name);
                                 $('#view_commun_name').text(tem.communname);
                                 $('#view_commun_abb').text(tem.communabb);
                                 $('#view_commun_type').text(tem.communtype);
@@ -1425,7 +1425,7 @@
                             else if ( id_template == "6" )
                             {
                                 $('#viewdata').modal('toggle');
-                                $('#Viewdata_name').text("构件"+pro.name);
+                                $('#Viewdata_name').text("构件 - "+pro.name);
                                 $('#view_data_name').text(tem.dataname);
                                 $('#view_data_type').text(tem.datatype);
                                 if(tem.dataempty==0) {$('#view_data_empty').text("是");}
@@ -1436,14 +1436,14 @@
                             else if ( id_template == "7" )
                             {
                                 $('#viewenvironment').modal('toggle');
-                                $('#Viewenvironment_name').text("构件"+pro.name);
+                                $('#Viewenvironment_name').text("构件 - "+pro.name);
                                 $('#view_environment_type').text(tem.environmenttype);
                                 $('#view_environment_configure').text(tem.environmentconfigure);
                             }
                             else if ( id_template == "8" )
                             {
                                 $('#viewdatabase').modal('toggle');
-                                $('#Viewdatabase_name').text("构件"+pro.name);
+                                $('#Viewdatabase_name').text("构件 - "+pro.name);
                                 $('#view_database_main').text(tem.maindatabase);
                                 if(tem.databasetype==0) {$('#view_database_type').text("非关系型");}
                                 else {$('#view_database_type').text("关系型");}
@@ -1453,7 +1453,7 @@
                             else if ( id_template == "9")
                             {
                                 $('#viewsystem').modal('toggle');
-                                $('#Viewsystem_name').text("构件"+pro.name);
+                                $('#Viewsystem_name').text("构件 - "+pro.name);
                                 $('#view_system_name').text(tem.systemname);
                                 $('#view_system_type').text(tem.systemtype);
                                 $('#view_system_edition').text(tem.systemedition);
@@ -1463,7 +1463,7 @@
                             else if ( id_template == "10")
                             {
                                 $('#viewhardware').modal('toggle');
-                                $('#Viewhardware_name').text("构件"+pro.name);
+                                $('#Viewhardware_name').text("构件 - "+pro.name);
                                 $('#view_hardware_name').text(tem.hardwarename);
                                 $('#view_hardware_type').text(tem.hardwaretype);
                                 $('#view_hardware_fun').text(tem.hardwarefun);
@@ -1472,7 +1472,7 @@
                             else if ( id_template == "11" )
                             {
                                 $('#viewweb').modal('toggle');
-                                $('#Viewweb_name').text("构件"+pro.name);
+                                $('#Viewweb_name').text("构件 - "+pro.name);
                                 $('#view_web_main').text(tem.webmain);
                                 $('#view_web_edition').text(tem.webedition);
                                 $('#view_web_summary').text(tem.websummary);
