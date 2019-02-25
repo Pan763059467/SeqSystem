@@ -3049,7 +3049,15 @@
             swal("新建构件失败！","请选择构件类型","error");
         }
         else if(index === 3){
-            swal("新建构件失败！","请到文档编辑界面进行封装","error");
+            swal({
+                        title: "由于用例类型内容较多!",
+                        text: "点击跳转到用例新建页面",
+                        type: "error",
+                        confirmButtonColor: "#18a689",
+                        confirmButtonText: "OK"
+                    }, function () {
+                        location.href = "structure-newCase"
+            })
         }
         else{
             swal(

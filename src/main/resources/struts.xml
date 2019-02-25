@@ -221,11 +221,12 @@
             <result name="RES" type="json"><param name="root">dataMap</param></result>
             <result name="SelectAll" type="json"><param name="root">dataMap</param></result>
             <result name="getcommon">/WEB-INF/pages/project_common_library.jsp</result>
+            <result name="newCasePage">/WEB-INF/pages/project_newCaseComponent.jsp</result>
             <result name="getpersonalStructure">/WEB-INF/pages/project_user_library.jsp</result>
             <result name="getMyrelease">/WEB-INF/pages/project_myrelease.jsp</result>
             <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
             <interceptor-ref name="myStack"/>
-            <allowed-methods>create,edit,Mydelete,SelectAll,Search,getcommon,getcommonagain,getpersonal,getpersonalagain,Myrelease,Myreleaseagain,Mycollect,Mycollectagain,Deploy,DeploySure</allowed-methods>
+            <allowed-methods>newCase,create,edit,Mydelete,SelectAll,Search,getcommon,getcommonagain,getpersonal,getpersonalagain,Myrelease,Myreleaseagain,Mycollect,Mycollectagain,Deploy,DeploySure</allowed-methods>
         </action>
 
         <action name="sha_structure-*" class="action.sha_StructureAction" method="{1}">

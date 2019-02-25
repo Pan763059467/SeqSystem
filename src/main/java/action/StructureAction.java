@@ -221,6 +221,11 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
         return "getMyrelease";
     }
 
+    public String newCase() {
+
+        return "newCasePage";
+    }
+
     public String Myreleaseagain(){
 
         return "getMyrelease";
