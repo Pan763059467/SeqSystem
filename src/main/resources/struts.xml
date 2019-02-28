@@ -226,7 +226,7 @@
             <result name="getMyrelease">/WEB-INF/pages/project_myrelease.jsp</result>
             <result name="getMycollect">/WEB-INF/pages/project_mycollect.jsp</result>
             <interceptor-ref name="myStack"/>
-            <allowed-methods>newCase,create,edit,Mydelete,SelectAll,Search,getcommon,getcommonagain,getpersonal,getpersonalagain,Myrelease,Myreleaseagain,Mycollect,Mycollectagain,Deploy,DeploySure</allowed-methods>
+            <allowed-methods>newCase,create,create2,edit,Mydelete,SelectAll,Search,getcommon,getcommonagain,getpersonal,getpersonalagain,Myrelease,Myreleaseagain,Mycollect,Mycollectagain,Deploy,DeploySure</allowed-methods>
         </action>
 
         <action name="sha_structure-*" class="action.sha_StructureAction" method="{1}">

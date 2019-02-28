@@ -3052,12 +3052,12 @@
             swal({
                         title: "由于用例类型内容较多!",
                         text: "点击跳转到用例新建页面",
-                        type: "error",
+                        type: "warning",
                         confirmButtonColor: "#18a689",
                         confirmButtonText: "OK"
                     }, function () {
-                        location.href = "structure-newCase"
-            })
+                        location.href = "structure-newCase?newName="+name;
+                })
         }
         else{
             swal(

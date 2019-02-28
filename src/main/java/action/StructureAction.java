@@ -26,6 +26,7 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     private int pagedis;
     private int id_review= 0;
     private UserEntity user;
+    private String newName;
 
     public String get()
     {
@@ -222,7 +223,7 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     }
 
     public String newCase() {
-
+        request.put("title",newName);
         return "newCasePage";
     }
 
@@ -347,6 +348,10 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     }
     public void setPagedis(int pagedis) {
         this.pagedis = pagedis;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
     }
 }
 
