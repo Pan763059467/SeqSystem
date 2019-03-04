@@ -31,14 +31,10 @@ public class StructureDaoImp extends DAO<StructureEntity> implements StructureDa
     }
 
     @Override
-    public boolean create2(int id_template, String content) {
-        String sql = "insert into STRUCTURE(ID_template,CONTENT) values(?,?)";
-        try{
-            update(sql,id_template,content);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public StructureEntity getOne(int id_structure) {
+        String sql = "select * from pri_STRUCTURE where ID_structure = ?";
+        StructureEntity structureEntity = get(sql,id_structure);
+        return structureEntity;
     }
 
     @Override

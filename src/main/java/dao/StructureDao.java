@@ -16,6 +16,6 @@ public interface StructureDao {
     List<StructureEntity> getAll2(int id_template);
     List<StructureEntity> getAll(int id_template);
     int count(int id_template);
-    boolean create2(int id_template, String content);
+    StructureEntity getOne(int id_structure);
 
 }

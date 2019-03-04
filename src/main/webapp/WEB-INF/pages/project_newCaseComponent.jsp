@@ -77,13 +77,13 @@
     </div>
     <div>
         <div class="ibox-content form-horizontal content cataloNotNoneContent gray-bg">
-            <h2 id="title" class="text-center">用例构件名称:${requestScope.title}</h2>
+
     <div id="main" style="margin-top:10px;margin-left: 5%;margin-right: 5%" class="white-bg">
 
   	    <div class="form-group" style="margin-right: 5px;margin-left: 5px">
         <label class="col-sm-2 control-label" style="text-align: left">功能点名称：</label>
         <div class="col-sm-8" style="margin-top: 3px">
-            <input type="email" name="funName" id="funName"  class="form-control dis" >
+            <input type="email" name="funName" id="funName"  class="form-control dis" value="${requestScope.title}">
         </div>
     </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
@@ -99,9 +99,10 @@
         </div>
 
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
-            <label style="padding-left: 15px">功能点描述</label>
-            <div class="click1edit wrapper" name="describe" id="describe">
-                暂无功能点描述
+            <label class="col-sm-2 control-label" style="text-align: left">功能点描述</label>
+            <div class="col-sm-8" style="margin-top: 3px">
+            <input type="email" class="form-control dis" name="describe" id="describe" value="暂无功能点描述">
+            </input>
             </div>
         </div>
 
@@ -133,27 +134,32 @@
 
         </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
-            <label style="padding-left: 15px">输入</label>
-            <div class="click1edit wrapper" name="in" id="in">
-                暂无输入
+            <label class="col-sm-2 control-label" style="text-align: left">输入</label>
+            <div class="col-sm-8" style="margin-bottom: 3px">
+                <input type="email" name="in" id="in"  class="form-control dis" value="暂无输入">
             </div>
         </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
-            <label style="padding-left: 15px">输出</label>
-            <div class="click1edit wrapper" name="out" id="out">
-                暂无输出
+            <label class="col-sm-2 control-label" style="text-align: left">输出</label>
+            <div class="col-sm-8" style="margin-bottom: 3px">
+            <input type="email" class="form-control dis" name="out" id="out" value="暂无输出">
+            </input>
             </div>
         </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
-            <label style="padding-left: 15px">基本操作流程</label>
-            <div class="click1edit wrapper" name="basic" id="basic">
-                暂无基本操作流程
+            <label class="col-sm-2 control-label" style="text-align: left">基本操作流程</label>
+            <div class="col-sm-8" style="margin-bottom: 3px">
+            <input type="email" class="form-control dis" name="basic" id="basic" value="暂无基本操作流程">
+
+            </input>
             </div>
         </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
-            <label style="padding-left: 15px">备选操作流程</label>
-            <div class="click1edit wrapper" name="alternative" id="alternative">
-                暂无备选操作流程
+            <label class="col-sm-2 control-label" style="text-align: left">备选操作流程</label>
+            <div class="col-sm-8" style="margin-bottom: 3px">
+            <input type="email" class="form-control dis" name="alternative" id="alternative" value="暂无备选操作流程">
+
+            </input>
             </div>
         </div>
 
@@ -255,7 +261,7 @@
         </div>
     </div>
     </div>
-        <div class="text-center">
+        <div style="text-align: center">
             <button class="btn btn-primary btn-lg" onclick="Create()" type="button">确认新建</button>
         </div>
 </div>
@@ -300,7 +306,78 @@
     });
 
     function Create() {
+        var funName=$("input#funName").val();
+        var priority=$("select#priority").val();
+        var describe=$("input#describe").val();
+        var inDiv=$("input#in").val();
+        var outDiv=$("input#out").val();
+        var basic=$("input#basic").val();
+        var alternative=$("input#alternative").val();
+        var funRoleList="[{";
+        var roleName,roleDescribe,usableName,usablePara,last="";
+        $(".funTable tbody").find("tr").each(function () {
+            if ($(this).hasClass("funTr")){//开头
+                if (last!=""){//第一次，没有,
+                    funRoleList+="},{"
+                }
+                roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
+                // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
+                funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
+                last="funTr";
+            }
+            else if ($(this).hasClass("usableTr")){//开头
+                usableName=$(this).children("th:first-child").text();
+                usablePara=$(this).children("th").eq(1).text();
+                funRoleList+=",\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"";
+                last="usableTr";
+            }
+        })
+        funRoleList+="}]";
 
+        var funUsableList="[",usableName,usablePara,first="yes";
+        $(".funTable tfoot").find("tr").each(function () {
+            if (first=="yes"){//第一次，没有,
+                funUsableList+="{"
+            }
+            else   funUsableList+=",{"
+            usableName=$(this).children("th:first-child").text();
+            usablePara=$(this).children("th").eq(1).text();
+            funUsableList+="\"usableName\":\""+usableName+"\",\"usablePara\":\""+usablePara+"\"}";
+            first="no";
+        })
+        funUsableList+="]";
+        //    alert(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length);
+
+        if(funName.length+priority.length+describe.length+inDiv.length+outDiv.length+basic.length+alternative.length>6000){
+            swal("您输入内容过长，请重新输入")
+        }
+        else if(funName.length==0){
+            swal("请输入功能点名称");
+        }
+        else {
+            $.ajax({
+                url: "catalog-saveLibThree",
+                data: {
+                    id_template: 3, funName: funName, priority: priority, content: describe,
+                    inDiv: inDiv, outDiv: outDiv, basic: basic, alternative: alternative,
+                    funRoleList: funRoleList, funUsableList: funUsableList
+                },
+                dataType: "json",
+                type: "Post",
+                async: "false",
+                success: function (result) {
+                    // swal("构件封装成功!", "可在对应构件库引用该构件", "success");
+                    $('button#cancel-button').click();
+                    window.location.reload();
+                    $("#edit").attr("style","display:show");
+                },
+                error: function (result) {
+                    showtoast
+                    ("dangerous", "封装失败", "构件封装失败")
+                }
+            })
+        }
     }
 
     var nowLine;
@@ -571,10 +648,12 @@
     //可用性初始化
     function UsableInit() {
         var content="";
-        for (var i=0;i<usableList.length;i++){
-            content+=" <option value='"+i+"' onclick='usableClick(this)'>"+(i+1)+"."+usableList[i].name+"</option>"
+        if(usableList != null){
+            for (var i=0;i<usableList.length;i++){
+                content+=" <option value='"+i+"' onclick='usableClick(this)'>"+(i+1)+"."+usableList[i].name+"</option>"
+            }
+            $("select#uaSelect").html(content);
         }
-        $("select#uaSelect").html(content);
     }
     //加载详细可用性内容
     function usableClick(obj) {
@@ -604,10 +683,12 @@
     //安全性初始化
     function SecurityInit() {
         var content="";
-        for (var i=0;i<securityList.length;i++){
-            content+=" <option value='"+i+"' onclick='SecurityClick(this)'>"+(i+1)+"."+securityList[i].name+"</option>"
+        if(securityList != null){
+            for (var i=0;i<securityList.length;i++){
+                content+=" <option value='"+i+"' onclick='SecurityClick(this)'>"+(i+1)+"."+securityList[i].name+"</option>"
+            }
+            $("select#seSelect").html(content);
         }
-        $("select#seSelect").html(content);
     }
 
     //加载详细安全性内容
@@ -619,11 +700,91 @@
         $("#seexample").text(securityList[id].example);
     }
 
+    //加载模板3的内容
+    function loadTemplateThree(entity) {
+        UsableInit();
+        SecurityInit();
+        $("input#funName").val(entity.funName);
+        $("select#priority").val(entity.priority);
+        $("input#describe").val(entity.describe);
+        $("input#in").val(entity.input);
+        $("input#out").val(entity.output);
+        $("input#basic").val(entity.basic);
+        $("input#alternative").val(entity.alternative);
+        //生成表格
+        var funRoleList=entity.funRoleList;
+        var funUsableList=entity.funUsableList;
+        var funRoleContent="";
+        if(funRoleList!=null)
+            for (var i=0;i<funRoleList.length;i++){
+                funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
+                var undefined="true",roleListContent="";
+                for (var j=0;j<roleList.length;j++){
+                    roleListContent+="<option";
+                    if(funRoleList[i].roleName==roleList[j].roleName){
+                        roleListContent+=" selected";
+                        undefined="false";
+                    }
+                    roleListContent+=" >"+roleList[j].roleName+"</option>";
+                }
+                if(undefined=="true"){
+                    funRoleContent+="<option disabled selected>未定义</option>";
+                }funRoleContent+=roleListContent;
+                funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' disabled>";
+                funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
+                if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
+                    funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+                }else if(funRoleList[i].usableName==null){
+                    funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+                    funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+                }else if(funRoleList[i].securityName==null){
+                    funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
+                    funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+                }else{
+                    funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='display: none; margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='display: none; margin-right: 10px' disabled>安全</button> </th></tr>";
+                    funRoleContent+="<tr class='usableTr'> <th></th> <th name='usableName' class='usableName'>"+funRoleList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funRoleList[i].usablePara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>";
+                    funRoleContent+="<tr class='securityTr'> <th></th> <th name='securityName' class='securityName'>"+funRoleList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funRoleList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+                }
+            }
+        $(".funTable tbody").prepend(funRoleContent);
+        var funUsableContent="";
+        if(funUsableList!=null)
+            for (var i=0;i<funUsableList.length;i++){
+                if(funUsableList[i].usableName!=null){
+                    funUsableContent+="<tr class='usableTr'> <th colspan='2' name='usableName' class='usableName'>"+funUsableList[i].usableName+"</th> <th  name='usablePara' class='usablePara' >"+funUsableList[i].usablePara+"</th> <th style='text-align: center' >  <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteUsable'  onclick='deleteUsable(this)' type='button' style='margin-right: 10px' disabled>删除可用性</button></th> </tr>"
+                }else if(funUsableList[i].securityName!=null){
+                    funUsableContent+="<tr class='securityTr'> <th colspan='2' name='securityName' class='securityName'>"+funUsableList[i].securityName+"</th> <th  name='securityPara' class='securityPara' >"+funUsableList[i].securityPara+"</th> <th style='text-align: center' > <button  class='btn btn-danger  btn-xs col-lg-push-1 dis' id='deleteSecurity'  onclick='deleteSecurity(this)' type='button' style='margin-right: 10px' disabled>删除安全性</button></th> </tr>";
+                }
+            }
+        $(".funTable tfoot").append(funUsableContent);
+    }
+
     //页面初始化
     $(document).ready(function () {
         getUsable();
         getSecurity();
+        getContent();
+
     })
+    var entity;
+    var id;
+    function getContent() {
+        id=${requestScope.content}
+        $.ajax({
+            url: "structure-getContent",
+            data: {id_structure : id},
+            dataType: "json",
+            type: "Post",
+            async: "false",
+            success: function (result) {
+                entity=result.entity;
+                loadTemplateThree(JSON.parse(entity.content));
+            },
+            error: function (result) {
+                showtoast("dangerous", "失败", "失败")
+            }
+        })
+    }
 </script>
 <!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
 </html>

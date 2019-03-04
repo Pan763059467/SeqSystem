@@ -111,7 +111,7 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
                 System.out.println(usie);
                 usieList.add(usie);
             }
-            System.out.println(structureAll);
+            //System.out.println(structureAll);
             ActionContext.getContext().getValueStack().set("list2",usieList);
         }
         else if(id_template==3) {
@@ -175,10 +175,10 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
             }
             for(int i=0;i<structureAll.size();i++)
             {   UserStructureIdEntity usie = gson.fromJson((structureAll.get(i).getContent()).substring(0, structureAll.get(i).getContent().length() - 1) + ",id_structure:" + String.valueOf(structureAll.get(i).getId_structure()) + "}", UserStructureIdEntity.class);
-                System.out.println(usie);
+                //System.out.println(usie);
                 usieList.add(usie);
             }
-            System.out.println(structureAll);
+            //System.out.println(structureAll);
             ActionContext.getContext().getValueStack().set("list4",usieList);
         }//拿构件出来
 
@@ -223,7 +223,8 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     }
 
     public String newCase() {
-        request.put("title",newName);
+        request.put("content",newName);
+        request.put("id",id_structure);
         return "newCasePage";
     }
 
@@ -231,6 +232,15 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
 
         return "getMyrelease";
     }
+
+    public String getContent(){
+        dataMap = new HashMap<>();
+        structureDao = new StructureDaoImp();
+        StructureEntity entity = structureDao.getOne(structure.getId_structure());
+        dataMap.put("entity",entity);
+        return "RES";
+    }
+
     /*
         public String create2(){
             dataMap = new HashMap<>();
