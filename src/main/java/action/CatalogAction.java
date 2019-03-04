@@ -5,14 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import dao.CatalogDao;
-import dao.TemplateDao;
-import dao.UsableDao;
-import dao.securityDao;
-import daoImp.CatalogDaoImp;
-import daoImp.TemplateDaoImp;
-import daoImp.UsableDaoImp;
-import daoImp.securityDaoImp;
+import dao.*;
+import daoImp.*;
 import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -46,6 +40,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String content;
     private int id_lib;
     private int  id_catalog;
+    private int structureId;
     private String describe;
     private String permissions;
     private  int projectId;
@@ -347,6 +342,21 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return "Re";
     }
 
+    public String saveTemplateThree2(){
+        Gson gson=new Gson();
+        StructureDao structureDao=new StructureDaoImp();
+        Type type = new TypeToken<ArrayList<FunUsable>>() {}.getType();
+        List<FunUsable> funUsables;
+        funUsables=gson.fromJson(funUsableList,type);
+        type= new TypeToken<ArrayList<FunRole>>() {}.getType();
+        List<FunRole> funRoles;
+        funRoles=gson.fromJson(funRoleList,type);
+        FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
+        System.out.println(structureId);
+        structureDao.edit(structureId,gson.toJson(funStructureEntity));
+        return "Re";
+    }
+
     public String saveLibThree(){
         Gson gson=new Gson();
         CatalogDao catalogDao=new CatalogDaoImp();
@@ -544,6 +554,10 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
 
     public void setId_catalog(int id_catalog) {
         this.id_catalog = id_catalog;
+    }
+
+    public void setStructureId(int structureId) {
+        this.structureId = structureId;
     }
 
     public void setDescribe(String describe) {

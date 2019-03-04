@@ -21,7 +21,7 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     private Map<String,Object> session;
     private Map<String, Object> dataMap;
     private int id_template;
-    private int id_structure;
+    private int id;
     private int page;
     private int pagedis;
     private int id_review= 0;
@@ -223,8 +223,8 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
     }
 
     public String newCase() {
-        request.put("content",newName);
-        request.put("id",id_structure);
+        request.put("title",newName);
+        request.put("id",id);
         return "newCasePage";
     }
 
@@ -362,6 +362,10 @@ public class StructureAction extends ActionSupport implements RequestAware, Sess
 
     public void setNewName(String newName) {
         this.newName = newName;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 

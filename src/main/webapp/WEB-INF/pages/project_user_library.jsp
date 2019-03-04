@@ -1647,17 +1647,9 @@
                     }
                     else if( temp == "3" ){
                         //swal("编辑失败！","请到文档编辑界面进行修改","error");
-                            var tem=row.content;
+                            var tem=row.name;
                             var id=row.id_structure;
-                            swal({
-                                title: "由于用例类型内容较多!",
-                                text: "点击跳转到用例新建页面",
-                                type: "warning",
-                                confirmButtonColor: "#18a689",
-                                confirmButtonText: "OK"
-                            }, function () {
-                                location.href = "structure-newCase?newName="+id+"&id="+id;
-                            })
+                            location.href = "structure-newCase?id="+id+"&newName="+tem;
                     }
                     else if( temp == "4") {
                         test_app = row.content;

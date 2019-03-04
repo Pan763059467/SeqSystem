@@ -70,7 +70,7 @@
         <ol class="breadcrumb" style="margin-left: 55px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="structure-getcommon"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="structure-getpersonal"><span class="lzf_b" style="color:#658387">个人构件库></span></a> >> <a href="structure-newCase">新建用例构件</a>
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="structure-getcommon"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="structure-getpersonal"><span class="lzf_b" style="color:#658387">个人构件库></span></a> >> <a href="structure-newCase">编辑用例构件</a>
                 </strong>
             </li>
         </ol>
@@ -262,7 +262,7 @@
     </div>
     </div>
         <div style="text-align: center">
-            <button class="btn btn-primary btn-lg" onclick="Create()" type="button">确认新建</button>
+            <button class="btn btn-primary btn-lg" onclick="Create()" type="button">确认编辑</button>
         </div>
 </div>
 </div>
@@ -273,6 +273,7 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 <script src="<%=basePath %>/js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<%=basePath %>/js/plugins/toastr/toastr.min.js"></script>
 <script>
     $("#exit").click(function () {
         swal(
@@ -320,8 +321,7 @@
                 if (last!=""){//第一次，没有,
                     funRoleList+="},{"
                 }
-                roleName=$(this).children("th").eq(1).children(".roleName").find("option:selected").text();
-                // alert($(this).children("th").eq(2).children(".roleDescribe"))
+                roleName=$(this).children("th").eq(1).children(".roleName").val();
                 roleDescribe=$(this).children("th").eq(2).children(".roleDescribe").val();
                 funRoleList+="\"roleName\":\""+roleName+"\",\"roleDescribe\":\""+roleDescribe+"\"";
                 last="funTr";
@@ -357,7 +357,7 @@
         }
         else {
             $.ajax({
-                url: "catalog-saveLibThree",
+                url: "catalog-saveTemplateThree2?structureId="+${requestScope.id},
                 data: {
                     id_template: 3, funName: funName, priority: priority, content: describe,
                     inDiv: inDiv, outDiv: outDiv, basic: basic, alternative: alternative,
@@ -367,9 +367,7 @@
                 type: "Post",
                 async: "false",
                 success: function (result) {
-                    // swal("构件封装成功!", "可在对应构件库引用该构件", "success");
-                    $('button#cancel-button').click();
-                    window.location.reload();
+                    swal("用例修改成功!", "可在对应构件库引用该构件", "success");
                     $("#edit").attr("style","display:show");
                 },
                 error: function (result) {
@@ -453,9 +451,9 @@
     function addFunlLine() {
         var optionCon="";
         var content="   <tr class='funTr'> <th > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black' ></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black'></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></th> <th> " +
-            "<select class='form-control roleName dis' name='' name='roleName'  > " +
+            "<input class='form-control roleName dis' name='' name='roleName'  > " +
             optionCon +
-            "</select> " +
+            "</input> " +
             "</th> <th> <textarea   class='form-control roleDescribe dis'   style='resize:vertical; max-width: 100%' name='roleDescribe'    ></textarea> </th> <th> <button  class='btn btn-primary  btn-xs col-lg-push-1'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px'>可用</button> <button class='btn btn-primary  btn-xs col-lg-push-1'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px'>安全</button> </th> </tr>"
         $(".funTable").children("tbody").children("tr:last-child").before(content);
     }
@@ -717,20 +715,16 @@
         var funRoleContent="";
         if(funRoleList!=null)
             for (var i=0;i<funRoleList.length;i++){
-                funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' style='display: none'> <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <select class='form-control  roleName dis' name='roleName'   disabled>";
-                var undefined="true",roleListContent="";
-                for (var j=0;j<roleList.length;j++){
-                    roleListContent+="<option";
-                    if(funRoleList[i].roleName==roleList[j].roleName){
-                        roleListContent+=" selected";
-                        undefined="false";
-                    }
-                    roleListContent+=" >"+roleList[j].roleName+"</option>";
+                funRoleContent+=" <tr class='funTr'> <th  ><div class='hidenTh' > <span class='fun_down li_fa fa col-md-offset-1  fa-arrow-down black'></span> <span class='fun_up fa li_fa col-md-offset-1  fa-arrow-up black ' ></span> <span class='fun_delete li_fa fa col-md-offset-1  fa-times  black' ></span></div> </th> <th> <input class='form-control  roleName dis' name='roleName'  ";
+                var undefined="true",roleListContent="value='";
+                if(funRoleList[i].roleName!=null){
+                    roleListContent+=funRoleList[i].roleName + "'>";
+                    undefined="false";
                 }
                 if(undefined=="true"){
-                    funRoleContent+="<option disabled selected>未定义</option>";
+                    roleListContent+="未定义'>";
                 }funRoleContent+=roleListContent;
-                funRoleContent+="</select> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' disabled>";
+                funRoleContent+="</input> </th> <th> <textarea   class='form-control roleDescribe dis'  name='roleDescribe'   style='resize:vertical; max-width: 100%' >";
                 funRoleContent+=funRoleList[i].roleDescribe+"</textarea> </th>";
                 if(funRoleList[i].usableName==null && funRoleList[i].securityName==null){//新增按钮
                     funRoleContent+=" <th> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addUsable'  data-toggle='modal' data-target='#addUsableModel' onclick='addUsable(this)' type='button' style='margin-right: 10px' disabled>可用</button> <button  class='btn btn-primary  btn-xs col-lg-push-1 dis'  id='addSecurity'  data-toggle='modal' data-target='#addSecurityModel' onclick='addSecurity(this)' type='button' style='margin-right: 10px' disabled>安全</button> </th></tr>";
@@ -769,7 +763,7 @@
     var entity;
     var id;
     function getContent() {
-        id=${requestScope.content}
+        id=${requestScope.id}
         $.ajax({
             url: "structure-getContent",
             data: {id_structure : id},
