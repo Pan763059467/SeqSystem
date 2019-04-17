@@ -14,10 +14,7 @@ import dao.*;
 import daoImp.*;
 
 
-import entity.DocumentEntity;
-import entity.OrganizationEntity;
-import entity.ProjectEntity;
-import entity.UserEntity;
+import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.json.JSONArray;
@@ -36,6 +33,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private ProjectDao projectDao;
     private ProDiscussDao proDiscussDao;
     private OrganizationDao organizationDao;
+    private IterationDao iterationDao;
     private ProjectEntity project;
     private Map<String,Object> request;
     private Map<String,Object> session;
@@ -43,6 +41,67 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int documentId;
     private UserDao userDao;
     private UserEntity user;
+    private String iter_name;
+    private int version;
+    private int catalog;
+    private int hours;
+    private int id_catalog;
+    private String user_name;
+
+    public String edit_w_hours(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_w(hours,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        return SUCCESS;
+    }
+
+    public String getFunctionInfo(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(catalog);
+        session.put("iter",iter);
+        return SUCCESS;
+    }
+
+    public String getFunctionList(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionList(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("FunctionList",json);
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        List<Iteration_2Entity> list2 = iteration2Dao.getList(project.getId_Project(),version);
+        System.out.println(list2);
+        ActionContext.getContext().getValueStack().set("list2",list2);
+        return SUCCESS;
+    }
+
+    public String getFunctionTrack(){
+        dataMap = new HashMap<>();
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        System.out.println(list);
+        return SUCCESS;
+    }
+
+    public String newIteration(){
+        dataMap = new HashMap<>();
+        projectDao = new ProjectDaoImp();
+        boolean res = projectDao.newIter(project.getId_Project(),iter_name,version);
+        dataMap.put("res",res);
+        return SUCCESS;
+    }
 
     public String create_test() throws ParseException {
         dataMap = new HashMap<String, Object>();
@@ -177,11 +236,25 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
     public String jmpProjectInfo() {
         return "projectInformation";
+
     }
     public String jmpDocument() {
         return "projectDocument";
     }
+    public String jmpFunctionInfo() {
+        return "projectFunctionInfo";
+    }
 
+    public String getContent(){
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(iter);
+        dataMap = new HashMap<>();
+        dataMap.put("res",json);
+        return SUCCESS;
+    }
     public String getProjectInfo() throws ParseException {
         dataMap = new HashMap<>();
         int id_Project = project.getId_Project();
@@ -398,12 +471,60 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         project = new ProjectEntity();
     }
 
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public int getId_catalog() {
+        return id_catalog;
+    }
+
+    public void setId_catalog(int id_catalog) {
+        this.id_catalog = id_catalog;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(int catalog) {
+        this.catalog = catalog;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     public int getDocumentId() {
         return documentId;
     }
 
     public void setDocumentId(int documentId) {
         this.documentId = documentId;
+    }
+
+    public String getIter_name() {
+        return iter_name;
+    }
+
+    public void setIter_name(String iter_name) {
+        this.iter_name = iter_name;
     }
 
     public Map<String, Object> getRequest() {

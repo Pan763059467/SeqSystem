@@ -6,10 +6,7 @@ import dao.CatalogDao;
 import dao.DAO;
 import dao.DocumentDao;
 import dao.ProjectDao;
-import entity.CatalogEntity;
-import entity.ProjectEntity;
-import entity.ShowOrgProjectEntity;
-import entity.UserEntity;
+import entity.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -281,4 +278,14 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
                 return false;
             }
         }
+
+    @Override
+    public boolean newIter(int id_project, String iter_name,int version) {
+        String sql1 = "insert into iteration(ID_PROJECT,ITER_NAME,DATA,ID_DOCUMENT) values(?,?,?,?)";
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
+        java.util.Date date = new java.util.Date();
+        int id_doument = getForValue(sql2,id_project,version);
+        update(sql1,id_project,iter_name,date,id_doument);
+        return true;
+    }
 }

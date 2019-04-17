@@ -29,7 +29,14 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     @Override
     public void insert(int id_template, int id_document, String title, int first_index, int second_index, int third_index, int fourth_index) {
         String sql="insert into CATALOG (id_template,id_document,title,first_index,second_index,third_index,fourth_index) values (?,?,?,?,?,?,?)";
+        String sql2="select ID_CATALOG from catalog where id_document = ? and first_index = ? and second_index = ? and third_index = ? and fourth_index = ?";
+        String sql3 = "insert into iteration_2 (ID_CATALOG) values (?)";
         update(sql,id_template,id_document,title,first_index,second_index,third_index,fourth_index);
+        int id_catalog = Integer.valueOf(getForValue(sql2,id_document,first_index,second_index,third_index,fourth_index).toString());
+        if(id_template == 3){
+            update(sql3,id_catalog);
+        }
+
     }
 
     @Override
@@ -148,7 +155,14 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     @Override
     public void newCatalog(int id_document,String title,int id_template) {
         String sql="insert into CATALOG (id_template,id_document,title,first_index,second_index,third_index,fourth_index) values (?,?,?,?,?,?,?)";
+        String sql2="select ID_CATALOG from catalog where id_document = ? and first_index = ? and second_index = ? and third_index = ? and fourth_index = ?";
+        String sql3 = "insert into iteration_2 (ID_CATALOG) values (?)";
         update(sql,id_template,id_document,title,1,0,0,0);
+        int id_catalog = Integer.valueOf(getForValue(sql2,id_document,1,0,0,0).toString());
+        if(id_template == 3){
+            update(sql3,id_catalog);
+        }
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dao;
 
+import entity.IterationEntity;
 import entity.ProjectEntity;
 import entity.ShowOrgProjectEntity;
 
@@ -7,6 +8,7 @@ import entity.UserEntity;
 import java.util.List;
 
 public interface ProjectDao {
+
     boolean save(ProjectEntity p);
     UserEntity getPM(ProjectEntity p);
     List<UserEntity> getMember(ProjectEntity p);
@@ -28,4 +30,5 @@ public interface ProjectDao {
     boolean modified(int flag,int id_project);
     boolean exist(String org_name);
     boolean belong(String org_name,int id_user);
+    boolean newIter(int id_project,String iter_name,int version);
 }

@@ -49,7 +49,28 @@
 </head>
 
 <body class="gray-bg animated fadeInDown">
-
+<div  class="modal inmodal" id="newIteration" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">创建迭代</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>创建</label>
+                    <input id="IterationName" type="text" maxlength="20" placeholder="请输入迭代名" class="form-control" required="true" autocomplete="off">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="button_newIter" type="button" class="btn btn-primary">创建</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%--promp layer1--%>
 <div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -243,7 +264,7 @@
                         <div class="panel-heading">
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
-                                    <li class="active">
+                                    <li >
                                         <a href="#tab-1" data-toggle="tab">文档管理</a>
                                     </li>
                                     <li>
@@ -252,6 +273,9 @@
                                     <li>
                                         <a href="#tab-3" data-toggle="tab">讨论区</a>
                                     </li>
+                                    <li class="active">
+                                        <a href="#tab-4" data-toggle="tab">项目管理</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -259,6 +283,56 @@
                         <div class="panel-body">
 
                             <div class="tab-content">
+                                <div class="tab-pane active" id="tab-4">
+                                    <div id="managerProject">
+                                        <button id="now" class="btn btn-success"><i class="fa"></i>当前需求版本：${sessionScope.version}</button>&nbsp<button id="newIteration" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                    </div>
+                                    <div class="bootstrap-table" >
+                                        <div class="wrapper wrapper-content" style="margin: 10px 0px 10px 0px">
+                                            <div class="ibox float-e-margins">
+                                                        <div class="ibox-title">
+                                                            <h5>功能点列表</h5>
+                                                            <div class="ibox-tools">
+                                                                <a class="collapse-link">
+                                                                    <i class="fa fa-chevron-up"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ibox-content">
+                                                            <div class="row">
+                                                                <div class="col-sm-2 m-b-xs">
+                                                                    <select class="input-sm form-control input-s-sm inline">
+                                                                        <option name="" disabled  selected="selected">全部功能点</option>
+                                                                        <s:iterator var = "iter" value="list2">
+                                                                            <option name="displayIter" class="Iteration"><s:property value="#iter.ITER_NAME"/> </option>
+                                                                        </s:iterator>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-4"></div>
+                                                            </div>
+                                                            <div class="bootstrap-table">
+                                                                <table id="FunctionList" data-toggle="table"
+                                                                       data-classes="table table-no-bordered"
+                                                                       data-click-to-select="true"
+                                                                       data-search="true"
+                                                                       data-show-refresh="true"
+                                                                       data-show-toggle="true"
+                                                                       data-show-columns="true"
+                                                                       data-toolbar="#toolbar"
+                                                                       data-query-params="quefryParams"
+                                                                       data-pagination="true"
+                                                                       data-halign="center"
+                                                                       data-striped="true"
+                                                                       data-page-size="5"
+                                                                       data-height="600"
+                                                                >
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tab-pane" id="tab-3">
                                     <!--自己的留言开始-->
                                     <div class="row" style="height: 42px">
@@ -319,7 +393,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane active" id="tab-1">
+                                <div class="tab-pane " id="tab-1">
 
                                     <div id="toolbar2">
 <s:if test='#session.project.state==1'>
@@ -383,6 +457,8 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 <script>
     $("#exit").click(function () {
@@ -415,6 +491,7 @@
                 location.href = "login-jmpLogin";
             })
     });
+
 
     $('#projectMember').bootstrapTable({
             columns: [
@@ -455,6 +532,7 @@
             ]
         }
     );
+
 
     var id_Project = "<s:property value="#session.project.id_Project"/>";
     var id_User = "<s:property value="#session.user.id_user"/>";
@@ -528,6 +606,8 @@
                 '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }</s:if>
     }
+
+
 
     //表格  - 操作 - 事件
     window.actionEvents = {
@@ -666,7 +746,6 @@
             ]
         }
     );
-
     $.ajax(
         {
             type:"post",
@@ -850,6 +929,46 @@
         })
     });
 
+    $("button#button_newIter").click(function () {
+        var iter_name = $("input#IterationName").val();
+        var version2 = <s:property value="#session.version"/>;
+        swal(
+            {
+                title: "您确定要创建新迭代吗",
+                text: "请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },function () {
+                $.ajax({
+                    url: "project-newIteration",
+                    data: {
+                        Id_Project: id_Project,
+                        iter_name: iter_name,
+                        version: version2
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res===true) {
+                            showtoast("success", "创建成功", "以成功创建该迭代");
+                            window.location.reload()
+                        }
+                        else showtoast("error", "创建失败", "服务器异常");
+                    },
+                    error: function (result) {
+                        showtoast("error", "创建失败", "服务器异常!")
+                    }
+                })
+            }
+        );
+    });
+
+
     $("button#button_alter").click(function () {
         var username = $("input#MemberName").val();
         swal(
@@ -918,7 +1037,7 @@
                 location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
             },
             error: function (result) {
-                showtoast("error", "转移失败", "用户名不存在!")
+                showtoast("error", "新建失败", "服务器异常!")
             }
         })
     });
@@ -991,7 +1110,126 @@
             })
     })
 </script>
-
+<script>
+    $(document).ready(function(){
+        $("option.Iteration").click(function () {
+                Ffive(element);
+            }
+        );
+    });
+    var version3 = <s:property value="#session.version"/>;
+    $('#FunctionList').bootstrapTable({
+            columns: [
+                {
+                    field: 'title',
+                    title: '功能点名称',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    field: 'Stage',
+                    title: '当前阶段',
+                    sortable: true,
+                    align: 'center',
+                    formatter: "rename"
+                },{
+                    field: 'PERSON',
+                    title: '责任人',
+                    align: 'center',
+                    formatter: "rename2"
+                },{
+                    field: 'ITER_NAME',
+                    title: '迭代',
+                    align: 'center',
+                    formatter: "rename3"
+                },{
+                    field: 'operate',
+                    title: '操作',
+                    align: 'center',
+                    events: "actionEvents2",
+                    formatter: "operateFormatter2"
+                }
+            ]
+        }
+    );
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getFunctionList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var FunctionList = JSON.parse(json.FunctionList);
+                $('#FunctionList').bootstrapTable('load',FunctionList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+    function operateFormatter2(value,row,index) {
+        return '<a class="mod fa fa-folder btn btn-custom"> 查看</a>'
+    }
+    function rename(value,row,index) {
+        if (row.Stage===0) {
+            return '未开始';
+        }
+        else if (row.Stage===1){
+            return '开发中';
+        }
+        else if (row.Stage===2){
+            return '测试中';
+        }
+        else if (row.Stage===3){
+            return 'bug修复中';
+        }
+        else if (row.Stage===4){
+            return '已完成';
+        }
+    }
+    function rename2(value,row,index) {
+        if (row.PERSON===undefined) {
+            return '未分配';
+        }
+        else {
+            return row.PERSON;
+        }
+    }
+    function rename3(value,row,index) {
+        if (row.ITER_NAME===undefined) {
+            return '未分配';
+        }
+        else {
+            return row.ITER_NAME;
+        }
+    }
+    window.actionEvents2 = {
+        'click .mod':
+            function(e, value, row, index) {
+                //修改操作
+                var catalog = parseInt(row.id_catalog);
+                $.ajax({
+                    type: "GET",
+                    url: "project-getFunctionInfo",
+                    data: {catalog:catalog},
+                    dataType: "json",
+                    success: function (result) {
+                        location.href = "project-jmpFunctionInfo";
+                    },
+                    error: function () {
+                        swal({
+                            icon: "error"
+                        });
+                    }
+                })
+            }
+    }
+</script>
 <%--评论区--%>
 <script>
     var num = 1;
