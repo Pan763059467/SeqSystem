@@ -301,10 +301,10 @@
                                                         <div class="ibox-content">
                                                             <div class="row">
                                                                 <div class="col-sm-2 m-b-xs">
-                                                                    <select class="input-sm form-control input-s-sm inline">
+                                                                    <select id = "chooseIter" class="form-control" onchange="IterChange()">
                                                                         <option name="" disabled  selected="selected">全部功能点</option>
                                                                         <s:iterator var = "iter" value="list2">
-                                                                            <option name="displayIter" class="Iteration"><s:property value="#iter.ITER_NAME"/> </option>
+                                                                            <option name="showIter"><s:property value="#iter.ITER_NAME"/> </option>
                                                                         </s:iterator>
                                                                     </select>
                                                                 </div>
@@ -461,6 +461,39 @@
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 <script>
+    var version3 = <s:property value="#session.version"/>;
+    var id_Project = "<s:property value="#session.project.id_Project"/>";
+
+    function IterChange(element){
+        var element = $("#chooseIter").val();
+        $.ajax(
+            {
+                url:"project-displayIteration",
+                data: {
+                    iter_name: element,
+                    version: version3,
+                    id_Project: id_Project
+                },
+                dataType:"json",
+                type: "Get",
+                async: "false",
+                success:function(json){
+                    var FunctionList = JSON.parse(json.FunctionList);
+                    $('#FunctionList').bootstrapTable('load',FunctionList);
+                },
+                error:function(){
+                    alert(" 错误");
+                }
+            }
+        )
+    }
+
+</script>
+<script>
+    var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var id_User = "<s:property value="#session.user.id_user"/>";
+    var discuss="";
+
     $("#exit").click(function () {
         swal(
             {
@@ -533,10 +566,6 @@
         }
     );
 
-
-    var id_Project = "<s:property value="#session.project.id_Project"/>";
-    var id_User = "<s:property value="#session.user.id_user"/>";
-    var discuss="";
 
     $.ajax(
         {
@@ -1111,13 +1140,11 @@
     })
 </script>
 <script>
-    $(document).ready(function(){
-        $("option.Iteration").click(function () {
-                Ffive(element);
-            }
-        );
-    });
     var version3 = <s:property value="#session.version"/>;
+    var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var id_User = "<s:property value="#session.user.id_user"/>";
+    var discuss="";
+
     $('#FunctionList').bootstrapTable({
             columns: [
                 {

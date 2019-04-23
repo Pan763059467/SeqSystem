@@ -41,4 +41,15 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
         update(sql3,id_catalog,user_name,date,where,before,after);
         return true;
     }
+
+    @Override
+    public List<IterationEntity> getFunctionList2(int id_project, int version, String iter) {
+        String sql1 = "select * from view_iteration where ID_TEMPLATE = 3 and ID_DOCUMENT = ? and ID_ITER = ?";
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
+        String sql3 = "select ID_ITER from iteration where ITER_NAME = ? and ID_PROJECT = ?";
+        int id_iter = getForValue(sql3,iter,id_project);
+        int id_doument = getForValue(sql2,id_project,version);
+        List<IterationEntity> list = getForList(sql1,id_doument,id_iter);
+        return list;
+    }
 }

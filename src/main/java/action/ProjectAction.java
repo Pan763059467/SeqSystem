@@ -58,6 +58,11 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
             session.put("iter",iter);
         }
         dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
         return SUCCESS;
     }
 
@@ -77,10 +82,16 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         Gson gson = new Gson();
         String json = gson.toJson(list);
         dataMap.put("FunctionList",json);
-        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
-        List<Iteration_2Entity> list2 = iteration2Dao.getList(project.getId_Project(),version);
-        System.out.println(list2);
-        ActionContext.getContext().getValueStack().set("list2",list2);
+        return SUCCESS;
+    }
+
+    public String displayIteration(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionList2(project.getId_Project(),version,iter_name);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("FunctionList",json);
         return SUCCESS;
     }
 
@@ -156,8 +167,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int version = documentDao.getVersion(Id_Project)+1;
         int id_document=documentDao.getDocumentId(Id_Project);
         int new_idDocument = documentDao.create(Id_Project,version,time,ID_User);
-        if (id_document!=-1){
-            projectDao=new ProjectDaoImp();
+        if (id_document != -1){
+            projectDao = new ProjectDaoImp();
             projectDao.copyAll(id_document,new_idDocument,version);
         }
         dataMap.put("id",new_idDocument);
@@ -199,6 +210,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("res",json);
         return SUCCESS;
     }
+
     public String showCompletedList() {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
@@ -234,7 +246,16 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String jmpProjectMember() {
         return "projectMember";
     }
+
     public String jmpProjectInfo() {
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        DocumentDao documentDao = new DocumentDaoImp();
+        ProjectEntity pro = (ProjectEntity) session.get("project");
+        int version2 = documentDao.getVersion(pro.getId_Project());
+        System.out.println(pro.getId_Project() + "ss" + version2);
+        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
+        System.out.println(list2 + "zz");
+        ActionContext.getContext().getValueStack().set("list2",list2);
         return "projectInformation";
 
     }
@@ -279,6 +300,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 //        }else{
 //            dataMap.put("days",0);
 //        }
+        dataMap.put("version",(int)version);
         return SUCCESS;
     }
     public String getProjectMember(){
@@ -470,6 +492,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public void prepare() throws Exception {
         project = new ProjectEntity();
     }
+
 
     public String getUser_name() {
         return user_name;

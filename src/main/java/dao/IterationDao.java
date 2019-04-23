@@ -8,5 +8,5 @@ public interface IterationDao {
     List<IterationEntity> getFunctionList(int id_project, int version);
     IterationEntity getOne(int catalog);
     boolean edit_w(int hours,int id_catalog,String user_name);
-
+    List<IterationEntity> getFunctionList2(int id_project, int version, String id_iter);
 }

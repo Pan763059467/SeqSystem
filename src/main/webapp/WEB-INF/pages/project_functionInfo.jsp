@@ -45,7 +45,6 @@
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
-
 </head>
 
 <body onload="two()" class="gray-bg animated fadeInDown" >
@@ -228,16 +227,15 @@
                                         </th>
                                     </tr>
                                     <tr >
-                                        <th style="width: 150px;text-align: center">预估工时:</th>
-                                        <th>
+                                        <th  style="width: 150px;text-align: center">预估工时:</th>
+                                        <th id="th7" onmouseover="toshow()" onmouseout="tomiss()">
                                             <s:if test='#session.iter.W_HOURS=="" || #session.iter.W_HOURS==null'>
                                                 <s:property value="" default="未设置"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.W_HOURS"/>
                                             </s:else>
-                                            <a data-toggle="modal" data-target="#W_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
-
+                                            <a id="th7_edit" style="display:none" data-toggle="modal" data-target="#W_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr >
@@ -308,28 +306,9 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath %>/js/functionInfo.js"></script>
 
 <script>
-
-    var id_Project = "<s:property value="#session.project.id_Project"/>";
-
-    $.ajax(
-        {
-            type: "post",
-            url: "project-getCommon",
-            data: {},
-            dataType: "json",
-            success: function (json) {
-                var common = JSON.parse(json.res);
-                alert(common)
-            },
-            error: function () {
-                swal({
-                    icon: "error"
-                });
-            }
-        }
-    );
 
     var catalog = "<s:property value="#session.iter.id_catalog"/>";
     function two(){
@@ -404,6 +383,7 @@
                     cancelButtonText: "取消",
                     closeOnConfirm: false
             }, function () {
+                    var hours = $("input#hours_w").val();
                     $.ajax({
                         url: "project-edit_w_hours",
                         data: {
@@ -412,9 +392,11 @@
                             user_name:user_name
                         },
                         dataType: "json",
-                        type: "Post",
+                        type: "get",
                         async: "false",
                         success: function (result) {
+                            var TrackList = JSON.parse(result.TrackList);
+                            $('#TrackList').bootstrapTable('load',TrackList);
                             if (result.res === true) {
                                 swal({
                                     title: "修改成功",
@@ -422,7 +404,9 @@
                                     confirmButtonColor: "#18a689",
                                     confirmButtonText: "OK"
                                 }, function () {
-
+                                    $("#th7").html(hours + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#W_HOURS\"><img src=\"<%=basePath %>/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                                    var oDiv = document.getElementById('cancel-apply');
+                                    oDiv.click();
                                 })
                             }
                         }, error: function () {
