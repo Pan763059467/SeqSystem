@@ -60,10 +60,18 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
         DocumentEntity document = get(sql,id);
         return document;
     }
+
     @Override
     public List<DocumentEntity> getAll(int id) {
         String sql = "select * from VIEW_projectDocs where ID_PROJECT = ?";
         List<DocumentEntity> list = getForList(sql,id);
+        return list;
+    }
+
+    @Override
+    public List<DocumentEntity> getAll2(int id, int version) {
+        String sql = "select * from VIEW_projectDocs where ID_PROJECT = ? and version != ?";
+        List<DocumentEntity> list = getForList(sql,id,version);
         return list;
     }
 

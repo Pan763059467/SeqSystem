@@ -71,6 +71,33 @@
         </div>
     </div>
 </div>
+
+<div  class="modal inmodal" id="chooseVersion" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">选择需求文档版本</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id = "version" class="form-control">
+                        <option name="now">${sessionScope.version}</option>
+                        <s:iterator var = "document" value="list3">
+                            <option name="showVersion"><s:property value="#document.VERSION"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_choose" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="choose" type="button" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%--promp layer1--%>
 <div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -285,7 +312,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab-4">
                                     <div id="managerProject">
-                                        <button id="now" class="btn btn-success"><i class="fa"></i>当前需求版本：${sessionScope.version}</button>&nbsp<button id="newIteration" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                        <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
                                     </div>
                                     <div class="bootstrap-table" >
                                         <div class="wrapper wrapper-content" style="margin: 10px 0px 10px 0px">
@@ -302,7 +329,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-2 m-b-xs">
                                                                     <select id = "chooseIter" class="form-control" onchange="IterChange()">
-                                                                        <option name="" disabled  selected="selected">全部功能点</option>
+                                                                        <option name="all">全部功能点</option>
                                                                         <s:iterator var = "iter" value="list2">
                                                                             <option name="showIter"><s:property value="#iter.ITER_NAME"/> </option>
                                                                         </s:iterator>
@@ -457,36 +484,39 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath %>/js/projectInformation.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 <script>
     var version3 = <s:property value="#session.version"/>;
     var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var version2 = <s:property value="#session.version"/>;
+    var id_User = "<s:property value="#session.user.id_user"/>";
+    var version_temp = <s:property value="#session.version_temp"/>;
+    var discuss="";
 
-    function IterChange(element){
-        var element = $("#chooseIter").val();
-        $.ajax(
-            {
-                url:"project-displayIteration",
-                data: {
-                    iter_name: element,
-                    version: version3,
-                    id_Project: id_Project
-                },
-                dataType:"json",
-                type: "Get",
-                async: "false",
-                success:function(json){
-                    var FunctionList = JSON.parse(json.FunctionList);
-                    $('#FunctionList').bootstrapTable('load',FunctionList);
-                },
-                error:function(){
-                    alert(" 错误");
-                }
+
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getFunctionList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var FunctionList = JSON.parse(json.FunctionList);
+                $('#FunctionList').bootstrapTable('load',FunctionList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
             }
-        )
-    }
+        }
+    );
 
 </script>
 <script>
@@ -958,46 +988,6 @@
         })
     });
 
-    $("button#button_newIter").click(function () {
-        var iter_name = $("input#IterationName").val();
-        var version2 = <s:property value="#session.version"/>;
-        swal(
-            {
-                title: "您确定要创建新迭代吗",
-                text: "请谨慎操作！",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: true
-            },function () {
-                $.ajax({
-                    url: "project-newIteration",
-                    data: {
-                        Id_Project: id_Project,
-                        iter_name: iter_name,
-                        version: version2
-                    },
-                    dataType: "json",
-                    type: "Post",
-                    async: "false",
-                    success: function (result) {
-                        if (result.res===true) {
-                            showtoast("success", "创建成功", "以成功创建该迭代");
-                            window.location.reload()
-                        }
-                        else showtoast("error", "创建失败", "服务器异常");
-                    },
-                    error: function (result) {
-                        showtoast("error", "创建失败", "服务器异常!")
-                    }
-                })
-            }
-        );
-    });
-
-
     $("button#button_alter").click(function () {
         var username = $("input#MemberName").val();
         swal(
@@ -1139,124 +1129,7 @@
             })
     })
 </script>
-<script>
-    var version3 = <s:property value="#session.version"/>;
-    var id_Project = "<s:property value="#session.project.id_Project"/>";
-    var id_User = "<s:property value="#session.user.id_user"/>";
-    var discuss="";
 
-    $('#FunctionList').bootstrapTable({
-            columns: [
-                {
-                    field: 'title',
-                    title: '功能点名称',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    field: 'Stage',
-                    title: '当前阶段',
-                    sortable: true,
-                    align: 'center',
-                    formatter: "rename"
-                },{
-                    field: 'PERSON',
-                    title: '责任人',
-                    align: 'center',
-                    formatter: "rename2"
-                },{
-                    field: 'ITER_NAME',
-                    title: '迭代',
-                    align: 'center',
-                    formatter: "rename3"
-                },{
-                    field: 'operate',
-                    title: '操作',
-                    align: 'center',
-                    events: "actionEvents2",
-                    formatter: "operateFormatter2"
-                }
-            ]
-        }
-    );
-    $.ajax(
-        {
-            type:"get",
-            url: "project-getFunctionList",
-            data: {
-                Id_Project: id_Project,
-                version: version3
-            },
-            dataType:"json",
-            success:function(json){
-                var FunctionList = JSON.parse(json.FunctionList);
-                $('#FunctionList').bootstrapTable('load',FunctionList);
-            },
-            error:function(){
-                swal({
-                    icon: "error"
-                });
-            }
-        }
-    );
-    function operateFormatter2(value,row,index) {
-        return '<a class="mod fa fa-folder btn btn-custom"> 查看</a>'
-    }
-    function rename(value,row,index) {
-        if (row.Stage===0) {
-            return '未开始';
-        }
-        else if (row.Stage===1){
-            return '开发中';
-        }
-        else if (row.Stage===2){
-            return '测试中';
-        }
-        else if (row.Stage===3){
-            return 'bug修复中';
-        }
-        else if (row.Stage===4){
-            return '已完成';
-        }
-    }
-    function rename2(value,row,index) {
-        if (row.PERSON===undefined) {
-            return '未分配';
-        }
-        else {
-            return row.PERSON;
-        }
-    }
-    function rename3(value,row,index) {
-        if (row.ITER_NAME===undefined) {
-            return '未分配';
-        }
-        else {
-            return row.ITER_NAME;
-        }
-    }
-    window.actionEvents2 = {
-        'click .mod':
-            function(e, value, row, index) {
-                //修改操作
-                var catalog = parseInt(row.id_catalog);
-                $.ajax({
-                    type: "GET",
-                    url: "project-getFunctionInfo",
-                    data: {catalog:catalog},
-                    dataType: "json",
-                    success: function (result) {
-                        location.href = "project-jmpFunctionInfo";
-                    },
-                    error: function () {
-                        swal({
-                            icon: "error"
-                        });
-                    }
-                })
-            }
-    }
-</script>
 <%--评论区--%>
 <script>
     var num = 1;

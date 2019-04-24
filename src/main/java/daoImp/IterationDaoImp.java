@@ -28,6 +28,40 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
         return iter;
     }
 
+
+    @Override
+    public boolean edit_stage(int stage, int id_catalog,String user_name) {
+        String sql1 = "update iteration_2 set Stage = ? where id_catalog = ?";
+        String sql2 = "select Stage from iteration_2 where id_catalog = ?";
+        String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        int before_tmp = getForValue(sql2,id_catalog);
+        String before = "未开始";
+        if(before_tmp == 1){
+            before = "开发中";
+        }else if(before_tmp == 2){
+            before = "测试中";
+        }else if(before_tmp == 3){
+            before = "bug修复中";
+        }else if(before_tmp == 4){
+            before = "已完成";
+        }
+        update(sql1,stage,id_catalog);
+        String after = "未开始";
+        if(stage == 1){
+            after = "开发中";
+        }else if(stage == 2){
+            after = "测试中";
+        }else if(stage == 3){
+            after = "bug修复中";
+        }else if(stage == 4){
+            after = "已完成";
+        }
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "当前阶段";
+        update(sql3,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
     @Override
     public boolean edit_w(int hours, int id_catalog,String user_name) {
         String sql1 = "update iteration_2 set W_HOURS = ? where id_catalog = ?";
@@ -38,6 +72,48 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
         String after = getForValue(sql2,id_catalog).toString();
         Timestamp date = new Timestamp(new java.util.Date().getTime());
         String where = "预估工时";
+        update(sql3,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
+    @Override
+    public boolean edit_f(int hours, int id_catalog,String user_name) {
+        String sql1 = "update iteration_2 set F_HOURS = ? where id_catalog = ?";
+        String sql2 = "select F_HOURS from iteration_2 where id_catalog = ?";
+        String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before = getForValue(sql2,id_catalog).toString();
+        update(sql1,hours,id_catalog);
+        String after = getForValue(sql2,id_catalog).toString();
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "完成工时";
+        update(sql3,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
+    @Override
+    public boolean edit_s(int hours, int id_catalog,String user_name) {
+        String sql1 = "update iteration_2 set S_HOURS = ? where id_catalog = ?";
+        String sql2 = "select S_HOURS from iteration_2 where id_catalog = ?";
+        String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before = getForValue(sql2,id_catalog).toString();
+        update(sql1,hours,id_catalog);
+        String after = getForValue(sql2,id_catalog).toString();
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "剩余工时";
+        update(sql3,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
+    @Override
+    public boolean edit_b(int hours, int id_catalog,String user_name) {
+        String sql1 = "update iteration_2 set B_HOURS = ? where id_catalog = ?";
+        String sql2 = "select B_HOURS from iteration_2 where id_catalog = ?";
+        String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before = getForValue(sql2,id_catalog).toString();
+        update(sql1,hours,id_catalog);
+        String after = getForValue(sql2,id_catalog).toString();
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "超出工时";
         update(sql3,id_catalog,user_name,date,where,before,after);
         return true;
     }

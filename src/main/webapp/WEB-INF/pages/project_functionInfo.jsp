@@ -51,6 +51,33 @@
 <%--promp layer1--%>
 
 <%--promp layer2--%>
+<div  class="modal inmodal" id="Stage" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置阶段</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>当前阶段</label>
+                    <select id = "stage_choose" class="form-control">
+                        <option name="0">未开始</option>
+                        <option name="1">开发中</option>
+                        <option name="2">测试中</option>
+                        <option name="3">bug修复中</option>
+                        <option name="4">已完成</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply4" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_stage" type="submit" class="btn btn-primary">设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div  class="modal inmodal" id="W_HOURS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -65,6 +92,63 @@
             <div class="modal-footer">
                 <button id="cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                 <button id="edit_w_hours" type="submit" class="btn btn-primary">设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="F_HOURS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置完成工时</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>完成工时</label> <input id="hours_f" type="text" placeholder="请输入完成工时" maxlength="40" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply8" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_f_hours" type="submit" class="btn btn-primary">设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="S_HOURS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置剩余工时</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>剩余工时</label> <input id="hours_s" type="text" placeholder="请输入剩余工时" maxlength="40" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply9" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_s_hours" type="submit" class="btn btn-primary">设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="B_HOURS" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置超出工时</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>超出工时</label> <input id="hours_b" type="text" placeholder="请输入超出工时" maxlength="40" class="form-control" required="required"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply10" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_b_hours" type="submit" class="btn btn-primary">设置</button>
             </div>
         </div>
     </div>
@@ -158,9 +242,9 @@
                             <div style="padding-left: 20px;padding-right: 20px" class="ibox-content">
                                 <table class="table" style="width:400px;border-left: none;border-right: none">
                                     <tbody style="font-size:13px;font-family: Arial">
-                                    <tr >
+                                    <tr id="tr1">
                                         <th style="width: 150px;text-align: center">迭代:</th>
-                                        <th>
+                                        <th id="th1">
                                             <s:if test='#session.iter.ITER_NAME=="" || #session.iter.ITER_NAME==null '>
                                                 <s:property value="" default="未分配"/>
                                             </s:if>
@@ -169,13 +253,13 @@
                                             </s:else>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr2">
                                         <th style="width: 150px;text-align: center">优先级:</th>
                                         <th id="priority2"></th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr3">
                                         <th style="width: 150px;text-align: center">当前责任人:</th>
-                                        <th>
+                                        <th id="th3">
                                             <s:if test='#session.iter.PERSON=="" || #session.iter.PERSON==null'>
                                                 <s:property value="" default="未分配"/>
                                             </s:if>
@@ -184,24 +268,25 @@
                                             </s:else>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr4" style="background: #FFFFFF" onmouseover="toshow4()" onmouseout="tomiss4()">
                                         <th style="width: 150px;text-align: center">当前阶段:</th>
-                                        <th>
-                                            <s:if test='#session.iter.Stage==0 || #session.iter.PERSON==null'>
+                                        <th id="th4">
+                                            <s:if test='#session.iter.Stage==0'>
                                                 <s:property value="" default="未开始"/>
                                             </s:if>
                                             <s:elseif test='#session.iter.Stage==1'>
                                                 <s:property value="" default="开发中"/>
                                             </s:elseif>
-                                            <s:elseif test='#session.iter.Stage==1'>
+                                            <s:elseif test='#session.iter.Stage==2'>
                                                 <s:property value="" default="测试中"/>
                                             </s:elseif>
-                                            <s:elseif test='#session.iter.Stage==1'>
+                                            <s:elseif test='#session.iter.Stage==3'>
                                                 <s:property value="" default="bug修复中"/>
                                             </s:elseif>
-                                            <s:elseif test='#session.iter.Stage==1'>
+                                            <s:elseif test='#session.iter.Stage==4'>
                                                 <s:property value="" default="已完成"/>
                                             </s:elseif>
+                                            <a id="th4_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr >
@@ -226,11 +311,11 @@
                                             </s:else>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr7" style="background: #FFFFFF" onmouseover="toshow7()" onmouseout="tomiss7()">
                                         <th  style="width: 150px;text-align: center">预估工时:</th>
-                                        <th id="th7" onmouseover="toshow()" onmouseout="tomiss()">
+                                        <th id="th7">
                                             <s:if test='#session.iter.W_HOURS=="" || #session.iter.W_HOURS==null'>
-                                                <s:property value="" default="未设置"/>
+                                                <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.W_HOURS"/>
@@ -238,37 +323,40 @@
                                             <a id="th7_edit" style="display:none" data-toggle="modal" data-target="#W_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr8" style="background: #FFFFFF" onmouseover="toshow8()" onmouseout="tomiss8()">
                                         <th style="width: 150px;text-align: center">完成工时:</th>
-                                        <th>
+                                        <th id="th8">
                                             <s:if test='#session.iter.F_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.F_HOURS"/>
                                             </s:else>
+                                            <a id="th8_edit" style="display:none" data-toggle="modal" data-target="#F_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr9" style="background: #FFFFFF" onmouseover="toshow9()" onmouseout="tomiss9()">
                                         <th style="width: 150px;text-align: center">剩余工时:</th>
-                                        <th>
+                                        <th id="th9">
                                             <s:if test='#session.iter.S_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.S_HOURS"/>
                                             </s:else>
+                                            <a id="th9_edit" style="display:none" data-toggle="modal" data-target="#S_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr>
+                                    <tr id="tr10" style="background: #FFFFFF" onmouseover="toshow10()" onmouseout="tomiss10()">
                                         <th style="width: 150px;text-align: center">超出工时:</th>
-                                        <th>
+                                        <th id="th10">
                                             <s:if test='#session.iter.B_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.B_HOURS"/>
                                             </s:else>
+                                            <a id="th10_edit" style="display:none" data-toggle="modal" data-target="#B_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -311,142 +399,10 @@
 <script>
 
     var catalog = "<s:property value="#session.iter.id_catalog"/>";
-    function two(){
-        $.ajax(
-            {
-                type:"GET",
-                url:"project-getContent",
-                data:{catalog:catalog},
-                dataType:"json",
-                success:function(json)
-                {
-                    var it = JSON.parse(json.res);
-                    var tem = JSON.parse(it.content);
-                    $('#funName').text(tem.funName);
-                    var priority;
-                    if ( tem.priority == 1 ){
-                        priority = "高"
-                    }else if( tem.priority == 2 ){
-                        priority = "中"
-                    }
-                    else if( tem.priority == 3 ) {
-                        priority = "低"
-                    }
-                    var funRoleList = "";
-                    var tmp1 = tem.funRoleList.length;
-                    for(var num = 0;num < tmp1; num++){
-                        funRoleList+="<div>角色："+tem.funRoleList[num].roleName+"</div>"
-                            +"<div>描述："+tem.funRoleList[num].roleDescribe+"</div>"
-                        if(tem.funRoleList[num].usableName!=null){
-                            funRoleList+="<div>"+tem.funRoleList[num].usableName+"</div>"
-                                +"<div>"+tem.funRoleList[num].usablePara+"</div>"
-                        }
-                    }
-                    var funUsableList ="";
-                    var tmp2 = tem.funUsableList.length;
-                    for(var num = 0;num < tmp2; num++){
-                        funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
-                            +"<div>"+tem.funUsableList[num].usablePara+"</div>"
-                    }
-                    $('#priority').text(priority);
-                    $('#priority2').text(priority);
-                    $('#describe').text(tem.describe);
-                    document.getElementById("funRoleList").innerHTML = funRoleList;
-                    document.getElementById("funUsableList").innerHTML = funUsableList;
-                    $('#input').text(tem.input);
-                    $('#output').text(tem.output);
-                    $('#basic').text(tem.basic);
-                    $('#alternative').text(tem.alternative);
-
-                },
-                error:function(){
-                    swal({
-                        icon: "error"
-                    });
-                }
-            }
-        )
-    }
+    var id_catalog = "${session.iter.id_catalog}";
+    var user_name = "${session.user.name}";
 
 
-    $("button#edit_w_hours").click(function (){
-        var id_catalog = "${session.iter.id_catalog}";
-        var user_name = "${session.user.name}";
-        swal(
-            {
-                    title: "您确认修改预估工时吗？",
-                    text: "确认请点击申请",
-                    type: "",
-                    showCancelButton: true,
-                    confirmButtonColor: "#18a689",
-                    confirmButtonText: "确认",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false
-            }, function () {
-                    var hours = $("input#hours_w").val();
-                    $.ajax({
-                        url: "project-edit_w_hours",
-                        data: {
-                            hours: $("input#hours_w").val(),
-                            id_catalog:id_catalog,
-                            user_name:user_name
-                        },
-                        dataType: "json",
-                        type: "get",
-                        async: "false",
-                        success: function (result) {
-                            var TrackList = JSON.parse(result.TrackList);
-                            $('#TrackList').bootstrapTable('load',TrackList);
-                            if (result.res === true) {
-                                swal({
-                                    title: "修改成功",
-                                    type: "success",
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "OK"
-                                }, function () {
-                                    $("#th7").html(hours + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#W_HOURS\"><img src=\"<%=basePath %>/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                                    var oDiv = document.getElementById('cancel-apply');
-                                    oDiv.click();
-                                })
-                            }
-                        }, error: function () {
-                            swal("修改失败！", "服务器异常", "error");
-                        }
-                    })
-            })
-
-    });
-
-    $('#TrackList').bootstrapTable({
-            columns: [
-                {
-                    field: 'DATE',
-                    title: '变更时间',
-                    sortable: true,
-                    align: 'center'
-                },
-                {
-                    field: 'USER_NAME',
-                    title: '变更人',
-                    sortable: true,
-                    align: 'center'
-                },{
-                    field: 'WHERE1',
-                    title: '变更字段',
-                    align: 'center'
-                },{
-                    field: 'BEFORE1',
-                    title: '变更前',
-                    align: 'center'
-
-                },{
-                    field: 'AFTER1',
-                    title: '变更后',
-                    align: 'center'
-                }
-            ]
-        }
-    );
     $.ajax(
         {
             type:"get",

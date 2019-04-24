@@ -11,7 +11,7 @@ public interface DocumentDao {
     int getVersion(int id);
     DocumentEntity getOne(int id);
     List<DocumentEntity> getAll(int id);
-
+    List<DocumentEntity> getAll2(int id, int version);
     int getDocumentId(int id_project);
 
     void delete(int Id_Document);
