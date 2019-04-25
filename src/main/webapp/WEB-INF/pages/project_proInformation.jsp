@@ -45,6 +45,7 @@
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 
 </head>
 

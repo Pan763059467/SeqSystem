@@ -1,3 +1,51 @@
+var timer1=null;
+function toshow1(){
+    clearTimeout(timer1);
+    th1_edit.style.display='block';
+    tr1.style.background='lightcyan'
+}
+function tomiss1() {
+    timer1=setTimeout(function () {
+        th1_edit.style.display='none';
+        tr1.style.background='#FFFFFF'
+    },0);
+    th1_edit.onmouseover=function() {
+        clearTimeout(timer1);
+    }
+}
+
+var timer2=null;
+function toshow2(){
+    clearTimeout(timer2);
+    th2_edit.style.display='block';
+    tr2.style.background='lightcyan'
+}
+function tomiss2() {
+    timer2=setTimeout(function () {
+        th2_edit.style.display='none';
+        tr2.style.background='#FFFFFF'
+    },0);
+    th2_edit.onmouseover=function() {
+        clearTimeout(timer2);
+    }
+}
+
+var timer3=null;
+function toshow3(){
+    clearTimeout(timer3);
+    th3_edit.style.display='block';
+    tr3.style.background='lightcyan'
+}
+function tomiss3() {
+    timer3=setTimeout(function () {
+        th3_edit.style.display='none';
+        tr3.style.background='#FFFFFF'
+    },0);
+    th3_edit.onmouseover=function() {
+        clearTimeout(timer3);
+    }
+}
+
 var timer4=null;
 function toshow4(){
     clearTimeout(timer4);
@@ -122,6 +170,7 @@ function two(){
                 $('#input').text(tem.input);
                 $('#output').text(tem.output);
                 $('#basic').text(tem.basic);
+                $('#basic').text(tem.basic);
                 $('#alternative').text(tem.alternative);
 
             },
@@ -133,6 +182,62 @@ function two(){
         }
     )
 }
+
+$("button#edit_stage").click(function (){
+    swal(
+        {
+            title: "您确认修改功能点当前阶段吗？",
+            text: "确认请点击确认",
+            type: "",
+            showCancelButton: true,
+            confirmButtonColor: "#18a689",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        }, function () {
+            var stage = $("select#stage_choose").get(0).options.selectedIndex;
+            $.ajax({
+                url: "project-edit_stage",
+                data: {
+                    Stage: stage,
+                    id_catalog:id_catalog,
+                    user_name:user_name
+                },
+                dataType: "json",
+                type: "get",
+                async: "false",
+                success: function (result) {
+                    var TrackList = JSON.parse(result.TrackList);
+                    $('#TrackList').bootstrapTable('load',TrackList);
+                    if (result.res === true) {
+                        swal({
+                            title: "修改成功",
+                            type: "success",
+                            confirmButtonColor: "#18a689",
+                            confirmButtonText: "OK"
+                        }, function () {
+                            if(stage == 0){
+                                $("#th4").html("未开始" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            }else if(stage == 1){
+                                $("#th4").html("开发中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            }else if(stage == 2){
+                                $("#th4").html("测试中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            }else if(stage == 3){
+                                $("#th4").html("bug修复中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            }else if(stage == 4){
+                                $("#th4").html("已完成" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            }
+                            var oDiv = document.getElementById('cancel-apply4');
+                            oDiv.click();
+                        })
+                    }
+                }, error: function () {
+                    swal("修改失败！", "服务器异常", "error");
+                }
+            })
+        })
+
+});
 
 $("button#edit_stage").click(function (){
     swal(

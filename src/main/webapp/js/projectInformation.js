@@ -202,8 +202,9 @@ window.actionEvents2 = {
                 url: "project-getFunctionInfo",
                 data: {catalog:catalog},
                 dataType: "json",
+                async: "true",
                 success: function (result) {
-                    location.href = "project-jmpFunctionInfo";
+                    window.open("project-jmpFunctionInfo");
                 },
                 error: function () {
                     swal({

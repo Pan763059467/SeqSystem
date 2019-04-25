@@ -355,6 +355,16 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         return "projectDocument";
     }
     public String jmpFunctionInfo() {
+        int version = (int) session.get("version");
+        int version_temp = (int) session.get("version_temp");
+        System.out.println(version + " " + version_temp);
+        if(version != version_temp){
+            return "projectFunctionInfo2";
+        }
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        ProjectEntity pro = (ProjectEntity) session.get("project");
+        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),(int)session.get("version"));
+        ActionContext.getContext().getValueStack().set("list_iter",list2);
         return "projectFunctionInfo";
     }
 

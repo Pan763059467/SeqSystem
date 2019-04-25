@@ -57,32 +57,6 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title">加入迭代</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group"><label>选择迭代</label>
-                    <select id = "chooseIter" class="form-control">
-                        <option name="all">请选择</option>
-                        <s:iterator var = "iter" value="list_iter">
-                            <option name="showIter"><s:property value="#iter.ITER_NAME"/> </option>
-                        </s:iterator>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="cancel-apply1" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_iter" type="submit" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div  class="modal inmodal" id="Stage" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
                 <h4 class="modal-title">设置阶段</h4>
             </div>
             <div class="modal-body">
@@ -268,7 +242,7 @@
                             <div style="padding-left: 20px;padding-right: 20px" class="ibox-content">
                                 <table class="table" style="width:400px;border-left: none;border-right: none">
                                     <tbody style="font-size:13px;font-family: Arial">
-                                    <tr id="tr1" style="background: #FFFFFF" onmouseover="toshow1()" onmouseout="tomiss1()">
+                                    <tr id="tr1">
                                         <th style="width: 150px;text-align: center">迭代:</th>
                                         <th id="th1">
                                             <s:if test='#session.iter.ITER_NAME=="" || #session.iter.ITER_NAME==null '>
@@ -277,17 +251,13 @@
                                             <s:else>
                                                 <s:property value="#session.iter.ITER_NAME"/>
                                             </s:else>
-                                            <a id="th1_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr id="tr2" style="background: #FFFFFF" onmouseover="toshow2()" onmouseout="tomiss2()">
+                                    <tr id="tr2">
                                         <th style="width: 150px;text-align: center">优先级:</th>
-                                        <th id="th2">
-                                            <span id="priority2"></span>
-                                            <a id="th2_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
-                                        </th>
+                                        <th id="priority2"></th>
                                     </tr>
-                                    <tr id="tr3" style="background: #FFFFFF" onmouseover="toshow3()" onmouseout="tomiss3()">
+                                    <tr id="tr3">
                                         <th style="width: 150px;text-align: center">当前责任人:</th>
                                         <th id="th3">
                                             <s:if test='#session.iter.PERSON=="" || #session.iter.PERSON==null'>
@@ -296,7 +266,6 @@
                                             <s:else>
                                                 <s:property value="#session.iter.PERSON"/>
                                             </s:else>
-                                            <a id="th3_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr4" style="background: #FFFFFF" onmouseover="toshow4()" onmouseout="tomiss4()">
@@ -425,8 +394,7 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
-<script src="<%=basePath %>/js/functionInfo.js"></script>
-
+<script src="<%=basePath %>/js/functionInfo2.js"></script>
 <script>
 
     var catalog = "<s:property value="#session.iter.id_catalog"/>";
