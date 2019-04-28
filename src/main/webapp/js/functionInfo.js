@@ -62,6 +62,21 @@ function tomiss4() {
     }
 }
 
+var timer5=null;
+function toshow5(){
+    clearTimeout(timer5);
+    th5_edit.style.display='block';
+    tr5.style.background='lightcyan'
+}
+function tomiss5() {
+    timer5=setTimeout(function () {
+        th5_edit.style.display='none';
+        tr5.style.background='#FFFFFF'
+    },0);
+    th5_edit.onmouseover=function() {
+        clearTimeout(timer5);
+    }
+}
 var timer7=null;
 function toshow7() {
     clearTimeout(timer7);
@@ -162,7 +177,7 @@ function two(){
                     funUsableList+="<div>"+tem.funUsableList[num].usableName+"</div>"
                         +"<div>"+tem.funUsableList[num].usablePara+"</div>"
                 }
-                $('#priority').text(priority);
+                $('#priority1').text(priority);
                 $('#priority2').text(priority);
                 $('#describe').text(tem.describe);
                 document.getElementById("funRoleList").innerHTML = funRoleList;
@@ -183,10 +198,10 @@ function two(){
     )
 }
 
-$("button#edit_stage").click(function (){
+$("button#edit_iter").click(function (){
     swal(
         {
-            title: "您确认修改功能点当前阶段吗？",
+            title: "您确认修改功能点当前迭代吗？",
             text: "确认请点击确认",
             type: "",
             showCancelButton: true,
@@ -195,11 +210,14 @@ $("button#edit_stage").click(function (){
             cancelButtonText: "取消",
             closeOnConfirm: false
         }, function () {
-            var stage = $("select#stage_choose").get(0).options.selectedIndex;
+            var iter = $("select#chooseIter").val();
+            var iter_name = $("select#chooseIter").find("option:selected").text();
+            alert(iter);
+            alert(iter_name)
             $.ajax({
-                url: "project-edit_stage",
+                url: "project-edit_iter",
                 data: {
-                    Stage: stage,
+                    id_iter: iter,
                     id_catalog:id_catalog,
                     user_name:user_name
                 },
@@ -216,18 +234,103 @@ $("button#edit_stage").click(function (){
                             confirmButtonColor: "#18a689",
                             confirmButtonText: "OK"
                         }, function () {
-                            if(stage == 0){
-                                $("#th4").html("未开始" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                            }else if(stage == 1){
-                                $("#th4").html("开发中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                            }else if(stage == 2){
-                                $("#th4").html("测试中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                            }else if(stage == 3){
-                                $("#th4").html("bug修复中" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                            }else if(stage == 4){
-                                $("#th4").html("已完成" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
-                            }
-                            var oDiv = document.getElementById('cancel-apply4');
+                            $("#th1").html(iter_name + "  <a id=\"th1_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Iter\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            var oDiv = document.getElementById('cancel-apply1');
+                            oDiv.click();
+                        })
+                    }
+                }, error: function () {
+                    swal("修改失败！", "服务器异常", "error");
+                }
+            })
+        })
+
+});
+
+$("button#edit_per").click(function (){
+    swal(
+        {
+            title: "您确认修改功能点当前责任人吗？",
+            text: "确认请点击确认",
+            type: "",
+            showCancelButton: true,
+            confirmButtonColor: "#18a689",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        }, function () {
+            var person_name = $("select#choosePer").find("option:selected").text();
+            alert(person_name);
+            $.ajax({
+                url: "project-edit_per",
+                data: {
+                    person_name: person_name,
+                    id_catalog:id_catalog,
+                    user_name:user_name
+                },
+                dataType: "json",
+                type: "get",
+                async: "false",
+                success: function (result) {
+                    var TrackList = JSON.parse(result.TrackList);
+                    $('#TrackList').bootstrapTable('load',TrackList);
+                    if (result.res === true) {
+                        swal({
+                            title: "修改成功",
+                            type: "success",
+                            confirmButtonColor: "#18a689",
+                            confirmButtonText: "OK"
+                        }, function () {
+                            $("#th3").html(person_name + "  <a id=\"th3_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Person\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            var oDiv = document.getElementById('cancel-apply3');
+                            oDiv.click();
+                        })
+                    }
+                }, error: function () {
+                    swal("修改失败！", "服务器异常", "error");
+                }
+            })
+        })
+
+});
+
+$("button#edit_pri").click(function (){
+    swal(
+        {
+            title: "您确认修改功能点优先级吗？",
+            text: "确认请点击确认",
+            type: "",
+            showCancelButton: true,
+            confirmButtonColor: "#18a689",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        }, function () {
+            var pri_after = $("select#choosePri").find("option:selected").text();
+            alert(pri_after);
+            $.ajax({
+                url: "project-edit_pri",
+                data: {
+                    pri_after: pri_after,
+                    id_catalog:id_catalog,
+                    user_name:user_name
+                },
+                dataType: "json",
+                type: "get",
+                async: "false",
+                success: function (result) {
+                    var TrackList = JSON.parse(result.TrackList);
+                    $('#TrackList').bootstrapTable('load',TrackList);
+                    if (result.res === true) {
+                        swal({
+                            title: "修改成功",
+                            type: "success",
+                            confirmButtonColor: "#18a689",
+                            confirmButtonText: "OK"
+                        }, function () {
+                            $("#priority1").html(pri_after);
+                            $("#th2").html(pri_after + "  <a id=\"th2_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Priority\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            var oDiv = document.getElementById('cancel-apply2');
                             oDiv.click();
                         })
                     }

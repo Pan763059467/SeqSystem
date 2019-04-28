@@ -28,6 +28,56 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
         return iter;
     }
 
+    @Override
+    public boolean edit_pri(String pri_after, String pri_before, int id_catalog,String user_name) {
+        String sql1 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "优先级";
+        update(sql1,id_catalog,user_name,date,where,pri_before,pri_after);
+        return true;
+    }
+
+    @Override
+    public boolean edit_per(String person_name, int id_catalog,String user_name) {
+        String sql1 = "update iteration_2 set PERSON = ? where id_catalog = ?";
+        String sql2 = "select PERSON from iteration_2 where id_catalog = ?";
+        String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before = "未分配";
+        try {
+            before = getForValue(sql2,id_catalog);
+        } catch (Exception e) {
+            e.printStackTrace();
+            before = "未分配";
+        }
+        update(sql1,person_name,id_catalog);
+        String after = person_name;
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "责任人";
+        update(sql3,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
+    @Override
+    public boolean edit_iter(int id_iter, int id_catalog, String user_name) {
+        String sql1 = "update iteration_2 set ID_ITER = ? where id_catalog = ?";
+        String sql2 = "select ITER_NAME from view_iteration where ID_CATALOG = ?";
+        String sql3 = "select ITER_NAME from iteration where ID_ITER = ?";
+        String sql4 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before = "未分配";
+        try {
+            before = getForValue(sql2,id_catalog);
+        } catch (Exception e) {
+            e.printStackTrace();
+            before = "未分配";
+        }
+        update(sql1,id_iter,id_catalog);
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where = "迭代";
+        String after = getForValue(sql3,id_iter);
+        update(sql4,id_catalog,user_name,date,where,before,after);
+        return true;
+    }
+
 
     @Override
     public boolean edit_stage(int stage, int id_catalog,String user_name) {

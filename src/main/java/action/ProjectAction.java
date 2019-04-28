@@ -47,7 +47,98 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int hours;
     private int id_catalog;
     private String user_name;
+    private String person_name;
     private int stage;
+    private int id_iter;
+    private String pri_after;
+    private String pri_before;
+
+    public String edit_pri(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(id_catalog);
+        String content = iter.getContent();
+        String content2 = content.substring(content.indexOf("\",\"priority\":")+13,content.indexOf(",\"describe\":\""));
+        switch (content2) {
+            case "1":
+                pri_before = "高";
+                break;
+            case "2":
+                pri_before = "中";
+                break;
+            default:
+                pri_before = "低";
+                break;
+        }
+        switch (pri_after) {
+            case "高":
+                content = content.replaceAll(",\"priority\":2,\"describe\":\"",",\"priority\":1,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":3,\"describe\":\"",",\"priority\":1,\"describe\":\"");
+                break;
+            case "中":
+                content = content.replaceAll(",\"priority\":1,\"describe\":\"",",\"priority\":2,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":3,\"describe\":\"",",\"priority\":2,\"describe\":\"");
+                break;
+            default:
+                content = content.replaceAll(",\"priority\":2,\"describe\":\"",",\"priority\":3,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":1,\"describe\":\"",",\"priority\":3,\"describe\":\"");
+                break;
+        }
+        System.out.println(content + "zzzz");
+        CatalogDao catalogDao = new CatalogDaoImp();
+        boolean edit_content = catalogDao.updateContent(content,id_catalog);
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_pri(pri_after,pri_before,id_catalog,user_name);
+        if(res && edit_content){
+            IterationEntity iter2;
+            iter2 = iterationDao.getOne(catalog);
+            session.put("iter",iter2);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_per(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_per(person_name,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_iter(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_iter(id_iter,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
 
     public String edit_stage(){
         dataMap = new HashMap<>();
@@ -328,7 +419,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         DocumentDao documentDao = new DocumentDaoImp();
         ProjectEntity pro = (ProjectEntity) session.get("project");
         int version2 = documentDao.getVersion(pro.getId_Project());
-        System.out.println(pro.getId_Project() + "ss" + version2);
         List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
         ActionContext.getContext().getValueStack().set("list2",list2);
         List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
@@ -363,8 +453,12 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         }
         Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
         ProjectEntity pro = (ProjectEntity) session.get("project");
-        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),(int)session.get("version"));
-        ActionContext.getContext().getValueStack().set("list_iter",list2);
+        List<Iteration_2Entity> iterations = iteration2Dao.getList(pro.getId_Project(),(int)session.get("version"));
+        ActionContext.getContext().getValueStack().set("list_iter",iterations);
+        projectDao = new ProjectDaoImp();
+        project = projectDao.getOne(pro.getId_Project());
+        List<UserEntity> members = projectDao.getMember(project);
+        ActionContext.getContext().getValueStack().set("list_members",members);
         return "projectFunctionInfo";
     }
 
@@ -594,6 +688,38 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public void prepare() throws Exception {
         project = new ProjectEntity();
+    }
+
+    public String getPri_after() {
+        return pri_after;
+    }
+
+    public void setPri_after(String pri_after) {
+        this.pri_after = pri_after;
+    }
+
+    public String getPri_before() {
+        return pri_before;
+    }
+
+    public void setPri_before(String pri_before) {
+        this.pri_before = pri_before;
+    }
+
+    public String getPerson_name() {
+        return person_name;
+    }
+
+    public void setPerson_name(String person_name) {
+        this.person_name = person_name;
+    }
+
+    public int getId_iter() {
+        return id_iter;
+    }
+
+    public void setId_iter(int id_iter) {
+        this.id_iter = id_iter;
     }
 
     public int getStage() {

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -45,13 +45,25 @@
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
+
+
 </head>
 
 <body onload="two()" class="gray-bg animated fadeInDown" >
 <%--promp layer1--%>
 
 <%--promp layer2--%>
-<div  class="modal inmodal" id="Stage" tabindex="-1" role="dialog" aria-hidden="true">
+<div  class="modal inmodal" id="Iter" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
@@ -62,9 +74,9 @@
             <div class="modal-body">
                 <div class="form-group"><label>选择迭代</label>
                     <select id = "chooseIter" class="form-control">
-                        <option name="all">请选择</option>
+                        <option name="" disabled  selected="selected">请选择</option>
                         <s:iterator var = "iter" value="list_iter">
-                            <option name="showIter"><s:property value="#iter.ITER_NAME"/> </option>
+                            <option value="<s:property value="#iter.ID_ITER"/>"><s:property value="#iter.ITER_NAME"/> </option>
                         </s:iterator>
                     </select>
                 </div>
@@ -72,6 +84,58 @@
             <div class="modal-footer">
                 <button id="cancel-apply1" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                 <button id="edit_iter" type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="Priority" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">优先级</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>选择优先级</label>
+                    <select id = "choosePri" class="form-control">
+                        <option disabled  selected="selected">请选择</option>
+                        <option name="0">高</option>
+                        <option name="1">中</option>
+                        <option name="2">低</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply2" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_pri" type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="Person" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">责任人</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>选择责任人</label>
+                    <select id = "choosePer" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <s:iterator var = "iter" value="list_members">
+                            <option name=""><s:property value="#iter.name"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply3" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_per" type="submit" class="btn btn-primary">确认</button>
             </div>
         </div>
     </div>
@@ -217,7 +281,7 @@
                                     <div id="tab-8" class="tab-pane active">
                                         <div class="panel-body">
                                             <strong>功能点名称：</strong> <span id="funName"></span><br>
-                                            <strong>优先级：</strong> <span id="priority"></span><br>
+                                            <strong>优先级：</strong> <span id="priority1"></span><br>
                                             <strong>功能点描述：</strong><br>
                                             &nbsp &nbsp &nbsp &nbsp<span id="describe"></span><br>
                                             <strong>用例过程:</strong><br>
@@ -277,14 +341,14 @@
                                             <s:else>
                                                 <s:property value="#session.iter.ITER_NAME"/>
                                             </s:else>
-                                            <a id="th1_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <a id="th1_edit" style="display:none" data-toggle="modal" data-target="#Iter"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr2" style="background: #FFFFFF" onmouseover="toshow2()" onmouseout="tomiss2()">
                                         <th style="width: 150px;text-align: center">优先级:</th>
                                         <th id="th2">
                                             <span id="priority2"></span>
-                                            <a id="th2_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <a id="th2_edit" style="display:none" data-toggle="modal" data-target="#Priority"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr3" style="background: #FFFFFF" onmouseover="toshow3()" onmouseout="tomiss3()">
@@ -296,7 +360,7 @@
                                             <s:else>
                                                 <s:property value="#session.iter.PERSON"/>
                                             </s:else>
-                                            <a id="th3_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <a id="th3_edit" style="display:none" data-toggle="modal" data-target="#Person"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr4" style="background: #FFFFFF" onmouseover="toshow4()" onmouseout="tomiss4()">
@@ -320,15 +384,17 @@
                                             <a id="th4_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr5" style="background: #FFFFFF">
                                         <th style="width: 150px;text-align: center">开始时间:</th>
-                                        <th>
+                                        <th id="th5">
                                             <s:if test='#session.iter.DATA_1==null'>
                                                 <s:property value="" default="未设置"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.DATA_1"/>
                                             </s:else>
+                                            <a id="th5_edit" style="display:none"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <input type="text" id="datepicker" style="display: block">
                                         </th>
                                     </tr>
                                     <tr >
@@ -366,7 +432,7 @@
                                             <a id="th8_edit" style="display:none" data-toggle="modal" data-target="#F_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr id="tr9" style="background: #FFFFFF" onmouseover="toshow9()" onmouseout="tomiss9()">
+                                    <tr id="tr9" style="background: #FFFFFF">
                                         <th style="width: 150px;text-align: center">剩余工时:</th>
                                         <th id="th9">
                                             <s:if test='#session.iter.S_HOURS==""'>
@@ -375,10 +441,10 @@
                                             <s:else>
                                                 <s:property value="#session.iter.S_HOURS"/>
                                             </s:else>
-                                            <a id="th9_edit" style="display:none" data-toggle="modal" data-target="#S_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <%--<a id="th9_edit" style="display:none" data-toggle="modal" data-target="#S_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>--%>
                                         </th>
                                     </tr>
-                                    <tr id="tr10" style="background: #FFFFFF" onmouseover="toshow10()" onmouseout="tomiss10()">
+                                    <tr id="tr10" style="background: #FFFFFF">
                                         <th style="width: 150px;text-align: center">超出工时:</th>
                                         <th id="th10">
                                             <s:if test='#session.iter.B_HOURS==""'>
@@ -387,7 +453,7 @@
                                             <s:else>
                                                 <s:property value="#session.iter.B_HOURS"/>
                                             </s:else>
-                                            <a id="th10_edit" style="display:none" data-toggle="modal" data-target="#B_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
+                                            <%--<a id="th10_edit" style="display:none" data-toggle="modal" data-target="#B_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>--%>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -434,6 +500,7 @@
     var user_name = "${session.user.name}";
     var version_tmp = "${session.version_temp}";
     var version = "${session.version}";
+
     $.ajax(
         {
             type:"get",

@@ -20,6 +20,14 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     int ID_User = user.getId_user();
     Date createDate = new Date(new java.util.Date().getTime());
     Timestamp time = new Timestamp(new java.util.Date().getTime());
+
+    @Override
+    public boolean updateContent(String content, int id_catalog) {
+        String sql1 = "update catalog set CONTENT = ? where ID_CATALOG = ?";
+        update(sql1,content,id_catalog);
+        return true;
+    }
+
     @Override
     public List<CatalogEntity> getAllIndex(int id_document) {
         String sql="select title,first_index,second_index,third_index,fourth_index from CATALOG where id_document=? ORDER BY first_index asc,second_index asc,third_index asc,fourth_index asc";
