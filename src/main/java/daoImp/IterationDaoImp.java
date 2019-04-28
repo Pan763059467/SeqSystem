@@ -29,6 +29,39 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
     }
 
     @Override
+    public boolean edit_time(Date start, Date end, int id_catalog, String user_name) {
+        String sql1 = "update iteration_2 set DATA_1 = ? where id_catalog = ?";
+        String sql2 = "update iteration_2 set DATA_2 = ? where id_catalog = ?";
+        String sql3 = "select DATA_1 from iteration_2 where id_catalog = ?";
+        String sql4 = "select DATA_2 from iteration_2 where id_catalog = ?";
+        String sql5 ="insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
+        String before1 = "未设置";
+        try {
+            before1 = getForValue(sql3,id_catalog).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            before1 = "未设置";
+        }
+        String before2 = "未设置";
+        try {
+            before2 = getForValue(sql4,id_catalog).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            before2 = "未设置";
+        }
+        update(sql1,start,id_catalog);
+        update(sql2,end,id_catalog);
+        String after1 = start.toString();
+        String after2 = end.toString();
+        Timestamp date = new Timestamp(new java.util.Date().getTime());
+        String where1 = "开始时间";
+        update(sql5,id_catalog,user_name,date,where1,before1,after1);
+        String where2 = "截至时间";
+        update(sql5,id_catalog,user_name,date,where2,before2,after2);
+        return true;
+    }
+
+    @Override
     public boolean edit_pri(String pri_after, String pri_before, int id_catalog,String user_name) {
         String sql1 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
         Timestamp date = new Timestamp(new java.util.Date().getTime());

@@ -16,7 +16,7 @@
 %>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>功能点--${sessionScope.iter.title}</title>
@@ -42,21 +42,24 @@
     <link href="<%=basePath %>/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/summernote/summernote-lite.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/laydate.css" type="text/css" rel="stylesheet">
+    <link href="<%=basePath %>/css/laydate2.css" type="text/css" rel="stylesheet"  id="LayDateSkin">
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
-    </script>
-
-
+    <style type="text/css">
+        *{margin:0;padding:0;list-style:none;}
+        html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
+        h2{line-height:30px; font-size:20px;}
+        a,a:hover{ text-decoration:none;}
+        pre{font-family:'微软雅黑'}
+        .box{width:970px; padding:10px 20px; background-color:#fff; margin:10px auto;}
+        .box a{padding-right:20px;}
+        .demo1,.demo2,.demo3,.demo4,.demo5,.demo6{margin:25px 0;}
+        h3{margin:10px 0;}
+        .layinput{height: 22px;line-height: 22px;width: 150px;margin: 0;}
+    </style>
 </head>
 
 <body onload="two()" class="gray-bg animated fadeInDown" >
@@ -167,6 +170,33 @@
         </div>
     </div>
 </div>
+
+<div  class="modal inmodal" id="Time" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置时间</h4>
+            </div>
+            <div class="modal-body">
+                <div class="demo3">
+                    <ul class="inline" style="padding-left: 100px">
+                        <span style="font-family: Arial;font-size: 20px">开始日期：</span><li class="inline laydate-icon" id="start" style="width:200px"></li>
+                        <br>
+                        <br>
+                        <span style="font-family: Arial;font-size: 20px">截至日期：</span><li class="inline laydate-icon" id="end" style="width:200px"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-apply5" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="edit_time" type="submit" class="btn btn-primary">设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div  class="modal inmodal" id="W_HOURS" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -384,7 +414,7 @@
                                             <a id="th4_edit" style="display:none" data-toggle="modal" data-target="#Stage"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr id="tr5" style="background: #FFFFFF">
+                                    <tr id="tr5" style="background: #FFFFFF" onmouseover="toshow5()" onmouseout="tomiss5()">
                                         <th style="width: 150px;text-align: center">开始时间:</th>
                                         <th id="th5">
                                             <s:if test='#session.iter.DATA_1==null'>
@@ -393,19 +423,19 @@
                                             <s:else>
                                                 <s:property value="#session.iter.DATA_1"/>
                                             </s:else>
-                                            <a id="th5_edit" style="display:none"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
-                                            <input type="text" id="datepicker" style="display: block">
+                                            <a id="th5_edit" style="display:none" data-toggle="modal" data-target="#Time"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
-                                    <tr >
+                                    <tr id="tr6" style="background: #FFFFFF" onmouseover="toshow6()" onmouseout="tomiss6()">
                                         <th style="width: 150px;text-align: center">截止日期:</th>
-                                        <th>
+                                        <th id="th6">
                                             <s:if test='#session.iter.DATA_2==null'>
                                                 <s:property value="" default="未设置"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.DATA_2"/>
                                             </s:else>
+                                            <a id="th6_edit" style="display:none" data-toggle="modal" data-target="#Time"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr7" style="background: #FFFFFF" onmouseover="toshow7()" onmouseout="tomiss7()">
@@ -492,6 +522,7 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
 <script src="<%=basePath %>/js/functionInfo.js"></script>
+<script type="text/javascript" src="<%=basePath %>/js/laydate.js"></script>
 
 <script>
 
@@ -519,7 +550,53 @@
         }
     );
 </script>
+<script>
 
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function(datas){
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+
+    var end = {
+        elem: '#end',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(),
+        max: '2099-06-16',
+        istime: true,
+        istoday: false,
+        choose: function(datas){
+            start.max = datas; //结束日选好后，充值开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+
+    //自定义日期格式
+    laydate({
+        elem: '#test1',
+        format: 'YYYY年MM月DD日',
+        festival: true, //显示节日
+        choose: function(datas){ //选择日期完毕的回调
+            alert('得到：'+datas);
+        }
+    });
+
+    //日期范围限定在昨天到明天
+    laydate({
+        elem: '#hello3',
+        min: laydate.now(-1), //-1代表昨天，-2代表前天，以此类推
+        max: laydate.now(+1) //+1代表明天，+2代表后天，以此类推
+    });
+</script>
 
 </html>
 

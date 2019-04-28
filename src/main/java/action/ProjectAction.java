@@ -52,6 +52,26 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int id_iter;
     private String pri_after;
     private String pri_before;
+    private Date start;
+    private Date end;
+
+    public String edit_time(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_time(start,end,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
 
     public String edit_pri(){
         dataMap = new HashMap<>();
@@ -688,6 +708,22 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public void prepare() throws Exception {
         project = new ProjectEntity();
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
     public String getPri_after() {

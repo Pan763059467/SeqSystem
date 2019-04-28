@@ -77,6 +77,22 @@ function tomiss5() {
         clearTimeout(timer5);
     }
 }
+var timer6=null;
+function toshow6(){
+    clearTimeout(timer6);
+    th6_edit.style.display='block';
+    tr6.style.background='lightcyan'
+}
+function tomiss6() {
+    timer6=setTimeout(function () {
+        th6_edit.style.display='none';
+        tr6.style.background='#FFFFFF'
+    },0);
+    th6_edit.onmouseover=function() {
+        clearTimeout(timer6);
+    }
+}
+
 var timer7=null;
 function toshow7() {
     clearTimeout(timer7);
@@ -387,6 +403,57 @@ $("button#edit_stage").click(function (){
                                 $("#th4").html("已完成" + "  <a id=\"th4_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Stage\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
                             }
                             var oDiv = document.getElementById('cancel-apply4');
+                            oDiv.click();
+                        })
+                    }
+                }, error: function () {
+                    swal("修改失败！", "服务器异常", "error");
+                }
+            })
+        })
+
+});
+
+$("button#edit_time").click(function (){
+    swal(
+        {
+            title: "您确认修改功能点开始/截至时间吗？",
+            text: "确认请点击确认",
+            type: "",
+            showCancelButton: true,
+            confirmButtonColor: "#18a689",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        }, function () {
+            var start = $("li#start").text();
+            var end = $("li#end").text();
+            alert(start);
+            alert(end);
+            $.ajax({
+                url: "project-edit_time",
+                data: {
+                    start: start,
+                    end: end,
+                    id_catalog:id_catalog,
+                    user_name:user_name
+                },
+                dataType: "json",
+                type: "get",
+                async: "false",
+                success: function (result) {
+                    var TrackList = JSON.parse(result.TrackList);
+                    $('#TrackList').bootstrapTable('load',TrackList);
+                    if (result.res === true) {
+                        swal({
+                            title: "修改成功",
+                            type: "success",
+                            confirmButtonColor: "#18a689",
+                            confirmButtonText: "OK"
+                        }, function () {
+                            $("#th5").html(start + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Time\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            $("#th6").html(end + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#Time\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            var oDiv = document.getElementById('cancel-apply5');
                             oDiv.click();
                         })
                     }
