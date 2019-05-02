@@ -298,11 +298,14 @@
                                     <li>
                                         <a href="#tab-2" data-toggle="tab">成员管理</a>
                                     </li>
+                                    <%--<li>--%>
+                                        <%--<a href="#tab-3" data-toggle="tab">讨论区</a>--%>
+                                    <%--</li>--%>
                                     <li>
-                                        <a href="#tab-3" data-toggle="tab">讨论区</a>
+                                        <a href="#tab-4" data-toggle="tab">项目管理</a>
                                     </li>
                                     <li class="active">
-                                        <a href="#tab-4" data-toggle="tab">项目管理</a>
+                                        <a href="#tab-5" data-toggle="tab">项目总览</a>
                                     </li>
                                 </ul>
                             </div>
@@ -311,7 +314,166 @@
                         <div class="panel-body">
 
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab-4">
+                                <div class="tab-pane active" id="tab-5">
+                                    <div class="panel-body">
+                                        <div class="col-sm-4 ui-sortable">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <h5>项目进度</h5>
+                                                    <div class="ibox-tools">
+                                                        <span>迭代1 （1/3）</span>
+                                                        <a class="collapse-link ui-sortable">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="ibox-content ibox-heading">
+                                                    <h3>迭代1 -- 还有约15个功能点需要做</h3>
+                                                    <small><i class="fa fa-map-marker"></i> 截至日期：2019.04.31</small>
+                                                </div>
+                                                <div class="ibox-content timeline">
+
+                                                    <div class="timeline-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 date ui-sortable">
+                                                                <i class="fa fa-briefcase"></i> 6:00
+                                                                <br>
+                                                                <small class="text-navy">操作人</small>
+                                                            </div>
+                                                            <div class="col-xs-7 content no-top-border ui-sortable">
+                                                                <p class="m-b-xs"><strong>完成功能点：登录</strong>
+                                                                </p>
+
+                                                                <p>备注部分</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 date ui-sortable">
+                                                                <i class="fa fa-file-text"></i> 7:00
+                                                                <br>
+                                                                <small class="text-navy">潘勇</small>
+                                                            </div>
+                                                            <div class="col-xs-7 content ui-sortable">
+                                                                <p class="m-b-xs"><strong>修复了登录bug</strong>
+                                                                </p>
+                                                                <p>顺手重启了服务器</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 date ui-sortable">
+                                                                <i class="fa fa-cab"></i> 8:00
+                                                                <br>
+                                                                <small class="text-navy">周惟渭</small>
+                                                            </div>
+                                                            <div class="col-xs-7 content ui-sortable">
+                                                                <p class="m-b-xs"><strong>测试登录功能</strong>
+                                                                </p>
+                                                                <p>
+                                                                    基本功能已经实现
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 date ui-sortable">
+                                                                <i class="fa fa-briefcase"></i> 11:00
+                                                                <br>
+                                                                <small class="text-navy">刘宇航</small>
+                                                            </div>
+                                                            <div class="col-xs-7 content ui-sortable">
+                                                                <p class="m-b-xs"><strong>完成注册功能</strong>
+                                                                </p>
+                                                                <p>
+                                                                    可能还又一些问题
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <div class="row">
+                                                            <div class="col-xs-3 date ui-sortable">
+                                                                <i class="fa fa-briefcase"></i> 11:00
+                                                                <br>
+                                                                <small class="text-navy">张惠雨</small>
+                                                            </div>
+                                                            <div class="col-xs-7 content ui-sortable">
+                                                                <p class="m-b-xs"><strong>完成改密功能</strong>
+                                                                </p>
+                                                                <p>
+                                                                    应该挺好的
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 ui-sortable">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <h5>任务栏</h5>
+                                                    <div class="ibox-tools">
+                                                        <button class="label label-warning"  data-toggle="modal" data-target="#task" type="submit">分配任务</button>
+                                                        <a class="collapse-link ui-sortable">
+                                                            <i class="fa fa-chevron-up"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="ibox-content no-padding">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">
+                                                            <p><a class="text-info" >功能点：注册  </a> <span class="label label-primary" style="float: right">责任人:潘勇</span><a class="text-info" style="float: right;margin-right: 5px">未完成</a></p>
+                                                            <div>备注部分</div>
+                                                            <small class="block text-muted"><i class="fa fa-clock-o"></i> 5分钟前 <span style="float: right">截至日期：2019.01.08</span></small>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div style="text-align:center;">
+                                                    <a onclick="previous()">上一页</a>&nbsp;&nbsp;
+                                                    <strong>第 <var id="index_t"></var> 页</strong>&nbsp;&nbsp;
+                                                    共 <var id="pages_t"></var> 页&nbsp;&nbsp;
+                                                    <a onclick="next()">下一页</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 ui-sortable">
+                                            <!--自己的留言开始-->
+                                            <div class="row" style="height: 42px">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <div class="col-md-6">
+                                                            <h5 style="margin-right: 10px">留言区</h5>
+                                                            <p>共 <var id="num" style="color: red"></var> 条留言</p>
+                                                        </div>
+                                                        <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
+                                                            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
+                                                            <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
+                                                        </div>
+                                                        <!-- The file upload form used as target for the file upload widget -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--自己的留言结束-->
+                                            <div class="allDiscuss">
+                                                <!--一行留言-->
+                                                <!--一行留言结束-->
+                                            </div>
+                                            <div style="text-align:center;">
+                                                <a onclick="previous()">上一页</a>&nbsp;&nbsp;
+                                                <strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;
+                                                共 <var id="pages"></var> 页&nbsp;&nbsp;
+                                                <a onclick="next()">下一页</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-4">
                                     <div id="managerProject">
                                         <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
                                     </div>
@@ -361,34 +523,34 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab-3">
-                                    <!--自己的留言开始-->
-                                    <div class="row" style="height: 42px">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <div class="col-md-4">
-                                                    <p>共 <var id="num"></var> 条留言</p>
-                                                </div>
-                                                <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
-                                                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
-                                                    <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
-                                                </div>
-                                                <!-- The file upload form used as target for the file upload widget -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--自己的留言结束-->
-                                    <div class="allDiscuss">
-                                        <!--一行留言-->
-                                        <!--一行留言结束-->
-                                    </div>
-                                    <div style="text-align:center;">
-                                        <a onclick="previous()">上一页</a>&nbsp;&nbsp;
-                                        <strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;
-                                        共 <var id="pages"></var> 页&nbsp;&nbsp;
-                                        <a onclick="next()">下一页</a>
-                                    </div>
-                                </div>
+                                <%--<div class="tab-pane" id="tab-3">--%>
+                                    <%--<!--自己的留言开始-->--%>
+                                    <%--<div class="row" style="height: 42px">--%>
+                                        <%--<div class="ibox float-e-margins">--%>
+                                            <%--<div class="ibox-title">--%>
+                                                <%--<div class="col-md-4">--%>
+                                                    <%--<p>共 <var id="num"></var> 条留言</p>--%>
+                                                <%--</div>--%>
+                                                <%--<div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >--%>
+                                                    <%--<button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>--%>
+                                                    <%--&lt;%&ndash;<label class="pull-right">没有附件？直接点这里--></label>&ndash;%&gt;--%>
+                                                <%--</div>--%>
+                                                <%--<!-- The file upload form used as target for the file upload widget -->--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--<!--自己的留言结束-->--%>
+                                    <%--<div class="allDiscuss">--%>
+                                        <%--<!--一行留言-->--%>
+                                        <%--<!--一行留言结束-->--%>
+                                    <%--</div>--%>
+                                    <%--<div style="text-align:center;">--%>
+                                        <%--<a onclick="previous()">上一页</a>&nbsp;&nbsp;--%>
+                                        <%--<strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;--%>
+                                        <%--共 <var id="pages"></var> 页&nbsp;&nbsp;--%>
+                                        <%--<a onclick="next()">下一页</a>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="tab-pane" id="tab-2">
                                     <div id="toolbar1">
                                         <s:if test='#session.project.state==1'>
@@ -1233,7 +1395,7 @@
                         content += tempDis.accessoryEntityList[j].filename;
                         content += '</a>';
                     }
-                    content+="</div> </div> <div class='ibox-content'> <div class=' wrapper'>";
+                    content+="</div> </div> <div class='ibox-content' style='word-wrap: break-word'> <div class=' wrapper'>";
                     content+=tempDis.content+"  </div> </div> </div> </div>";
                     title="";
                 }

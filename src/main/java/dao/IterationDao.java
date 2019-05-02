@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface IterationDao {
+    List<IterationEntity> getFunctionTask(int id_project, int version);
     List<IterationEntity> getFunctionList(int id_project, int version);
     IterationEntity getOne(int catalog);
     boolean edit_time(Date start, Date end, int id_catalog, String user_name);

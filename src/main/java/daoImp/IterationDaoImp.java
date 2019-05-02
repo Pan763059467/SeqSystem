@@ -12,6 +12,17 @@ import java.util.Date;
 import java.util.List;
 
 public class IterationDaoImp extends DAO<IterationEntity> implements IterationDao {
+
+
+    @Override
+    public List<IterationEntity> getFunctionTask(int id_project, int version) {
+        String sql1 = "select * from view_iteration where ID_DOCUMENT = ? and PERSON is null";
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
+        int id_doument = getForValue(sql2,id_project,version);
+        List<IterationEntity> list = getForList(sql1,id_doument);
+        return list;
+    }
+
     @Override
     public List<IterationEntity> getFunctionList(int id_project, int version) {
         String sql1 = "select * from view_iteration where ID_TEMPLATE = 3 and ID_DOCUMENT = ?";

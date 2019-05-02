@@ -10,6 +10,8 @@ import java.util.List;
  * @author MJY
  */
 public interface CatalogDao {
+
+
     boolean updateContent(String content, int id_catalog);
 
     List<CatalogEntity> getAllIndex(int id_document);
