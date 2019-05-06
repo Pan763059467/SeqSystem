@@ -120,8 +120,41 @@ $("button#button_newIter").click(function () {
     );
 });
 
-
-
+$('#TaskList').bootstrapTable({
+        columns: [
+            {
+                field: 'title',
+                title: '功能点名称',
+                sortable: true,
+                align: 'center'
+            },
+            {
+                field: 'Stage',
+                title: '当前阶段',
+                sortable: true,
+                align: 'center',
+                formatter: "rename"
+            },{
+                field: 'PERSON',
+                title: '责任人',
+                align: 'center'
+            },{
+                field: 'DATA_2',
+                title: '截至时间',
+                align: 'center',
+                formatter: "rename4"
+            }
+        ]
+    }
+);
+function rename4(value,row,index) {
+    if (row.DATA_2===undefined) {
+        return '未设置';
+    }
+    else {
+        return row.DATA_2;
+    }
+}
 $('#FunctionList').bootstrapTable({
         columns: [
             {

@@ -55,6 +55,17 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private Date start;
     private Date end;
 
+    public String getTaskList(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TaskList",json);
+        System.out.println(json);
+        return SUCCESS;
+    }
+
     public String edit_time(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();

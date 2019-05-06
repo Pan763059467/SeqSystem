@@ -16,7 +16,7 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
 
     @Override
     public List<IterationEntity> getFunctionTask(int id_project, int version) {
-        String sql1 = "select * from view_iteration where ID_DOCUMENT = ? and PERSON is null";
+        String sql1 = "select * from view_iteration where ID_DOCUMENT = ? and PERSON is not null";
         String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
         int id_doument = getForValue(sql2,id_project,version);
         List<IterationEntity> list = getForList(sql1,id_doument);
