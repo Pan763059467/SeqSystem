@@ -50,6 +50,40 @@
 </head>
 
 <body class="gray-bg animated fadeInDown">
+<div  class="modal inmodal" id="Task" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">分配任务</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>选择责任人</label>
+                    <select id = "choosePer" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <s:iterator var = "members" value="list_members">
+                            <option name=""><s:property value="#members.name"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+                <div class="form-group"><label>选择功能点</label>
+                    <select id = "chooseFunction" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <s:iterator var = "functions" value="list_functions">
+                            <option value="<s:property value="#functions.id_catalog"/>"><s:property value="#functions.title"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_task" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="task_per" type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div  class="modal inmodal" id="newIteration" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -145,6 +179,7 @@
         </div>
     </div>
 </div>
+
 <div  class="modal inmodal" id="say" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -418,7 +453,7 @@
                                                 <div class="ibox-title">
                                                     <h5>任务栏</h5>
                                                     <div class="ibox-tools">
-                                                        <button class="label label-warning"  data-toggle="modal" data-target="#task">分配任务</button>
+                                                        <button class="label label-warning"  data-toggle="modal" data-target="#Task" type="submit">分配任务</button>
 
                                                     </div>
                                                 </div>
@@ -493,11 +528,11 @@
                                                                     <select id = "chooseIter" class="form-control" onchange="IterChange()">
                                                                         <option name="all">全部功能点</option>
                                                                         <s:iterator var = "iter" value="list2">
-                                                                            <option name="showIter"><s:property value="#iter.ITER_NAME"/> </option>
+                                                                            <option value="<s:property value="#iter.ID_ITER"/>"><s:property value="#iter.ITER_NAME"/> </option>
                                                                         </s:iterator>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-4"></div>
+                                                                <div class="col-md-4">   <button id="iter_manager" class="btn btn-primary" style="display: none">管理迭代</button> </div>
                                                             </div>
                                                             <div class="bootstrap-table">
                                                                 <table id="FunctionList" data-toggle="table"
@@ -704,6 +739,7 @@
 <script>
     var id_Project = "<s:property value="#session.project.id_Project"/>";
     var id_User = "<s:property value="#session.user.id_user"/>";
+    var user_name = "${session.user.name}";
     var discuss="";
 
     $("#exit").click(function () {

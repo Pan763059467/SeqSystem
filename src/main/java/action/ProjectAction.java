@@ -55,6 +55,24 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private Date start;
     private Date end;
 
+    public String task_per(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.task_per(person_name,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TaskList",json);
+        return SUCCESS;
+    }
+
+
     public String getTaskList(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
@@ -62,7 +80,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         Gson gson = new Gson();
         String json = gson.toJson(list);
         dataMap.put("TaskList",json);
-        System.out.println(json);
         return SUCCESS;
     }
 
@@ -116,7 +133,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
                 content = content.replaceAll(",\"priority\":1,\"describe\":\"",",\"priority\":3,\"describe\":\"");
                 break;
         }
-        System.out.println(content + "zzzz");
         CatalogDao catalogDao = new CatalogDaoImp();
         boolean edit_content = catalogDao.updateContent(content,id_catalog);
         iterationDao = new IterationDaoImp();
@@ -285,11 +301,11 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String displayIteration(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
-        version = (int) session.get("version_temp");
-        List<IterationEntity> list = iterationDao.getFunctionList2(project.getId_Project(),version,iter_name);
+        List<IterationEntity> list = iterationDao.getFunctionList2(id_iter);
         Gson gson = new Gson();
         String json = gson.toJson(list);
         dataMap.put("FunctionList",json);
+        System.out.println(json);
         return SUCCESS;
     }
 
@@ -300,7 +316,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         Gson gson = new Gson();
         String json = gson.toJson(list);
         dataMap.put("TrackList",json);
-        System.out.println(list);
         return SUCCESS;
     }
 
@@ -317,8 +332,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         projectDao = new ProjectDaoImp();
         userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
-        System.out.println(project.getName()+" "+project.getDocument_Name());
-        System.out.println(project.getId_Organization());
         UserEntity sessionUser=(UserEntity)session.get("user");
         String orgName = organizationDao.getOrgName(project.getId_Organization());
         int points = sessionUser.getPoints();
@@ -331,7 +344,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
               dataMap.put("res", res);
               boolean exist = projectDao.exist(orgName);
               boolean belong = projectDao.belong(orgName,sessionUser.getId_user());
-              System.out.println(belong+"dd");
               dataMap.put("belong", belong);
               dataMap.put("exist", exist);
               dataMap.put("flag", flag);
@@ -422,7 +434,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String modified(){
-        System.out.println(project.getFlag());
         dataMap = new HashMap<>();
         projectDao = new ProjectDaoImp();
         boolean res = projectDao.modified(project.getFlag(),project.getId_Project());
@@ -454,6 +465,13 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         ActionContext.getContext().getValueStack().set("list2",list2);
         List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
         ActionContext.getContext().getValueStack().set("list3",list3);
+        projectDao = new ProjectDaoImp();
+        project = projectDao.getOne(pro.getId_Project());
+        List<UserEntity> members = projectDao.getMember(project);
+        ActionContext.getContext().getValueStack().set("list_members",members);
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
         return "projectInformation";
 
     }
@@ -478,7 +496,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String jmpFunctionInfo() {
         int version = (int) session.get("version");
         int version_temp = (int) session.get("version_temp");
-        System.out.println(version + " " + version_temp);
         if(version != version_temp){
             return "projectFunctionInfo2";
         }
@@ -535,7 +552,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap = new HashMap<String, Object>();
         int id_Project = project.getId_Project();
 
-//        System.out.println(id_Project);
         projectDao = new ProjectDaoImp();
         project = projectDao.getOne(id_Project);
 
@@ -556,7 +572,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
             int addOrNot=1;//1为可编辑，0为不可编辑
             if(list.size()!=0&&list.get(0).getState()==0)//有未发布文档，不可编辑
             {
-//                System.out.println(list.get(list.size()-1).getState()+"  "+list.size());
                 addOrNot=0;
             }
             Gson gson = new Gson();
@@ -671,7 +686,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
             projectDao = new ProjectDaoImp();
             organizationDao = new OrganizationDaoImp();
             project = projectDao.getOne(id_Project);
-            System.out.println(project.getId_Organization());
             boolean isIn = false;
             OrganizationEntity organizationEntity = new OrganizationEntity();
             if(project.getId_Organization()!=0){

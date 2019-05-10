@@ -441,24 +441,28 @@
                                     <tr id="tr7" style="background: #FFFFFF" onmouseover="toshow7()" onmouseout="tomiss7()">
                                         <th  style="width: 150px;text-align: center">预估工时:</th>
                                         <th id="th7">
+                                            <span id="th7_tmp">
                                             <s:if test='#session.iter.W_HOURS=="" || #session.iter.W_HOURS==null'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.W_HOURS"/>
                                             </s:else>
+                                            </span>
                                             <a id="th7_edit" style="display:none" data-toggle="modal" data-target="#W_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>
                                     <tr id="tr8" style="background: #FFFFFF" onmouseover="toshow8()" onmouseout="tomiss8()">
                                         <th style="width: 150px;text-align: center">完成工时:</th>
                                         <th id="th8">
+                                            <span id="th8_tmp">
                                             <s:if test='#session.iter.F_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
                                             <s:else>
                                                 <s:property value="#session.iter.F_HOURS"/>
                                             </s:else>
+                                            </span>
                                             <a id="th8_edit" style="display:none" data-toggle="modal" data-target="#F_HOURS"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
                                     </tr>

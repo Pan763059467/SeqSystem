@@ -479,6 +479,17 @@ $("button#edit_w_hours").click(function (){
             closeOnConfirm: false
         }, function () {
             var hours = $("input#hours_w").val();
+            var hours_f = $("span#th8_tmp").text();
+            if(hours_f === ""){
+                hours_f = 0;
+            }
+            var hours_s = 0;
+            var hours_b = 0;
+            if(parseInt(hours_f) > parseInt(hours)){
+                hours_b = hours_f - hours;
+            }else{
+                hours_s = hours - hours_f;
+            }
             $.ajax({
                 url: "project-edit_w_hours",
                 data: {
@@ -499,9 +510,11 @@ $("button#edit_w_hours").click(function (){
                             confirmButtonColor: "#18a689",
                             confirmButtonText: "OK"
                         }, function () {
-                            $("#th7").html(hours + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#W_HOURS\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
+                            $("#th7").html("<span id=\"th7_tmp\">"+ hours + " </span>" + "  <a id=\"th7_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#W_HOURS\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
                             var oDiv = document.getElementById('cancel-apply');
                             oDiv.click();
+                            $("#th9").html(hours_s);
+                            $("#th10").html(hours_b);
                         })
                     }
                 }, error: function () {
@@ -525,6 +538,17 @@ $("button#edit_f_hours").click(function (){
             closeOnConfirm: false
         }, function () {
             var hours = $("input#hours_f").val();
+            var hours_w = $("span#th7_tmp").text();
+            if(hours_w === ""){
+                hours_w = 0;
+            }
+            var hours_s = 0;
+            var hours_b = 0;
+            if(parseInt(hours_w) > parseInt(hours)){
+                hours_s = hours_w - hours;
+            }else{
+                hours_b = hours - hours_w;
+            }
             $.ajax({
                 url: "project-edit_f_hours",
                 data: {
@@ -548,6 +572,8 @@ $("button#edit_f_hours").click(function (){
                             $("#th8").html(hours + "  <a id=\"th8_edit\" style=\"display:none\" data-toggle=\"modal\" data-target=\"#F_HOURS\"><img src=\"/img/editTrack.png\" style=\"height: 20px;margin: 5px 5px 5px 5px;\"> </a>");
                             var oDiv = document.getElementById('cancel-apply8');
                             oDiv.click();
+                            $("#th9").html(hours_s);
+                            $("#th10").html(hours_b);
                         })
                     }
                 }, error: function () {
