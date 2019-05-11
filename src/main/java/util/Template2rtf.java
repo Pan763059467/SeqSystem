@@ -52,7 +52,7 @@ public class Template2rtf {
         tmpline = tmpline.replaceAll("<img ","");
         tmpline = tmpline.replaceAll("src=\"","");
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
-        tmpline = tmpline.replaceAll("/disImage",basePath+"/disImage");
+        tmpline = tmpline.replaceAll("/docImage",basePath+"/docImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
         //System.out.println(tmpline);
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
@@ -435,7 +435,7 @@ public class Template2rtf {
                 }
             }
         }
-//        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(basePath+"/disImage/20180913/20180913171005_965.png");
+//        com.lowagie.text.Image img = com.lowagie.text.Image.getInstance(basePath+"/docImage/20180913/20180913171005_965.png");
 //        doc.add(img);
         doc.close();
 

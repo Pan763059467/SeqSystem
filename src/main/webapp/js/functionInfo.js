@@ -229,8 +229,6 @@ $("button#edit_iter").click(function (){
         }, function () {
             var iter = $("select#chooseIter").val();
             var iter_name = $("select#chooseIter").find("option:selected").text();
-            alert(iter);
-            alert(iter_name)
             $.ajax({
                 url: "project-edit_iter",
                 data: {
@@ -277,7 +275,6 @@ $("button#edit_per").click(function (){
             closeOnConfirm: false
         }, function () {
             var person_name = $("select#choosePer").find("option:selected").text();
-            alert(person_name);
             $.ajax({
                 url: "project-edit_per",
                 data: {
@@ -324,7 +321,6 @@ $("button#edit_pri").click(function (){
             closeOnConfirm: false
         }, function () {
             var pri_after = $("select#choosePri").find("option:selected").text();
-            alert(pri_after);
             $.ajax({
                 url: "project-edit_pri",
                 data: {
@@ -429,8 +425,6 @@ $("button#edit_time").click(function (){
         }, function () {
             var start = $("li#start").text();
             var end = $("li#end").text();
-            alert(start);
-            alert(end);
             $.ajax({
                 url: "project-edit_time",
                 data: {

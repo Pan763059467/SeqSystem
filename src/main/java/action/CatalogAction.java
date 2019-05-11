@@ -2,6 +2,7 @@ package action;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -14,18 +15,21 @@ import daoImp.TemplateDaoImp;
 import daoImp.UsableDaoImp;
 import daoImp.securityDaoImp;
 import entity.*;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import util.Template2Pdf;
 import util.Template2rtf;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by DELL on 2017/12/12.
@@ -94,6 +98,44 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String webmain;
     private String webedition;
     private String websummary;
+    private File file;
+    private String fileFileName;
+
+
+    public String doc_image()
+    {
+        HttpServletRequest request2 = (HttpServletRequest)ActionContext.getContext().get(StrutsStatics.HTTP_REQUEST);
+
+        dataMap = new HashMap<String, Object>();
+        if (file!=null) {
+            String savePath = ServletActionContext.getServletContext().getRealPath("docImage");
+
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+            String ymd=sdf.format(new Date());
+            savePath+="/"+ymd+"/";
+            File dirFile=new File(savePath);
+            if(!dirFile.exists()){
+                dirFile.mkdir();
+            }
+            String fileExt=fileFileName.substring(fileFileName.lastIndexOf(".")+1).trim().toLowerCase();
+            SimpleDateFormat sdfForFileName=new SimpleDateFormat("yyyyMMddHHmmss");
+            String newName=sdfForFileName.format(new Date())+"_"+new Random().nextInt(1000)+"."+fileExt;
+            File destFile=new File(dirFile,newName);
+
+            try {
+                System.out.println("Src File name: " + file);
+                System.out.println("Dst File name: " + fileFileName);
+//                    File destFile = new File(savePath, MyFileFileName.get(i));
+                FileUtils.copyFile(file, destFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String path=request2.getContextPath()+"/"+"docImage/"+ymd+"/"+newName;
+            dataMap.put("path",path);
+        }
+        return "RES";
+    }
 
 
     public String getIndex(){
@@ -499,6 +541,22 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         return catalogEntity;
     }
 
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public String getFileFileName() {
+        return fileFileName;
+    }
+
+    public void setFileFileName(String fileFileName) {
+        this.fileFileName = fileFileName;
+    }
 
     @Override
     public void setSession(Map<String, Object> session) {

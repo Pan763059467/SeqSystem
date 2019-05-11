@@ -265,8 +265,6 @@ $("button#task_per").click(function (){
         }, function () {
             var person_name = $("select#choosePer").find("option:selected").text();
             var id_cato = $("select#chooseFunction").find("option:selected").val();
-            alert(id_cato);
-            alert(person_name);
             $.ajax({
                 url: "project-task_per",
                 data: {
