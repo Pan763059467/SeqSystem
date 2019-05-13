@@ -45,11 +45,94 @@
 
     <link href="<%=basePath %>/css/xzw.css" rel="stylesheet">
     <link href="<%=basePath %>/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
+    <link href="<%=basePath %>/css/button.css" rel="stylesheet">
 
 </head>
 
 <body class="gray-bg animated fadeInDown">
+<div  class="modal inmodal" id="Task" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">分配任务</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>选择责任人</label>
+                    <select id = "choosePer" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <s:iterator var = "members" value="list_members">
+                            <option name=""><s:property value="#members.name"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+                <div class="form-group"><label>选择功能点</label>
+                    <select id = "chooseFunction" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <s:iterator var = "functions" value="list_functions">
+                            <option value="<s:property value="#functions.id_catalog"/>"><s:property value="#functions.title"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_task" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="task_per" type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div  class="modal inmodal" id="newIteration" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">创建迭代</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>创建</label>
+                    <input id="IterationName" type="text" maxlength="20" placeholder="请输入迭代名" class="form-control" required="true" autocomplete="off">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="button_newIter" type="button" class="btn btn-primary">创建</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="modal inmodal" id="chooseVersion" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">选择需求文档版本</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id = "version" class="form-control">
+                        <option name="now">${sessionScope.version}</option>
+                        <s:iterator var = "document" value="list3">
+                            <option name="showVersion"><s:property value="#document.VERSION"/> </option>
+                        </s:iterator>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_choose" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="choose" type="button" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%--promp layer1--%>
 <div  class="modal inmodal" id="newUser" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -96,6 +179,7 @@
         </div>
     </div>
 </div>
+
 <div  class="modal inmodal" id="say" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -243,14 +327,20 @@
                         <div class="panel-heading">
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
-                                    <li class="active">
+                                    <li >
                                         <a href="#tab-1" data-toggle="tab">文档管理</a>
                                     </li>
                                     <li>
                                         <a href="#tab-2" data-toggle="tab">成员管理</a>
                                     </li>
+                                    <%--<li>--%>
+                                        <%--<a href="#tab-3" data-toggle="tab">讨论区</a>--%>
+                                    <%--</li>--%>
                                     <li>
-                                        <a href="#tab-3" data-toggle="tab">讨论区</a>
+                                        <a href="#tab-4" data-toggle="tab">项目管理</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#tab-5" data-toggle="tab">项目总览</a>
                                     </li>
                                 </ul>
                             </div>
@@ -259,34 +349,148 @@
                         <div class="panel-body">
 
                             <div class="tab-content">
-                                <div class="tab-pane" id="tab-3">
-                                    <!--自己的留言开始-->
-                                    <div class="row" style="height: 42px">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-title">
-                                                <div class="col-md-4">
-                                                    <p>共 <var id="num"></var> 条留言</p>
+                                <div class="tab-pane active" id="tab-5">
+                                    <div class="panel-body">
+                                        <div class="col-sm-7 ui-sortable">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <h5>任务栏</h5>
+                                                    <div class="ibox-tools">
+                                                        <button class="label label-warning"  data-toggle="modal" data-target="#Task" type="submit">分配任务</button>
+
+                                                    </div>
                                                 </div>
-                                                <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
-                                                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
-                                                    <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
+                                                <div class="bootstrap-table">
+                                                        <table id="TaskList" data-toggle="table"
+                                                               data-classes="table table-no-bordered"
+                                                               data-click-to-select="true"
+                                                               data-search="true"
+                                                               data-show-refresh="true"
+                                                               data-show-toggle="true"
+                                                               data-show-columns="true"
+                                                               data-toolbar="#toolbar"
+                                                               data-query-params="quefryParams"
+                                                               data-pagination="true"
+                                                               data-halign="center"
+                                                               data-striped="true"
+                                                               data-page-size="5"
+                                                               data-height="600"
+                                                        >
+                                                        </table>
                                                 </div>
-                                                <!-- The file upload form used as target for the file upload widget -->
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--自己的留言结束-->
-                                    <div class="allDiscuss">
-                                        <!--一行留言-->
-                                        <!--一行留言结束-->
-                                    </div>
-                                    <div style="text-align:center;">
-                                        <a onclick="previous()">上一页</a>&nbsp;&nbsp;
-                                        <strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;
-                                        共 <var id="pages"></var> 页&nbsp;&nbsp;
-                                        <a onclick="next()">下一页</a>
+                                        <div class="col-sm-5 ui-sortable">
+                                            <!--自己的留言开始-->
+                                            <div class="row" style="height: 42px">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <div class="col-md-6">
+                                                            <h5 style="margin-right: 10px">留言区</h5>
+                                                            <p>共 <var id="num" style="color: red"></var> 条留言</p>
+                                                        </div>
+                                                        <div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >
+                                                            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>
+                                                            <%--<label class="pull-right">没有附件？直接点这里--></label>--%>
+                                                        </div>
+                                                        <!-- The file upload form used as target for the file upload widget -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--自己的留言结束-->
+                                            <div class="allDiscuss">
+                                                <!--一行留言-->
+                                                <!--一行留言结束-->
+                                            </div>
+                                            <div style="text-align:center;">
+                                                <a onclick="previous()">上一页</a>&nbsp;&nbsp;
+                                                <strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;
+                                                共 <var id="pages"></var> 页&nbsp;&nbsp;
+                                                <a onclick="next()">下一页</a>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane" id="tab-4">
+                                    <div id="managerProject">
+                                        <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                    </div>
+                                    <div class="bootstrap-table" >
+                                        <div class="wrapper wrapper-content" style="margin: 10px 0px 10px 0px">
+                                            <div class="ibox float-e-margins">
+                                                        <div class="ibox-title">
+                                                            <h5>功能点列表</h5>
+                                                            <div class="ibox-tools">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="ibox-content">
+                                                            <div class="row">
+                                                                <div class="col-sm-2 m-b-xs">
+                                                                    <select id = "chooseIter" class="form-control" onchange="IterChange()">
+                                                                        <option name="all">全部功能点</option>
+                                                                        <s:iterator var = "iter" value="list2">
+                                                                            <option value="<s:property value="#iter.ID_ITER"/>"><s:property value="#iter.ITER_NAME"/> </option>
+                                                                        </s:iterator>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <button id="iter_add" class="btn btn-primary" style="display: none">导入功能点</button>
+                                                                    <button id="iter_del" class="btn btn-danger" style="display: none">删除功能点</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bootstrap-table">
+                                                                <table id="FunctionList" data-toggle="table"
+                                                                       data-classes="table table-no-bordered"
+                                                                       data-click-to-select="true"
+                                                                       data-search="true"
+                                                                       data-show-refresh="true"
+                                                                       data-show-toggle="true"
+                                                                       data-show-columns="true"
+                                                                       data-toolbar="#toolbar"
+                                                                       data-query-params="quefryParams"
+                                                                       data-pagination="true"
+                                                                       data-halign="center"
+                                                                       data-striped="true"
+                                                                       data-page-size="5"
+                                                                       data-height="600"
+                                                                >
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--<div class="tab-pane" id="tab-3">--%>
+                                    <%--<!--自己的留言开始-->--%>
+                                    <%--<div class="row" style="height: 42px">--%>
+                                        <%--<div class="ibox float-e-margins">--%>
+                                            <%--<div class="ibox-title">--%>
+                                                <%--<div class="col-md-4">--%>
+                                                    <%--<p>共 <var id="num"></var> 条留言</p>--%>
+                                                <%--</div>--%>
+                                                <%--<div id="sayComments" style="visibility: visible;float: right" class="col-md-4" >--%>
+                                                    <%--<button class="btn btn-success pull-right" data-toggle="modal" data-target="#say" type="submit">发表评论</button>--%>
+                                                    <%--&lt;%&ndash;<label class="pull-right">没有附件？直接点这里--></label>&ndash;%&gt;--%>
+                                                <%--</div>--%>
+                                                <%--<!-- The file upload form used as target for the file upload widget -->--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--<!--自己的留言结束-->--%>
+                                    <%--<div class="allDiscuss">--%>
+                                        <%--<!--一行留言-->--%>
+                                        <%--<!--一行留言结束-->--%>
+                                    <%--</div>--%>
+                                    <%--<div style="text-align:center;">--%>
+                                        <%--<a onclick="previous()">上一页</a>&nbsp;&nbsp;--%>
+                                        <%--<strong>第 <var id="index"></var> 页</strong>&nbsp;&nbsp;--%>
+                                        <%--共 <var id="pages"></var> 页&nbsp;&nbsp;--%>
+                                        <%--<a onclick="next()">下一页</a>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="tab-pane" id="tab-2">
                                     <div id="toolbar1">
                                         <s:if test='#session.project.state==1'>
@@ -319,7 +523,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane active" id="tab-1">
+                                <div class="tab-pane " id="tab-1">
 
                                     <div id="toolbar2">
 <s:if test='#session.project.state==1'>
@@ -383,8 +587,67 @@
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/plugins/sortable.min.js"></script>
 <script src="<%=basePath %>/js/plugins/bootstrap-fileinput/locales/zh.js"></script>
 <script src="<%=basePath %>/js/mjy.js"></script>
+<script src="<%=basePath %>/js/projectInformation.js"></script>
+<script src="<%=basePath %>/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 <script>
+    var version3 = <s:property value="#session.version"/>;
+    var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var version2 = <s:property value="#session.version"/>;
+    var id_User = "<s:property value="#session.user.id_user"/>";
+    var version_temp = <s:property value="#session.version_temp"/>;
+    var discuss="";
+
+
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getFunctionList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var FunctionList = JSON.parse(json.FunctionList);
+                $('#FunctionList').bootstrapTable('load',FunctionList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getTaskList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var TaskList = JSON.parse(json.TaskList);
+                $('#TaskList').bootstrapTable('load',TaskList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+</script>
+<script>
+    var id_Project = "<s:property value="#session.project.id_Project"/>";
+    var id_User = "<s:property value="#session.user.id_user"/>";
+    var user_name = "${session.user.name}";
+    var discuss="";
+
     $("#exit").click(function () {
         swal(
             {
@@ -415,6 +678,7 @@
                 location.href = "login-jmpLogin";
             })
     });
+
 
     $('#projectMember').bootstrapTable({
             columns: [
@@ -456,9 +720,6 @@
         }
     );
 
-    var id_Project = "<s:property value="#session.project.id_Project"/>";
-    var id_User = "<s:property value="#session.user.id_user"/>";
-    var discuss="";
 
     $.ajax(
         {
@@ -528,6 +789,8 @@
                 '<a class="delete"><img src="<%=basePath%>/img/deletemember.png" height="20px" width="20px" title="移除成员" alt="移除成员"></a>'].join('');
         }</s:if>
     }
+
+
 
     //表格  - 操作 - 事件
     window.actionEvents = {
@@ -666,7 +929,6 @@
             ]
         }
     );
-
     $.ajax(
         {
             type:"post",
@@ -918,7 +1180,7 @@
                 location.href = "catalog-jmpTemplate?documentId="+result.id+"&rank=3&projectId="+id_Project+"&state=0";
             },
             error: function (result) {
-                showtoast("error", "转移失败", "用户名不存在!")
+                showtoast("error", "新建失败", "服务器异常!")
             }
         })
     });
@@ -1094,7 +1356,7 @@
                         content += tempDis.accessoryEntityList[j].filename;
                         content += '</a>';
                     }
-                    content+="</div> </div> <div class='ibox-content'> <div class=' wrapper'>";
+                    content+="</div> </div> <div class='ibox-content' style='word-wrap: break-word'> <div class=' wrapper'>";
                     content+=tempDis.content+"  </div> </div> </div> </div>";
                     title="";
                 }

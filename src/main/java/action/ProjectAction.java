@@ -14,10 +14,7 @@ import dao.*;
 import daoImp.*;
 
 
-import entity.DocumentEntity;
-import entity.OrganizationEntity;
-import entity.ProjectEntity;
-import entity.UserEntity;
+import entity.*;
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.json.JSONArray;
@@ -36,6 +33,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private ProjectDao projectDao;
     private ProDiscussDao proDiscussDao;
     private OrganizationDao organizationDao;
+    private IterationDao iterationDao;
     private ProjectEntity project;
     private Map<String,Object> request;
     private Map<String,Object> session;
@@ -43,14 +41,309 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int documentId;
     private UserDao userDao;
     private UserEntity user;
+    private String iter_name;
+    private int version;
+    private int catalog;
+    private int hours;
+    private int id_catalog;
+    private String user_name;
+    private String person_name;
+    private int stage;
+    private int id_iter;
+    private String pri_after;
+    private String pri_before;
+    private Date start;
+    private Date end;
+
+    public String task_per(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.task_per(person_name,id_catalog,user_name);
+        dataMap.put("res",res);
+        if (res){
+            List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TaskList",json);
+        }
+        return SUCCESS;
+    }
+
+
+    public String getTaskList(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TaskList",json);
+        return SUCCESS;
+    }
+
+    public String edit_time(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_time(start,end,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(id_catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_pri(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(id_catalog);
+        String content = iter.getContent();
+        String content2 = content.substring(content.indexOf("\",\"priority\":")+13,content.indexOf(",\"describe\":\""));
+        switch (content2) {
+            case "1":
+                pri_before = "高";
+                break;
+            case "2":
+                pri_before = "中";
+                break;
+            default:
+                pri_before = "低";
+                break;
+        }
+        switch (pri_after) {
+            case "高":
+                content = content.replaceAll(",\"priority\":2,\"describe\":\"",",\"priority\":1,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":3,\"describe\":\"",",\"priority\":1,\"describe\":\"");
+                break;
+            case "中":
+                content = content.replaceAll(",\"priority\":1,\"describe\":\"",",\"priority\":2,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":3,\"describe\":\"",",\"priority\":2,\"describe\":\"");
+                break;
+            default:
+                content = content.replaceAll(",\"priority\":2,\"describe\":\"",",\"priority\":3,\"describe\":\"");
+                content = content.replaceAll(",\"priority\":1,\"describe\":\"",",\"priority\":3,\"describe\":\"");
+                break;
+        }
+        CatalogDao catalogDao = new CatalogDaoImp();
+        boolean edit_content = catalogDao.updateContent(content,id_catalog);
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_pri(pri_after,pri_before,id_catalog,user_name);
+        if(res && edit_content){
+            IterationEntity iter2;
+            iter2 = iterationDao.getOne(id_catalog);
+            session.put("iter",iter2);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_per(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(person_name.equals(iter_before.getPERSON())){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_per(person_name,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
+        }
+        return SUCCESS;
+    }
+
+    public String edit_iter(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(id_iter == iter_before.getID_ITER()){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_iter(id_iter,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
+        }
+        return SUCCESS;
+    }
+
+    public String edit_stage(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(stage == iter_before.getStage()){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_stage(stage,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
+        }
+        return SUCCESS;
+    }
+
+
+    public String edit_w_hours(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_w(hours,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(id_catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_f_hours(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_f(hours,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(id_catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_s_hours(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_s(hours,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(id_catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String edit_b_hours(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        boolean res = iterationDao.edit_b(hours,id_catalog,user_name);
+        if(res){
+            IterationEntity iter;
+            iter = iterationDao.getOne(id_catalog);
+            session.put("iter",iter);
+        }
+        dataMap.put("res",res);
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+
+    public String getFunctionInfo(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(catalog);
+        session.put("iter",iter);
+        return SUCCESS;
+    }
+
+    public String getFunctionList(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionList(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("FunctionList",json);
+        return SUCCESS;
+    }
+
+    public String displayIteration(){
+        dataMap = new HashMap<>();
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionList2(id_iter);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("FunctionList",json);
+        System.out.println(json);
+        return SUCCESS;
+    }
+
+    public String getFunctionTrack(){
+        dataMap = new HashMap<>();
+        TrackDao trackDao = new TrackDaoImp();
+        List<TrackEntity> list = trackDao.getTrack(catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("TrackList",json);
+        return SUCCESS;
+    }
+
+    public String newIteration(){
+        dataMap = new HashMap<>();
+        projectDao = new ProjectDaoImp();
+        boolean res = projectDao.newIter(project.getId_Project(),iter_name,version);
+        dataMap.put("res",res);
+        return SUCCESS;
+    }
 
     public String create_test() throws ParseException {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
         userDao = new UserDaoImp();
         OrganizationDao organizationDao = new OrganizationDaoImp();
-        System.out.println(project.getName()+" "+project.getDocument_Name());
-        System.out.println(project.getId_Organization());
         UserEntity sessionUser=(UserEntity)session.get("user");
         String orgName = organizationDao.getOrgName(project.getId_Organization());
         int points = sessionUser.getPoints();
@@ -63,7 +356,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
               dataMap.put("res", res);
               boolean exist = projectDao.exist(orgName);
               boolean belong = projectDao.belong(orgName,sessionUser.getId_user());
-              System.out.println(belong+"dd");
               dataMap.put("belong", belong);
               dataMap.put("exist", exist);
               dataMap.put("flag", flag);
@@ -97,8 +389,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         int version = documentDao.getVersion(Id_Project)+1;
         int id_document=documentDao.getDocumentId(Id_Project);
         int new_idDocument = documentDao.create(Id_Project,version,time,ID_User);
-        if (id_document!=-1){
-            projectDao=new ProjectDaoImp();
+        if (id_document != -1){
+            projectDao = new ProjectDaoImp();
             projectDao.copyAll(id_document,new_idDocument,version);
         }
         dataMap.put("id",new_idDocument);
@@ -140,6 +432,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("res",json);
         return SUCCESS;
     }
+
     public String showCompletedList() {
         dataMap = new HashMap<String, Object>();
         projectDao = new ProjectDaoImp();
@@ -153,7 +446,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String modified(){
-        System.out.println(project.getFlag());
         dataMap = new HashMap<>();
         projectDao = new ProjectDaoImp();
         boolean res = projectDao.modified(project.getFlag(),project.getId_Project());
@@ -175,13 +467,71 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String jmpProjectMember() {
         return "projectMember";
     }
+
     public String jmpProjectInfo() {
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        DocumentDao documentDao = new DocumentDaoImp();
+        ProjectEntity pro = (ProjectEntity) session.get("project");
+        int version2 = documentDao.getVersion(pro.getId_Project());
+        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list2",list2);
+        List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list3",list3);
+        projectDao = new ProjectDaoImp();
+        project = projectDao.getOne(pro.getId_Project());
+        List<UserEntity> members = projectDao.getMember(project);
+        ActionContext.getContext().getValueStack().set("list_members",members);
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
         return "projectInformation";
+
+    }
+
+    public String showVersion(){
+        dataMap = new HashMap<>();
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        List<Iteration_2Entity> iter = iteration2Dao.getList(project.getId_Project(),version);
+        dataMap.put("iter_list",iter);
+        dataMap.put("version_temp",version);
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> list = iterationDao.getFunctionList(project.getId_Project(),version);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("FunctionList",json);
+        session.put("version_temp",version);
+        return SUCCESS;
     }
     public String jmpDocument() {
         return "projectDocument";
     }
+    public String jmpFunctionInfo() {
+        int version = (int) session.get("version");
+        int version_temp = (int) session.get("version_temp");
+        if(version != version_temp){
+            return "projectFunctionInfo2";
+        }
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        ProjectEntity pro = (ProjectEntity) session.get("project");
+        List<Iteration_2Entity> iterations = iteration2Dao.getList(pro.getId_Project(),(int)session.get("version"));
+        ActionContext.getContext().getValueStack().set("list_iter",iterations);
+        projectDao = new ProjectDaoImp();
+        project = projectDao.getOne(pro.getId_Project());
+        List<UserEntity> members = projectDao.getMember(project);
+        ActionContext.getContext().getValueStack().set("list_members",members);
+        return "projectFunctionInfo";
+    }
 
+    public String getContent(){
+        iterationDao = new IterationDaoImp();
+        IterationEntity iter;
+        iter = iterationDao.getOne(catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(iter);
+        dataMap = new HashMap<>();
+        dataMap.put("res",json);
+        return SUCCESS;
+    }
     public String getProjectInfo() throws ParseException {
         dataMap = new HashMap<>();
         int id_Project = project.getId_Project();
@@ -193,8 +543,9 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
         int rank = projectDao.getRank(id_Project,user.getId_user());
         DocumentDao documentDao = new DocumentDaoImp();
-        double version = documentDao.getVersion(id_Project);
-        session.put("version",String.valueOf(version));
+        int version = documentDao.getVersion(id_Project);
+        session.put("version",version);
+        session.put("version_temp",version);
         session.put("rank",rank);
         session.put("PM",pm);
         session.put("project",project);
@@ -206,13 +557,13 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 //        }else{
 //            dataMap.put("days",0);
 //        }
+        dataMap.put("version",(int)version);
         return SUCCESS;
     }
     public String getProjectMember(){
         dataMap = new HashMap<String, Object>();
         int id_Project = project.getId_Project();
 
-//        System.out.println(id_Project);
         projectDao = new ProjectDaoImp();
         project = projectDao.getOne(id_Project);
 
@@ -233,7 +584,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
             int addOrNot=1;//1为可编辑，0为不可编辑
             if(list.size()!=0&&list.get(0).getState()==0)//有未发布文档，不可编辑
             {
-//                System.out.println(list.get(list.size()-1).getState()+"  "+list.size());
                 addOrNot=0;
             }
             Gson gson = new Gson();
@@ -348,7 +698,6 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
             projectDao = new ProjectDaoImp();
             organizationDao = new OrganizationDaoImp();
             project = projectDao.getOne(id_Project);
-            System.out.println(project.getId_Organization());
             boolean isIn = false;
             OrganizationEntity organizationEntity = new OrganizationEntity();
             if(project.getId_Organization()!=0){
@@ -398,12 +747,116 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         project = new ProjectEntity();
     }
 
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public String getPri_after() {
+        return pri_after;
+    }
+
+    public void setPri_after(String pri_after) {
+        this.pri_after = pri_after;
+    }
+
+    public String getPri_before() {
+        return pri_before;
+    }
+
+    public void setPri_before(String pri_before) {
+        this.pri_before = pri_before;
+    }
+
+    public String getPerson_name() {
+        return person_name;
+    }
+
+    public void setPerson_name(String person_name) {
+        this.person_name = person_name;
+    }
+
+    public int getId_iter() {
+        return id_iter;
+    }
+
+    public void setId_iter(int id_iter) {
+        this.id_iter = id_iter;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
+    public void setStage(int stage) {
+        this.stage = stage;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public int getId_catalog() {
+        return id_catalog;
+    }
+
+    public void setId_catalog(int id_catalog) {
+        this.id_catalog = id_catalog;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getCatalog() {
+        return catalog;
+    }
+
+    public void setCatalog(int catalog) {
+        this.catalog = catalog;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     public int getDocumentId() {
         return documentId;
     }
 
     public void setDocumentId(int documentId) {
         this.documentId = documentId;
+    }
+
+    public String getIter_name() {
+        return iter_name;
+    }
+
+    public void setIter_name(String iter_name) {
+        this.iter_name = iter_name;
     }
 
     public Map<String, Object> getRequest() {

@@ -154,8 +154,11 @@
                 <param name="contentDisposition">attachment; filename="ReqDocument.doc"</param>
                 <param name="bufferSize">2048</param>
             </result>
+            <result name="RES" type="json">
+                <param name="root">dataMap</param>
+            </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTitle,saveLibOne,saveLibThree,saveLibTwo,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateThree2,saveTemplateTwo,saveTemplateFour,saveTemplateFive,saveTemplateSix,saveTemplateSeven,saveTemplateEight,saveTemplateNine,saveTemplateTen,saveTemplateEleven,getUsable,getSecurity</allowed-methods>
+            <allowed-methods>getTitle,doc_image,saveLibOne,saveLibThree,saveLibTwo,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateFour,saveTemplateFive,saveTemplateSix,saveTemplateSeven,saveTemplateEight,saveTemplateNine,saveTemplateTen,saveTemplateEleven,getUsable,getSecurity</allowed-methods>
         </action>
 
         <action name="commonStructureId-*" class="action.CommonStructureIdAction" method="{1}">
@@ -185,10 +188,12 @@
             </result>
             <result name="end">/WEB-INF/pages/project_completedList.jsp</result>
             <result name="projectInformation">/WEB-INF/pages/project_proInformation.jsp</result>
+            <result name="projectFunctionInfo">/WEB-INF/pages/project_functionInfo.jsp</result>
+            <result name="projectFunctionInfo2">/WEB-INF/pages/project_functionInfo2.jsp</result>
             <result name="projectDocument">/mjy_index.jsp</result>
             <result name="deploy">/WEB-INF/pages/project_proInformation.jsp</result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
+            <allowed-methods>task_per,getTaskList,edit_time,edit_pri,edit_per,edit_iter,showVersion,displayIteration,getFunctionTrack,edit_stage,edit_w_hours,edit_f_hours,getContent,jmpFunctionInfo,getFunctionInfo,getFunctionList,newIteration,modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
         </action>
 
         <action name="library-*" class="action.LibraryAction" method="{1}">

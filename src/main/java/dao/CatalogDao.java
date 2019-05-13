@@ -10,13 +10,17 @@ import java.util.List;
  * @author MJY
  */
 public interface CatalogDao {
-List<CatalogEntity> getAllIndex(int id_document);
 
-void insert(int id_template, int id_document, String title, int first, int second, int third, int fourth);
 
-void update(int id_document, int first);
+    boolean updateContent(String content, int id_catalog);
 
-void update(int id_document, int first, int second);
+    List<CatalogEntity> getAllIndex(int id_document);
+
+    void insert(int id_template, int id_document, String title, int first, int second, int third, int fourth);
+
+    void update(int id_document, int first);
+
+    void update(int id_document, int first, int second);
 
     void update(int id_document, int first, int second, int third);
 

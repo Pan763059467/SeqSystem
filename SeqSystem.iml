@@ -73,5 +73,7 @@
     <orderEntry type="library" name="Maven: com.lowagie:itext-rtf:2.1.5" level="project" />
     <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-core:9.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-pdf:9.0.4" level="project" />
+    <orderEntry type="library" name="jquery-1.12.4" level="application" />
+    <orderEntry type="library" name="jquery-ui" level="application" />
   </component>
 </module>

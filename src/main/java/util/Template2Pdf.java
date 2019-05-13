@@ -350,7 +350,7 @@ public class Template2Pdf {
         tmpline = tmpline.replaceAll("<img ","");
         tmpline = tmpline.replaceAll("src=\"","");
         //tmpline = tmpline.replaceAll("\" style=\"width: .*px;\">","");
-        tmpline = tmpline.replaceAll("/disImage",basePath1+"/disImage");
+        tmpline = tmpline.replaceAll("/docImage",basePath1+"/docImage");
         tmpline = tmpline.replaceAll(",", "1!~o#do=u-ha`o:");
         List htmlList = HTMLWorker.parseToList(new StringReader(tmpline), ss);
         for (int i = 0; i < htmlList.size(); i++) {
