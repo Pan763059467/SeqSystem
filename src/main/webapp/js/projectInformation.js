@@ -14,7 +14,8 @@ function IterChange(){
                 success:function(json){
                     var FunctionList = JSON.parse(json.FunctionList);
                     $('#FunctionList').bootstrapTable('load',FunctionList);
-                    $("#iter_manager").hide()
+                    $("#iter_add").hide()
+                    $("#iter_del").hide()
                 },
                 error:function(){
                     alert(" 错误");
@@ -37,7 +38,8 @@ function IterChange(){
                 success:function(json){
                     var FunctionList = JSON.parse(json.FunctionList);
                     $('#FunctionList').bootstrapTable('load',FunctionList);
-                    $("#iter_manager").show()
+                    $("#iter_add").show()
+                    $("#iter_del").show()
                 },
                 error:function(){
                     alert(" 错误");
@@ -86,41 +88,47 @@ $("button#choose").click(function () {
 });
 
 $("button#button_newIter").click(function () {
-    swal(
-        {
-            title: "您确定要创建新迭代吗",
-            text: "请谨慎操作！",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            closeOnConfirm: true
-        },function () {
-            var iter_name = $("input#IterationName").val();
-            $.ajax({
-                url: "project-newIteration",
-                data: {
-                    Id_Project: id_Project,
-                    iter_name: iter_name,
-                    version: version2
-                },
-                dataType: "json",
-                type: "Post",
-                async: "false",
-                success: function (result) {
-                    if (result.res===true) {
-                        showtoast("success", "创建成功", "以成功创建该迭代");
-                        window.location.reload()
+    var iter_name = $("input#IterationName").val();
+    if(iter_name === "" || iter_name === null) {
+        swal("创建失败！", "请填写迭代名称", "error");
+    }
+    else {
+        swal(
+            {
+                title: "您确定要创建新迭代吗",
+                text: "请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+                var iter_name = $("input#IterationName").val();
+                $.ajax({
+                    url: "project-newIteration",
+                    data: {
+                        Id_Project: id_Project,
+                        iter_name: iter_name,
+                        version: version2
+                    },
+                    dataType: "json",
+                    type: "Post",
+                    async: "false",
+                    success: function (result) {
+                        if (result.res === true) {
+                            showtoast("success", "创建成功", "以成功创建该迭代");
+                            window.location.reload()
+                        }
+                        else showtoast("error", "创建失败", "服务器异常");
+                    },
+                    error: function (result) {
+                        showtoast("error", "创建失败", "服务器异常!")
                     }
-                    else showtoast("error", "创建失败", "服务器异常");
-                },
-                error: function (result) {
-                    showtoast("error", "创建失败", "服务器异常!")
-                }
-            })
-        }
-    );
+                })
+            }
+        );
+    }
 });
 
 $('#TaskList').bootstrapTable({
@@ -252,6 +260,15 @@ window.actionEvents2 = {
 }
 
 $("button#task_per").click(function (){
+    var person_name = $("select#choosePer").find("option:selected").text();
+    var id_cato = $("select#chooseFunction").find("option:selected").val();
+    if(id_cato === "" || id_cato === null || id_cato === "请选择") {
+        swal("分配失败！", "请选择功能点", "error");
+    }
+    else if(person_name === "" || person_name === null || person_name === "请选择") {
+        swal("分配失败！", "请选择责任人", "error");
+    }
+    else {
     swal(
         {
             title: "您确认该任务的分配吗？",
@@ -263,8 +280,6 @@ $("button#task_per").click(function (){
             cancelButtonText: "取消",
             closeOnConfirm: false
         }, function () {
-            var person_name = $("select#choosePer").find("option:selected").text();
-            var id_cato = $("select#chooseFunction").find("option:selected").val();
             $.ajax({
                 url: "project-task_per",
                 data: {
@@ -278,23 +293,28 @@ $("button#task_per").click(function (){
                 type: "get",
                 async: "false",
                 success: function (result) {
-                    var TaskList = JSON.parse(result.TaskList);
-                    $('#TaskList').bootstrapTable('load',TaskList);
-                    if (result.res === true) {
-                        swal({
-                            title: "修改成功",
-                            type: "success",
-                            confirmButtonColor: "#18a689",
-                            confirmButtonText: "OK"
-                        }, function () {
-                            var oDiv = document.getElementById('cancel_task');
-                            oDiv.click();
-                        })
+                    if (result.res){
+                        var TaskList = JSON.parse(result.TaskList);
+                        $('#TaskList').bootstrapTable('load',TaskList);
+                        if (result.res === true) {
+                            swal({
+                                title: "修改成功",
+                                type: "success",
+                                confirmButtonColor: "#18a689",
+                                confirmButtonText: "OK"
+                            }, function () {
+                                var oDiv = document.getElementById('cancel_task');
+                                oDiv.click();
+                            })
+                        }
+                    } else{
+                        swal("分配失败！", "这是重复的任务分配", "error");
                     }
+
                 }, error: function () {
                     swal("修改失败！", "服务器异常", "error");
                 }
             })
         })
-
+    }
 });

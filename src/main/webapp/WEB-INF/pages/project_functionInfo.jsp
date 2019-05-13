@@ -86,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply1" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_iter" type="submit" class="btn btn-primary">确认</button>
+                <button id="edit_iter" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply2" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_pri" type="submit" class="btn btn-primary">确认</button>
+                <button id="edit_pri" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply3" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_per" type="submit" class="btn btn-primary">确认</button>
+                <button id="edit_per" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -155,6 +155,7 @@
             <div class="modal-body">
                 <div class="form-group"><label>当前阶段</label>
                     <select id = "stage_choose" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
                         <option name="0">未开始</option>
                         <option name="1">开发中</option>
                         <option name="2">测试中</option>
@@ -165,7 +166,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply4" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_stage" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_stage" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -191,7 +192,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply5" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_time" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_time" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -207,11 +208,11 @@
                 <h4 class="modal-title">设置预估工时</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group"><label>预估工时</label> <input id="hours_w" type="text" placeholder="请输入预估工时" maxlength="40" class="form-control" required="required"></div>
+                <div class="form-group"><label>预估工时</label> <input id="hours_w" type="text"  maxlength="4" placeholder="请输入预估工时(max:9999)" maxlength="40" class="form-control" required="required"></div>
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_w_hours" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_w_hours" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -226,11 +227,11 @@
                 <h4 class="modal-title">设置完成工时</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group"><label>完成工时</label> <input id="hours_f" type="text" placeholder="请输入完成工时" maxlength="40" class="form-control" required="required"></div>
+                <div class="form-group"><label>完成工时</label> <input id="hours_f" type="text"  maxlength="4" placeholder="请输入完成工时(max:9999)" maxlength="40" class="form-control" required="required"></div>
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply8" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_f_hours" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_f_hours" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -249,7 +250,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply9" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_s_hours" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_s_hours" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -268,7 +269,7 @@
             </div>
             <div class="modal-footer">
                 <button id="cancel-apply10" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button id="edit_b_hours" type="submit" class="btn btn-primary">设置</button>
+                <button id="edit_b_hours" type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
@@ -384,7 +385,7 @@
                                     <tr id="tr3" style="background: #FFFFFF" onmouseover="toshow3()" onmouseout="tomiss3()">
                                         <th style="width: 150px;text-align: center">当前责任人:</th>
                                         <th id="th3">
-                                            <s:if test='#session.iter.PERSON=="" || #session.iter.PERSON==null'>
+                                            <s:if test='#session.iter.PERSON=="" || #session.iter.PERSON==null '>
                                                 <s:property value="" default="未分配"/>
                                             </s:if>
                                             <s:else>
@@ -421,7 +422,7 @@
                                                 <s:property value="" default="未设置"/>
                                             </s:if>
                                             <s:else>
-                                                <s:property value="#session.iter.DATA_1"/>
+                                                20<s:property value="#session.iter.DATA_1"/>
                                             </s:else>
                                             <a id="th5_edit" style="display:none" data-toggle="modal" data-target="#Time"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
@@ -433,7 +434,7 @@
                                                 <s:property value="" default="未设置"/>
                                             </s:if>
                                             <s:else>
-                                                <s:property value="#session.iter.DATA_2"/>
+                                                20<s:property value="#session.iter.DATA_2"/>
                                             </s:else>
                                             <a id="th6_edit" style="display:none" data-toggle="modal" data-target="#Time"><img src="<%=basePath %>/img/editTrack.png" style="height: 20px;margin: 5px 5px 5px 5px;"> </a>
                                         </th>
@@ -468,7 +469,7 @@
                                     </tr>
                                     <tr id="tr9" style="background: #FFFFFF">
                                         <th style="width: 150px;text-align: center">剩余工时:</th>
-                                        <th id="th9">
+                                        <th id="th9" style="color: lime">
                                             <s:if test='#session.iter.S_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>
@@ -480,7 +481,7 @@
                                     </tr>
                                     <tr id="tr10" style="background: #FFFFFF">
                                         <th style="width: 150px;text-align: center">超出工时:</th>
-                                        <th id="th10">
+                                        <th id="th10" style="color: red">
                                             <s:if test='#session.iter.B_HOURS==""'>
                                                 <s:property value="" default="0"/>
                                             </s:if>

@@ -59,16 +59,13 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
         boolean res = iterationDao.task_per(person_name,id_catalog,user_name);
-        if(res){
-            IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
-            session.put("iter",iter);
-        }
         dataMap.put("res",res);
-        List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        dataMap.put("TaskList",json);
+        if (res){
+            List<IterationEntity> list = iterationDao.getFunctionTask(project.getId_Project(),version);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TaskList",json);
+        }
         return SUCCESS;
     }
 
@@ -89,7 +86,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_time(start,end,id_catalog,user_name);
         if(res){
             IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
+            iter = iterationDao.getOne(id_catalog);
             session.put("iter",iter);
         }
         dataMap.put("res",res);
@@ -139,7 +136,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_pri(pri_after,pri_before,id_catalog,user_name);
         if(res && edit_content){
             IterationEntity iter2;
-            iter2 = iterationDao.getOne(catalog);
+            iter2 = iterationDao.getOne(id_catalog);
             session.put("iter",iter2);
         }
         dataMap.put("res",res);
@@ -154,54 +151,69 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String edit_per(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
-        boolean res = iterationDao.edit_per(person_name,id_catalog,user_name);
-        if(res){
-            IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
-            session.put("iter",iter);
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(person_name.equals(iter_before.getPERSON())){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_per(person_name,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
         }
-        dataMap.put("res",res);
-        TrackDao trackDao = new TrackDaoImp();
-        List<TrackEntity> list = trackDao.getTrack(id_catalog);
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        dataMap.put("TrackList",json);
         return SUCCESS;
     }
 
     public String edit_iter(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
-        boolean res = iterationDao.edit_iter(id_iter,id_catalog,user_name);
-        if(res){
-            IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
-            session.put("iter",iter);
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(id_iter == iter_before.getID_ITER()){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_iter(id_iter,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
         }
-        dataMap.put("res",res);
-        TrackDao trackDao = new TrackDaoImp();
-        List<TrackEntity> list = trackDao.getTrack(id_catalog);
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        dataMap.put("TrackList",json);
         return SUCCESS;
     }
 
     public String edit_stage(){
         dataMap = new HashMap<>();
         iterationDao = new IterationDaoImp();
-        boolean res = iterationDao.edit_stage(stage,id_catalog,user_name);
-        if(res){
-            IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
-            session.put("iter",iter);
+        IterationEntity iter_before = (IterationEntity) session.get("iter");
+        if(stage == iter_before.getStage()){
+            dataMap.put("res",false);
+        }else{
+            boolean res = iterationDao.edit_stage(stage,id_catalog,user_name);
+            if(res){
+                IterationEntity iter;
+                iter = iterationDao.getOne(id_catalog);
+                session.put("iter",iter);
+            }
+            dataMap.put("res",res);
+            TrackDao trackDao = new TrackDaoImp();
+            List<TrackEntity> list = trackDao.getTrack(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("TrackList",json);
         }
-        dataMap.put("res",res);
-        TrackDao trackDao = new TrackDaoImp();
-        List<TrackEntity> list = trackDao.getTrack(id_catalog);
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        dataMap.put("TrackList",json);
         return SUCCESS;
     }
 
@@ -212,7 +224,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_w(hours,id_catalog,user_name);
         if(res){
             IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
+            iter = iterationDao.getOne(id_catalog);
             session.put("iter",iter);
         }
         dataMap.put("res",res);
@@ -230,7 +242,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_f(hours,id_catalog,user_name);
         if(res){
             IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
+            iter = iterationDao.getOne(id_catalog);
             session.put("iter",iter);
         }
         dataMap.put("res",res);
@@ -248,7 +260,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_s(hours,id_catalog,user_name);
         if(res){
             IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
+            iter = iterationDao.getOne(id_catalog);
             session.put("iter",iter);
         }
         dataMap.put("res",res);
@@ -266,7 +278,7 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         boolean res = iterationDao.edit_b(hours,id_catalog,user_name);
         if(res){
             IterationEntity iter;
-            iter = iterationDao.getOne(catalog);
+            iter = iterationDao.getOne(id_catalog);
             session.put("iter",iter);
         }
         dataMap.put("res",res);

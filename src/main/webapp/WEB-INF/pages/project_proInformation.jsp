@@ -351,103 +351,6 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab-5">
                                     <div class="panel-body">
-                                        <%--<div class="col-sm-4 ui-sortable">--%>
-                                            <%--<div class="ibox float-e-margins">--%>
-                                                <%--<div class="ibox-title">--%>
-                                                    <%--<h5>项目进度</h5>--%>
-                                                    <%--<div class="ibox-tools">--%>
-                                                        <%--<span>迭代1 （1/3）</span>--%>
-                                                        <%--<a class="collapse-link ui-sortable">--%>
-                                                            <%--<i class="fa fa-chevron-up"></i>--%>
-                                                        <%--</a>--%>
-                                                    <%--</div>--%>
-                                                <%--</div>--%>
-                                                <%--<div class="ibox-content ibox-heading">--%>
-                                                    <%--<h3>迭代1 -- 还有约15个功能点需要做</h3>--%>
-                                                    <%--<small><i class="fa fa-map-marker"></i> 截至日期：2019.04.31</small>--%>
-                                                <%--</div>--%>
-                                                <%--<div class="ibox-content timeline">--%>
-
-                                                    <%--<div class="timeline-item">--%>
-                                                        <%--<div class="row">--%>
-                                                            <%--<div class="col-xs-3 date ui-sortable">--%>
-                                                                <%--<i class="fa fa-briefcase"></i> 6:00--%>
-                                                                <%--<br>--%>
-                                                                <%--<small class="text-navy">操作人</small>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="col-xs-7 content no-top-border ui-sortable">--%>
-                                                                <%--<p class="m-b-xs"><strong>完成功能点：登录</strong>--%>
-                                                                <%--</p>--%>
-
-                                                                <%--<p>备注部分</p>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                    <%--</div>--%>
-                                                    <%--<div class="timeline-item">--%>
-                                                        <%--<div class="row">--%>
-                                                            <%--<div class="col-xs-3 date ui-sortable">--%>
-                                                                <%--<i class="fa fa-file-text"></i> 7:00--%>
-                                                                <%--<br>--%>
-                                                                <%--<small class="text-navy">潘勇</small>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="col-xs-7 content ui-sortable">--%>
-                                                                <%--<p class="m-b-xs"><strong>修复了登录bug</strong>--%>
-                                                                <%--</p>--%>
-                                                                <%--<p>顺手重启了服务器</p>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                    <%--</div>--%>
-                                                    <%--<div class="timeline-item">--%>
-                                                        <%--<div class="row">--%>
-                                                            <%--<div class="col-xs-3 date ui-sortable">--%>
-                                                                <%--<i class="fa fa-cab"></i> 8:00--%>
-                                                                <%--<br>--%>
-                                                                <%--<small class="text-navy">周惟渭</small>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="col-xs-7 content ui-sortable">--%>
-                                                                <%--<p class="m-b-xs"><strong>测试登录功能</strong>--%>
-                                                                <%--</p>--%>
-                                                                <%--<p>--%>
-                                                                    <%--基本功能已经实现--%>
-                                                                <%--</p>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                    <%--</div>--%>
-                                                    <%--<div class="timeline-item">--%>
-                                                        <%--<div class="row">--%>
-                                                            <%--<div class="col-xs-3 date ui-sortable">--%>
-                                                                <%--<i class="fa fa-briefcase"></i> 11:00--%>
-                                                                <%--<br>--%>
-                                                                <%--<small class="text-navy">刘宇航</small>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="col-xs-7 content ui-sortable">--%>
-                                                                <%--<p class="m-b-xs"><strong>完成注册功能</strong>--%>
-                                                                <%--</p>--%>
-                                                                <%--<p>--%>
-                                                                    <%--可能还又一些问题--%>
-                                                                <%--</p>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                    <%--</div>--%>
-                                                    <%--<div class="timeline-item">--%>
-                                                        <%--<div class="row">--%>
-                                                            <%--<div class="col-xs-3 date ui-sortable">--%>
-                                                                <%--<i class="fa fa-briefcase"></i> 11:00--%>
-                                                                <%--<br>--%>
-                                                                <%--<small class="text-navy">张惠雨</small>--%>
-                                                            <%--</div>--%>
-                                                            <%--<div class="col-xs-7 content ui-sortable">--%>
-                                                                <%--<p class="m-b-xs"><strong>完成改密功能</strong>--%>
-                                                                <%--</p>--%>
-                                                                <%--<p>--%>
-                                                                    <%--应该挺好的--%>
-                                                                <%--</p>--%>
-                                                            <%--</div>--%>
-                                                        <%--</div>--%>
-                                                    <%--</div>--%>
-                                                <%--</div>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
                                         <div class="col-sm-7 ui-sortable">
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
@@ -532,7 +435,10 @@
                                                                         </s:iterator>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-4">   <button id="iter_manager" class="btn btn-primary" style="display: none">管理迭代</button> </div>
+                                                                <div class="col-md-4">
+                                                                    <button id="iter_add" class="btn btn-primary" style="display: none">导入功能点</button>
+                                                                    <button id="iter_del" class="btn btn-danger" style="display: none">删除功能点</button>
+                                                                </div>
                                                             </div>
                                                             <div class="bootstrap-table">
                                                                 <table id="FunctionList" data-toggle="table"

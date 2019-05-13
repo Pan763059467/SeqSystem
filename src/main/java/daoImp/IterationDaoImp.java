@@ -26,6 +26,9 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
             e.printStackTrace();
             before = "未分配";
         }
+        if (before.equals(person_name)){
+            return false;
+        }
         update(sql1,person_name,id_catalog);
         String after = person_name;
         Timestamp date = new Timestamp(new java.util.Date().getTime());
