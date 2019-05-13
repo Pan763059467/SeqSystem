@@ -70,20 +70,19 @@
         <ol class="breadcrumb" style="margin-left: 55px">
             <li style="font-size: 15px">
                 <strong>
-                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="structure-getcommon"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="structure-getpersonal"><span class="lzf_b" style="color:#658387">个人构件库></span></a> >> <a href="structure-newCase">编辑用例构件</a>
+                    <a href="user-jmpHomepage"><span class="lzf_b" style="color:#658387">首页</span></a> >> <a href="structure-getcommon"><span class="lzf_b" style="color:#658387">构件库</span></a> >> <a href="structure-getpersonal"><span class="lzf_b" style="color:#658387">个人构件库></span></a> >> <a href="structure-newCase?id=${requestScope.id}&newName=${requestScope.title}">编辑用例构件</a>
                 </strong>
             </li>
         </ol>
     </div>
     <div>
         <div class="ibox-content form-horizontal content cataloNotNoneContent gray-bg">
-
-    <div id="main" style="margin-top:10px;margin-left: 5%;margin-right: 5%" class="white-bg">
+            <div id="main" style="margin-top:10px;margin-left: 5%;margin-right: 5%" class="white-bg">
 
   	    <div class="form-group" style="margin-right: 5px;margin-left: 5px">
         <label class="col-sm-2 control-label" style="text-align: left">功能点名称：</label>
         <div class="col-sm-8" style="margin-top: 3px">
-            <input type="email" name="funName" id="funName"  class="form-control dis" value="${requestScope.title}">
+            <input type="email" name="funName" id="funName"  class="form-control dis" >
         </div>
     </div>
         <div class="form-group" style="margin-right: 5px;margin-left: 5px">
@@ -260,11 +259,11 @@
             </div>
         </div>
     </div>
-    </div>
+        </div>
         <div style="text-align: center">
             <button class="btn btn-primary btn-lg" onclick="Create()" type="button">确认编辑</button>
         </div>
-</div>
+    </div>
 </div>
 
 </body>
