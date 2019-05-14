@@ -473,21 +473,21 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String jmpProjectInfo() {
-//        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
-//        DocumentDao documentDao = new DocumentDaoImp();
-//        ProjectEntity pro = (ProjectEntity) session.get("project");
-//        int version2 = documentDao.getVersion(pro.getId_Project());
-//        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
-//        ActionContext.getContext().getValueStack().set("list2",list2);
-//        List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
-//        ActionContext.getContext().getValueStack().set("list3",list3);
-//        projectDao = new ProjectDaoImp();
-//        project = projectDao.getOne(pro.getId_Project());
-//        List<UserEntity> members = projectDao.getMember(project);
-//        ActionContext.getContext().getValueStack().set("list_members",members);
-//        iterationDao = new IterationDaoImp();
-//        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
-//        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
+        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+        DocumentDao documentDao = new DocumentDaoImp();
+        ProjectEntity pro = (ProjectEntity) session.get("project");
+        int version2 = documentDao.getVersion(pro.getId_Project());
+        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list2",list2);
+        List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list3",list3);
+        projectDao = new ProjectDaoImp();
+        project = projectDao.getOne(pro.getId_Project());
+        List<UserEntity> members = projectDao.getMember(project);
+        ActionContext.getContext().getValueStack().set("list_members",members);
+        iterationDao = new IterationDaoImp();
+        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
+        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
         return "projectInformation";
 
     }

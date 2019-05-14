@@ -38,7 +38,7 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
     @Override
     public List<IterationEntity> getFunctionTask(int id_project, int version) {
         String sql1 = "select * from view_iteration where ID_DOCUMENT = ? and PERSON is not null";
-        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ? and TYPE = 3";
         int id_doument = getForValue(sql2,id_project,version);
         List<IterationEntity> list = getForList(sql1,id_doument);
         return list;
@@ -47,10 +47,13 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
     @Override
     public List<IterationEntity> getFunctionList(int id_project, int version) {
         String sql1 = "select * from view_iteration where ID_TEMPLATE = 3 and ID_DOCUMENT = ?";
-        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
-        int id_doument = getForValue(sql2,id_project,version);
-        List<IterationEntity> list = getForList(sql1,id_doument);
-        return list;
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ? and TYPE = 3";
+        if (version != 0){
+            int id_doument = getForValue(sql2,id_project,version);
+            List<IterationEntity> list = getForList(sql1,id_doument);
+            return list;
+        }
+        return null;
     }
 
     @Override

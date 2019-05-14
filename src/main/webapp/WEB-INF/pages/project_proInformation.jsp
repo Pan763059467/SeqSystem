@@ -386,8 +386,11 @@
                                                 <div class="ibox-title">
                                                     <h5>任务栏</h5>
                                                     <div class="ibox-tools">
+                                                        <s:if test='#session.project.state==1'>
+                                                            <s:if test="#session.rank==3">
                                                         <button class="label label-warning"  data-toggle="modal" data-target="#Task" type="submit">分配任务</button>
-
+                                                            </s:if>
+                                                        </s:if>
                                                     </div>
                                                 </div>
                                                 <div class="bootstrap-table">
@@ -444,7 +447,12 @@
                                 </div>
                                 <div class="tab-pane" id="tab-4">
                                     <div id="managerProject">
-                                        <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                        <s:if test='#session.version!=0'>
+                                            <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                        </s:if>
+                                        <s:else>
+                                            该项目下暂无需求文档
+                                        </s:else>
                                     </div>
                                     <div class="bootstrap-table" >
                                         <div class="wrapper wrapper-content" style="margin: 10px 0px 10px 0px">
@@ -630,47 +638,47 @@
     var discuss="";
 
 
-    // $.ajax(
-    //     {
-    //         type:"get",
-    //         url: "project-getFunctionList",
-    //         data: {
-    //             Id_Project: id_Project,
-    //             version: version3
-    //         },
-    //         dataType:"json",
-    //         success:function(json){
-    //             var FunctionList = JSON.parse(json.FunctionList);
-    //             $('#FunctionList').bootstrapTable('load',FunctionList);
-    //         },
-    //         error:function(){
-    //             swal({
-    //                 icon: "error"
-    //             });
-    //         }
-    //     }
-    // );
-    //
-    // $.ajax(
-    //     {
-    //         type:"get",
-    //         url: "project-getTaskList",
-    //         data: {
-    //             Id_Project: id_Project,
-    //             version: version3
-    //         },
-    //         dataType:"json",
-    //         success:function(json){
-    //             var TaskList = JSON.parse(json.TaskList);
-    //             $('#TaskList').bootstrapTable('load',TaskList);
-    //         },
-    //         error:function(){
-    //             swal({
-    //                 icon: "error"
-    //             });
-    //         }
-    //     }
-    // );
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getFunctionList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var FunctionList = JSON.parse(json.FunctionList);
+                $('#FunctionList').bootstrapTable('load',FunctionList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getTaskList",
+            data: {
+                Id_Project: id_Project,
+                version: version3
+            },
+            dataType:"json",
+            success:function(json){
+                var TaskList = JSON.parse(json.TaskList);
+                $('#TaskList').bootstrapTable('load',TaskList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
 </script>
 <script>
     var id_Project = "<s:property value="#session.project.id_Project"/>";

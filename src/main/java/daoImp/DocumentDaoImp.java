@@ -60,7 +60,7 @@ public class DocumentDaoImp extends DAO<DocumentEntity> implements DocumentDao {
     @Override
     public int getVersion(int id) {
         try {
-            String sql = "select max(VERSION) from DOCUMENT where ID_PROJECT = ?";
+            String sql = "select max(VERSION) from DOCUMENT where ID_PROJECT = ? and TYPE = 3";
             int version = Integer.valueOf(getForValue(sql,id).toString());
             return version;
         }

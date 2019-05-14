@@ -10,9 +10,18 @@ public class Iteration_2DaoImp extends DAO<Iteration_2Entity> implements Iterati
     @Override
     public List<Iteration_2Entity> getList(int id_project, int version) {
         String sql1 = "select * from iteration where ID_DOCUMENT = ?";
-        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ?";
-        int id_doument = getForValue(sql2,id_project,version);
-        List<Iteration_2Entity> list = getForList(sql1,id_doument);
+        String sql2 = "select ID_DOCUMENT from document where ID_PROJECT = ? and VERSION = ? and TYPE = 3";
+        int id_document = 0;
+        List<Iteration_2Entity> list = null;
+        try {
+            id_document = getForValue(sql2,id_project,version);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (id_document != 0){
+            list = getForList(sql1,id_document);
+        }
         return list;
     }
 }
