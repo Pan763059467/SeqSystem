@@ -95,17 +95,7 @@
         <br/>
     </div>
 
-    <div class="form-group has-feedback">
-        <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u12.png" style="height: 18px;width: 20px"></button>　文档名称 <span style="color: red">*</span></label>
-            <div class="col-sm-4">
-            <input type="text"  id="docName" class="form-control" maxlength="30" placeholder="请输入文档名称（必填）" required="true"/>
-            <i id="warning2"></i>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <br/>
-    </div>
 
     <div class="form-group">
         <label class="control-label col-sm-3"><button class="btn-circle btn-default"><img src="<%=basePath %>img/u13.png" style="height: 18px;width: 20px"></button>　机构名称  </label>
@@ -221,18 +211,11 @@
         else {
             $("#warning1").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
         }
-        if ($.trim(docName)==""){
-            $("#warning2").html("<i class='glyphicon glyphicon-remove pull-right' style='color: red'>必填项!</i>");
-            return;
-        }
-        else {
-            $("#warning2").html("<i class='glyphicon glyphicon-ok-sign pull-right' style='color: green'></i>");
-        }
         var r = document.getElementById("orgList").value;
         $.ajax({
             url: "project-create_test",
             data: {
-                name: $("input#proName").val(), document_Name: $("input#docName").val(),
+                name: $("input#proName").val(),
                 id_Organization: r, intro: $("textarea#intro").val()
             },
             dataType: "json",
@@ -242,61 +225,61 @@
                 if(result.points >= ${sessionScope.Mpoint5}) {
                     if (result.flag === 0) {
                         if(result.exist === true) {
-                        if(result.belong === true) {
-                        //if (result.res === true) {
-                            swal(
-                                {
-                                    title: "您确认创建吗？",
-                                    text: "创建项目将会扣除"+"${sessionScope.Mpoint5}"+"积分",
-                                    type: "",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#18a689",
-                                    confirmButtonText: "确定",
-                                    cancelButtonText: "取消",
-                                    closeOnConfirm: false
-                                }, function () {
-                                    $.ajax({
-                                        url: "project-create",
-                                        data: {
-                                            name: $("input#proName").val(), document_Name: $("input#docName").val(),
-                                            id_Organization: r, intro: $("textarea#intro").val()
-                                        },
-                                        dataType: "json",
-                                        type: "Post",
-                                        async: "false",
-                                        success: function (result) {
-                                            if (result.res === true) {
-                                                swal(
-                                                    {
-                                                        title: "创建成功",
-                                                        text: "点击跳转至当前项目列表",
-                                                        type: "success",
-                                                        confirmButtonColor: "#18a689",
-                                                        confirmButtonText: "OK"
-                                                    },function () {
-                                                    location.href = "user-jmpCurrentProjectList";
-                                                })
-                                            }
-                                            else {
+                            if(result.belong === true) {
+                                //if (result.res === true) {
+                                swal(
+                                    {
+                                        title: "您确认创建吗？",
+                                        text: "创建项目将会扣除"+"${sessionScope.Mpoint5}"+"积分",
+                                        type: "",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#18a689",
+                                        confirmButtonText: "确定",
+                                        cancelButtonText: "取消",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        $.ajax({
+                                            url: "project-create",
+                                            data: {
+                                                name: $("input#proName").val(),
+                                                id_Organization: r, intro: $("textarea#intro").val()
+                                            },
+                                            dataType: "json",
+                                            type: "Post",
+                                            async: "false",
+                                            success: function (result) {
+                                                if (result.res === true) {
+                                                    swal(
+                                                        {
+                                                            title: "创建成功",
+                                                            text: "点击跳转至当前项目列表",
+                                                            type: "success",
+                                                            confirmButtonColor: "#18a689",
+                                                            confirmButtonText: "OK"
+                                                        },function () {
+                                                            location.href = "user-jmpCurrentProjectList";
+                                                        })
+                                                }
+                                                else {
+                                                    showtoast("error", "创建失败", "操作失败");
+                                                }
+                                            },
+                                            error: function (result) {
                                                 showtoast("error", "创建失败", "操作失败");
                                             }
-                                        },
-                                        error: function (result) {
-                                            showtoast("error", "创建失败", "操作失败");
-                                        }
-                                })
-                                }
-                            )
-                       // }
-                       //  else {
-                       //     showtoast("error", "创建失败", "操作失败");
-                       // }
-                    }else{
-                        swal("您未加入该机构！", "请重新选择机构", "error")
-                    }
-                    }else{
-                        swal("您输入的机构不存在！", "请重新选择机构", "error")
-                    }
+                                        })
+                                    }
+                                )
+                                // }
+                                //  else {
+                                //     showtoast("error", "创建失败", "操作失败");
+                                // }
+                            }else{
+                                swal("您未加入该机构！", "请重新选择机构", "error")
+                            }
+                        }else{
+                            swal("您输入的机构不存在！", "请重新选择机构", "error")
+                        }
                     } else {
                         swal("您选择的机构已封停！", "请联系机构管理员", "error")
                     }

@@ -41,6 +41,8 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private int documentId;
     private UserDao userDao;
     private UserEntity user;
+    private int DocType;
+    private SGroupDao sGroupDao;
     private String iter_name;
     private int version;
     private int catalog;
@@ -382,18 +384,20 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     public String createDoc() {
         dataMap = new HashMap<String, Object>();
         int Id_Project = (Integer)request.get("id_Project");
+        String DocName = (request.get("name")).toString();
+        DocType = (Integer) request.get("DocType");
         UserEntity user = (UserEntity)ActionContext.getContext().getSession().get("user");
         int ID_User = user.getId_user();
         Timestamp time = new Timestamp(new java.util.Date().getTime());
         DocumentDao documentDao = new DocumentDaoImp();
-        int version = documentDao.getVersion(Id_Project)+1;
-        int id_document=documentDao.getDocumentId(Id_Project);
-        int new_idDocument = documentDao.create(Id_Project,version,time,ID_User);
-        if (id_document != -1){
-            projectDao = new ProjectDaoImp();
-            projectDao.copyAll(id_document,new_idDocument,version);
+        boolean already = false;
+        sGroupDao = new SGroupDaoImp();
+        already = sGroupDao.has(Id_Project,DocType);
+        if(already == false){
+            int new_idDocument = documentDao.create(Id_Project,1,time,ID_User,DocName,DocType);
+            dataMap.put("id",new_idDocument);
         }
-        dataMap.put("id",new_idDocument);
+        else dataMap.put("already",true);
         return SUCCESS;
     }
 
@@ -469,21 +473,21 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     }
 
     public String jmpProjectInfo() {
-        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
-        DocumentDao documentDao = new DocumentDaoImp();
-        ProjectEntity pro = (ProjectEntity) session.get("project");
-        int version2 = documentDao.getVersion(pro.getId_Project());
-        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
-        ActionContext.getContext().getValueStack().set("list2",list2);
-        List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
-        ActionContext.getContext().getValueStack().set("list3",list3);
-        projectDao = new ProjectDaoImp();
-        project = projectDao.getOne(pro.getId_Project());
-        List<UserEntity> members = projectDao.getMember(project);
-        ActionContext.getContext().getValueStack().set("list_members",members);
-        iterationDao = new IterationDaoImp();
-        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
-        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
+//        Iteration_2Dao iteration2Dao = new Iteration_2DaoImp();
+//        DocumentDao documentDao = new DocumentDaoImp();
+//        ProjectEntity pro = (ProjectEntity) session.get("project");
+//        int version2 = documentDao.getVersion(pro.getId_Project());
+//        List<Iteration_2Entity> list2 = iteration2Dao.getList(pro.getId_Project(),version2);
+//        ActionContext.getContext().getValueStack().set("list2",list2);
+//        List<DocumentEntity> list3 = documentDao.getAll2(pro.getId_Project(),version2);
+//        ActionContext.getContext().getValueStack().set("list3",list3);
+//        projectDao = new ProjectDaoImp();
+//        project = projectDao.getOne(pro.getId_Project());
+//        List<UserEntity> members = projectDao.getMember(project);
+//        ActionContext.getContext().getValueStack().set("list_members",members);
+//        iterationDao = new IterationDaoImp();
+//        List<IterationEntity> functionList2 = iterationDao.getFunctionList(pro.getId_Project(),version2);
+//        ActionContext.getContext().getValueStack().set("list_functions",functionList2);
         return "projectInformation";
 
     }
@@ -577,18 +581,12 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
 
     public String getDocument(){
         dataMap = new HashMap<String, Object>();
-        DocumentDao documentDao = new DocumentDaoImp();
+        SGroupDao sgroupDao = new SGroupDaoImp();
 
         try {
-            List<DocumentEntity> list = documentDao.getAll(project.getId_Project());
-            int addOrNot=1;//1为可编辑，0为不可编辑
-            if(list.size()!=0&&list.get(0).getState()==0)//有未发布文档，不可编辑
-            {
-                addOrNot=0;
-            }
+            List<SGroupEntity> list = sgroupDao.getAll(project.getId_Project());
             Gson gson = new Gson();
             String jsonString = gson.toJson(list);
-            dataMap.put("addOrNot",addOrNot);
             dataMap.put("res", jsonString);
         }catch (Exception e){
             e.printStackTrace();
@@ -745,6 +743,22 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public void prepare() throws Exception {
         project = new ProjectEntity();
+    }
+
+    public int getDocType() {
+        return DocType;
+    }
+
+    public void setDocType(int docType) {
+        DocType = docType;
+    }
+
+    public SGroupDao getsGroupDao() {
+        return sGroupDao;
+    }
+
+    public void setsGroupDao(SGroupDao sGroupDao) {
+        this.sGroupDao = sGroupDao;
     }
 
     public Date getStart() {

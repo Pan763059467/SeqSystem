@@ -31,4 +31,5 @@ public interface ProjectDao {
     boolean exist(String org_name);
     boolean belong(String org_name,int id_user);
     boolean newIter(int id_project,String iter_name,int version);
+    boolean isIn(int id_user,int id_project);
 }

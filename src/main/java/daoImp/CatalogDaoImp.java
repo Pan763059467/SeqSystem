@@ -8,6 +8,7 @@ import entity.UserEntity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -265,31 +266,15 @@ public class CatalogDaoImp extends DAO<CatalogEntity> implements CatalogDao {
     }
 
     @Override
-    public void saveLib(int id_template,String roleName,String content) {
-        String sql;
-        if (id_template == 1) {
-            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",'图文','" + createDate + "',0,?,?);";
-            try {
-                update(sql, id_template, content);
+    public void saveLib(int id_user, int id_template, String content) {
+        String sql = "insert into pri_structure(ID_USER,CreationTime,ID_TEMPLATE,CONTENT) value(?,?,?,?)";
+        java.util.Date dateStr = new java.util.Date();
+        String date= new SimpleDateFormat("yyyy-MM-dd").format(dateStr);
+        try{
+            update(sql,id_user,date,id_template,content);
 
-            } catch (Exception e) {
-            }
-        } else if (id_template == 2) {
-            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",?,'" + createDate + "',0,?,?);";
-            try {
-                update(sql, roleName,id_template,content);
-
-            } catch (Exception e) {
-            }
-        } else {
-            sql = "insert into pri_structure(ID_USER,NAME,CreationTime,flag,id_template,CONTENT) values(" + ID_User + ",?,'" + createDate + "',0,?,?);";
-            try {
-                update(sql,roleName,id_template,content);
-
-            } catch (Exception e) {
-            }
+        }catch (Exception e){
         }
-
     }
 
 }

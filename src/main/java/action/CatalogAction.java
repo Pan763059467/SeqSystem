@@ -42,7 +42,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private int place;
     private String title;
     private String content;
-    private int id_lib;
+    private int id_template;
     private int  id_catalog;
     private int structureId;
     private String describe;
@@ -50,6 +50,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private  int projectId;
     private int state;
     private int rank;
+    private int type;
     private int index;
     private int layer;
     private String funName;
@@ -60,6 +61,17 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     private String alternative;
     private String funRoleList;
     private String funUsableList;
+    private String stakeHolderList;
+    private String features;
+    private String quality;
+    private String schedule;
+    private String cost;
+    private String staff;
+    private String constraintList;
+    private String featureList;
+    private String purpose;
+    private String premise;
+    private String testCaseList;
     private InputStream pdfStream;
     private InputStream rtfStream;
     private String appname;
@@ -147,6 +159,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         session.put("projectId",projectId);
         request.put("state",state);
         request.put("rank",rank);
+        request.put("type",type);
         return "document";
     }
 
@@ -305,6 +318,19 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
             webmainEntity entity = gson.fromJson(catalogEntity.getContent(), webmainEntity.class);
             dataMap.put("entity", entity);
         }
+        else if(catalogEntity.getId_template() == 12){
+            StakeHolderEntity entity = gson.fromJson(catalogEntity.getContent(), StakeHolderEntity.class);
+            dataMap.put("entity", entity);
+        }else if(catalogEntity.getId_template() == 13){
+            ProgramConstraint entity = gson.fromJson(catalogEntity.getContent(), ProgramConstraint.class);
+            dataMap.put("entity", entity);
+        } else if(catalogEntity.getId_template() == 14){
+            Release entity = gson.fromJson(catalogEntity.getContent(), Release.class);
+            dataMap.put("entity", entity);
+        }else if(catalogEntity.getId_template() == 16){
+            TestEntity entity = gson.fromJson(catalogEntity.getContent(), TestEntity.class);
+            dataMap.put("entity", entity);
+        }
             dataMap.put("template", templateEntity);
             //这个包括目录
             dataMap.put("catalogEntity", catalogEntity);
@@ -345,9 +371,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         CommonStructureEntity structureEntity=new CommonStructureEntity(content);
         Gson gson = new Gson();
-        int id_template=1;
-        catalogDao.saveLib(id_template,content,gson.toJson(structureEntity));
-        System.out.println(id_template);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(structureEntity));
         return "Re";
     }
 
@@ -364,9 +389,9 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         CatalogDao catalogDao=new CatalogDaoImp();
         UserStructureEntity structureEntity=new UserStructureEntity(content,describe,permissions);
         Gson gson = new Gson();
-        System.out.println(content);
-        int id_template=2;
-        catalogDao.saveLib(id_template,content,gson.toJson(structureEntity));
+        System.out.println(gson.toJson(structureEntity));
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(structureEntity));
         return "Re";
     }
 
@@ -409,8 +434,8 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         List<FunRole> funRoles;
         funRoles=gson.fromJson(funRoleList,type);
         FunStructureEntity funStructureEntity=new FunStructureEntity(funName,priority,content,funRoles,funUsables,inDiv,outDiv,basic,alternative);
-        int id_template=3;
-        catalogDao.saveLib(id_template,funName,gson.toJson(funStructureEntity));
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(funStructureEntity));
         return "Re";
     }
 
@@ -478,6 +503,99 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         catalogDao.saveContent(id_catalog,gson.toJson(structureEntity));
         return "Re";
     }
+
+    public String saveTemplateTwelve(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<StakeHolder>>() {}.getType();
+        List<StakeHolder> stakeHolder;
+        stakeHolder=gson.fromJson(stakeHolderList,type);
+        StakeHolderEntity stakeHolderEntity=new StakeHolderEntity(stakeHolder);
+        catalogDao.saveContent(id_catalog,gson.toJson(stakeHolderEntity));
+        return "Re";
+    }
+
+    public String saveLibTwelve(){
+        UserEntity User=(UserEntity)session.get("user");
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<StakeHolder>>() {}.getType();
+        List<StakeHolder> stakeHolder;
+        stakeHolder=gson.fromJson(stakeHolderList,type);
+        StakeHolderEntity stakeHolderEntity=new StakeHolderEntity(stakeHolder);
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(stakeHolderEntity));
+        return "Re";
+    }
+
+    public String saveTemplateThirteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Constraint>>() {}.getType();
+        List<Constraint> constraint;
+        constraint=gson.fromJson(constraintList,type);
+        ProgramConstraint programConstraint=new ProgramConstraint(features,quality,schedule,cost,staff,constraint);
+        catalogDao.saveContent(id_catalog,gson.toJson(programConstraint));
+        return "Re";
+    }
+
+    public String saveLibThirteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Constraint>>() {}.getType();
+        List<Constraint> constraint;
+        constraint=gson.fromJson(constraintList,type);
+        ProgramConstraint programConstraint=new ProgramConstraint(features,quality,schedule,cost,staff,constraint);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(programConstraint));
+        return "Re";
+    }
+
+    public String saveTemplateFourteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Feature>>() {}.getType();
+        List<Feature> feature;
+        feature=gson.fromJson(featureList,type);
+        Release release=new Release(feature);
+        catalogDao.saveContent(id_catalog,gson.toJson(release));
+        return "Re";
+    }
+
+    public String saveLibFourteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<Feature>>() {}.getType();
+        List<Feature> feature;
+        feature=gson.fromJson(featureList,type);
+        Release release=new Release(feature);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(release));
+        return "Re";
+    }
+
+    public String saveTemplateSixteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<TestCase>>() {}.getType();
+        List<TestCase> testCases;
+        testCases=gson.fromJson(testCaseList,type);
+        TestEntity testEntity=new TestEntity(describe,purpose,premise,testCases);
+        catalogDao.saveContent(id_catalog,gson.toJson(testEntity));
+        return "Re";
+    }
+
+    public String saveLibSixteen(){
+        Gson gson=new Gson();
+        CatalogDao catalogDao=new CatalogDaoImp();
+        Type type= new TypeToken<ArrayList<TestCase>>() {}.getType();
+        List<TestCase> testCases;
+        testCases=gson.fromJson(testCaseList,type);
+        TestEntity testEntity=new TestEntity(describe,purpose,premise,testCases);
+        UserEntity User=(UserEntity)session.get("user");
+        catalogDao.saveLib(User.getId_user(),id_template,gson.toJson(testEntity));
+        return "Re";
+    }
+
     public String getUsable(){
         UsableDao usableDao=new UsableDaoImp();
         List<UsableEntity> usableEntityList=usableDao.getUsable();
@@ -606,9 +724,10 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
         this.content = content;
     }
 
-    public void setId_lib(int id_lib) {
-        this.id_lib = id_lib;
+    public void setId_template(int id_template) {
+        this.id_template = id_template;
     }
+
 
     public void setId_catalog(int id_catalog) {
         this.id_catalog = id_catalog;
@@ -813,6 +932,55 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public void setWebsummary(String websummary) {
         this.websummary = websummary;
     }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setStakeHolderList(String stakeHolderList) {
+        this.stakeHolderList = stakeHolderList;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setStaff(String staff) {
+        this.staff = staff;
+    }
+
+    public void setConstraintList(String constraintList) {
+        this.constraintList = constraintList;
+    }
+
+    public void setFeatureList(String featureList) {
+        this.featureList = featureList;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public void setPremise(String premise) {
+        this.premise = premise;
+    }
+
+    public void setTestCaseList(String testCaseList) {
+        this.testCaseList = testCaseList;
+    }
+
     @Override
     public void prepare() throws Exception {
 

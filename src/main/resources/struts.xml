@@ -158,7 +158,7 @@
                 <param name="root">dataMap</param>
             </result>
         <interceptor-ref name="myStack"/>
-            <allowed-methods>getTitle,doc_image,saveLibOne,saveLibThree,saveLibTwo,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateFour,saveTemplateFive,saveTemplateSix,saveTemplateSeven,saveTemplateEight,saveTemplateNine,saveTemplateTen,saveTemplateEleven,getUsable,getSecurity</allowed-methods>
+            <allowed-methods>getTitle,doc_image,saveLibOne,saveLibThree,saveLibTwo,saveLibTwelve,saveLibThirteen,saveLibFourteen,saveLibSixteen,jmpOrgTemplate,generateContract,generateContractRtf,getIndex,jmpTemplate,addState1,addState2,up,down,newCatalog,getCatalog,rename,getRoleCount,saveTemplateOne,saveTemplateThree,saveTemplateTwo,saveTemplateFour,saveTemplateFive,saveTemplateSix,saveTemplateSeven,saveTemplateEight,saveTemplateNine,saveTemplateTen,saveTemplateEleven,saveTemplateTwelve,saveTemplateThirteen,saveTemplateFourteen,saveTemplateSixteen,getUsable,getSecurity</allowed-methods>
         </action>
 
         <action name="commonStructureId-*" class="action.CommonStructureIdAction" method="{1}">
@@ -195,6 +195,16 @@
          <interceptor-ref name="myStack"/>
             <allowed-methods>task_per,getTaskList,edit_time,edit_pri,edit_per,edit_iter,showVersion,displayIteration,getFunctionTrack,edit_stage,edit_w_hours,edit_f_hours,getContent,jmpFunctionInfo,getFunctionInfo,getFunctionList,newIteration,modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
         </action>
+
+        <action name="sgroup-*" class="action.SGroupAction" method="{1}">
+            <result name="success" type="json">
+                <param name="root">dataMap</param>
+            </result>
+            <result name="sGroupInformation">/WEB-INF/pages/project_groInformation.jsp</result>
+            <interceptor-ref name="myStack"/>
+            <allowed-methods>getSGroupInfo,jmpSGroupInfo,getSGroupMember,inviteMember,getDocument,createDoc,alterPM,setVPM,dismissVPM,deleteMember</allowed-methods>
+        </action>
+
 
         <action name="library-*" class="action.LibraryAction" method="{1}">
             <result name="success" type="json">
