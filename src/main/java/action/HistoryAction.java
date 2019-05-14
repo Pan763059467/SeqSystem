@@ -41,7 +41,6 @@ public class HistoryAction extends ActionSupport implements RequestAware, Sessio
         return "showHistory";
     }
 
-
     @Override
     public void setSession(Map<String, Object> session) {
         this.session = session;

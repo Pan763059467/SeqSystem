@@ -64,6 +64,6 @@ public interface CatalogDao {
 
     List<CatalogEntity> getAllByDocument(int id_document);
 
-    void saveLib(int id_template, String content, String roleName);
+    void saveLib(int id_user,int id_template,String content);
 
 }
