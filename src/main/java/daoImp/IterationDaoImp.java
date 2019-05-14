@@ -18,15 +18,13 @@ public class IterationDaoImp extends DAO<IterationEntity> implements IterationDa
         String sql1 = "update iteration_2 set PERSON = ? where id_catalog = ?";
         String sql2 = "select PERSON from iteration_2 where id_catalog = ?";
         String sql3 = "insert into track(ID_CATALOG,USER_NAME,DATE,WHERE1,BEFORE1,AFTER1) values(?,?,?,?,?,?)";
-        String before;
+        String before = "未分配";
         try {
-            before = "未分配";
             before = getForValue(sql2,id_catalog);
         } catch (Exception e) {
             e.printStackTrace();
-            before = "未分配";
         }
-        if (before.equals(person_name)){
+        if (before == person_name){
             return false;
         }
         update(sql1,person_name,id_catalog);

@@ -327,7 +327,7 @@
                         <div class="panel-heading">
                             <div class="panel-options">
                                 <ul class="nav nav-tabs">
-                                    <li >
+                                    <li class="active">
                                         <a href="#tab-1" data-toggle="tab">文档管理</a>
                                     </li>
                                     <li>
@@ -339,7 +339,7 @@
                                     <li>
                                         <a href="#tab-4" data-toggle="tab">项目管理</a>
                                     </li>
-                                    <li class="active">
+                                    <li>
                                         <a href="#tab-5" data-toggle="tab">项目总览</a>
                                     </li>
                                 </ul>
@@ -349,7 +349,7 @@
                         <div class="panel-body">
 
                             <div class="tab-content">
-                                <div class="tab-pane active" id="tab-5">
+                                <div class="tab-pane" id="tab-5">
                                     <div class="panel-body">
                                         <div class="col-sm-7 ui-sortable">
                                             <div class="ibox float-e-margins">
@@ -435,10 +435,10 @@
                                                                         </s:iterator>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <button id="iter_add" class="btn btn-primary" style="display: none">导入功能点</button>
-                                                                    <button id="iter_del" class="btn btn-danger" style="display: none">删除功能点</button>
-                                                                </div>
+                                                                <%--<div class="col-md-4">--%>
+                                                                    <%--<button id="iter_add" class="btn btn-primary" style="display: none">导入功能点</button>--%>
+                                                                    <%--<button id="iter_del" class="btn btn-danger" style="display: none">删除功能点</button>--%>
+                                                                <%--</div>--%>
                                                             </div>
                                                             <div class="bootstrap-table">
                                                                 <table id="FunctionList" data-toggle="table"
@@ -523,7 +523,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane " id="tab-1">
+                                <div class="tab-pane active" id="tab-1">
 
                                     <div id="toolbar2">
 <s:if test='#session.project.state==1'>

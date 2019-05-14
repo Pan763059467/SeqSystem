@@ -233,7 +233,6 @@ $("button#edit_iter").click(function (){
                 cancelButtonText: "取消",
                 closeOnConfirm: false
             }, function () {
-                alert(iter);
                 $.ajax({
                     url: "project-edit_iter",
                     data: {
