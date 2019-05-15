@@ -15,9 +15,8 @@ public class Iteration_2DaoImp extends DAO<Iteration_2Entity> implements Iterati
         List<Iteration_2Entity> list = null;
         try {
             id_document = getForValue(sql2,id_project,version);
-
         }catch (Exception e){
-            e.printStackTrace();
+            return list;
         }
         if (id_document != 0){
             list = getForList(sql1,id_document);
