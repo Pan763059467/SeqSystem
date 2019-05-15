@@ -209,6 +209,10 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
     @Override
     public boolean copyAll(int id_document,int new_idDocument, int version) {
         System.out.println("start");
+        String sql1 = "select document_name from DOCUMENT where id_document = ?";
+        String sql2 = "select type from DOCUMENT where id_document = ?";
+        String sql3 = "update DOCUMENT set document_name = ?  where id_document = ?";
+        String sql4 = "update DOCUMENT set type = ? where id_document = ?";
         CatalogDao catalogDao=new CatalogDaoImp();
         try {
             List<CatalogEntity> catalogEntityList=catalogDao.getAllByDocument(id_document);
@@ -217,11 +221,18 @@ public class ProjectDaoImp extends DAO<ProjectEntity> implements ProjectDao {
                 catalogEntity=catalogEntityList.get(i);
                 catalogDao.insert(catalogEntity.getId_template(),new_idDocument,catalogEntity.getTitle(),catalogEntity.getFirst_index(),catalogEntity.getSecond_index(),catalogEntity.getThird_index(),catalogEntity.getFourth_index());
             }
+            String name = getForValue(sql1,id_document);
+            int type = getForValue(sql2,id_document);
+            update(sql3,name,new_idDocument);
+            update(sql4,type,new_idDocument);
         }
         catch (Exception e){
             System.out.println("exception:"+e);
             String sql="delete from CATALOG where id_document=? ";
-            update(sql,id_document,version+1);
+            update(sql,id_document);
+            String name = getForValue(sql1,id_document);
+            int type = getForValue(sql2,id_document);
+            update(sql3,name,type,new_idDocument);
             return false;
         }
         return true;
