@@ -290,7 +290,7 @@
                                         </th>
                                     </tr>
                                     <tr >
-                                        <th style="width: 150px;text-align: center">开始时间:</th>
+                                        <th style="width: 150px;text-align: center">开始日期:</th>
                                         <th>
                                             <s:if test='#session.iter.DATA_1==null'>
                                                 <s:property value="" default="未设置"/>
@@ -411,6 +411,23 @@
             success:function(json){
                 var TrackList = JSON.parse(json.TrackList);
                 $('#TrackList').bootstrapTable('load',TrackList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getRequirmentList",
+            data:{id_catalog:id_catalog},
+            dataType:"json",
+            success:function(json){
+                var updateList = JSON.parse(json.updateList);
+                $('#updateList').bootstrapTable('load',updateList);
             },
             error:function(){
                 swal({

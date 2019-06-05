@@ -753,3 +753,83 @@ $('#TrackList').bootstrapTable({
         ]
     }
 );
+
+
+$('#updateList').bootstrapTable({
+        columns: [
+            {
+                field: 'FILED',
+                title: '变更位置',
+                sortable: true,
+                align: 'center'
+            },
+            {
+                field: 'PERSON',
+                title: '变更人',
+                sortable: true,
+                align: 'center'
+            },{
+                field: 'CONTENT',
+                title: '变更后内容',
+                align: 'center'
+            }
+        ]
+    }
+);
+
+$("button#update_req").click(function (){
+    var content =  $("input#content").val();
+    var field = $("select#chooseFiled").find("option:selected").text();
+    if(field === "" || field === null || field === "请选择") {
+        swal("更改失败！", "请选择需求更改位置", "error");
+    }
+    else if(content === "" || content === null ) {
+        swal("更改失败！", "更改内容不能为空", "error");
+    }
+    else {
+        swal(
+            {
+                title: "您确认该需求更改吗？",
+                text: "确认请点击确认",
+                type: "",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "project-update_requirement",
+                    data: {
+                        id_catalog:id_catalog,
+                        user_name:user_name,
+                        field: field,
+                        content:content
+                    },
+                    dataType: "json",
+                    type: "get",
+                    async: "false",
+                    success: function (json) {
+                        var updateList = JSON.parse(json.updateList);
+                        $('#updateList').bootstrapTable('load',updateList);
+                        if (json.res === true){
+                            swal({
+                                    title: "修改成功",
+                                    type: "success",
+                                    confirmButtonColor: "#18a689",
+                                    confirmButtonText: "OK"
+                            }, function () {
+                                    var oDiv = document.getElementById('cancel_update');
+                                    oDiv.click();
+                            })
+                        } else{
+                            swal("更改失败！", "服务器异常", "error");
+                        }
+
+                    }, error: function () {
+                        swal("更改失败！", "服务器异常", "error");
+                    }
+                })
+            })
+    }
+});
