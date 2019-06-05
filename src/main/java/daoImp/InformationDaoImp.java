@@ -16,9 +16,12 @@ public class InformationDaoImp extends DAO<InformationEntity> implements Informa
         List list1 = getForList(sql1,ID);
         String sql2 = "select * from VIEW_PROJECT_APPLY where STATE = 0 and ID_USER = ?";
         List list2 = getForList(sql2,ID);
+        String sql3 = "select * from VIEW_SGROUP_APPLY where STATE = 0 and ID_USER = ?";
+        List list3 = getForList(sql3,ID);
         List list = new ArrayList();
         list.addAll(list1);
         list.addAll(list2);
+        list.addAll(list3);
 //        System.out.println("list1:"+list1.size()+"list2:"+list2.size());
 //        while(list1.size() != 0 || list2.size() != 0){
 //            InformationEntity info1 = (InformationEntity) list1.get(0);
