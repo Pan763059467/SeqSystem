@@ -145,13 +145,13 @@
             <result name="pdf" type="stream">
                 <param name="contentType">application/pdf; charset=gb2312</param>
                 <param name="inputName">pdfStream</param>
-                <param name="contentDisposition">attachment; filename="ReqDocument.pdf"</param>
+                <param name="contentDisposition">attachment; filename="Document.pdf"</param>
                 <param name="bufferSize">2048</param>
             </result>
             <result name="rtf" type="stream">
                 <param name="contentType">application/rtf; charset=gb2312</param>
                 <param name="inputName">rtfStream</param>
-                <param name="contentDisposition">attachment; filename="ReqDocument.doc"</param>
+                <param name="contentDisposition">attachment; filename="Document.doc"</param>
                 <param name="bufferSize">2048</param>
             </result>
             <result name="RES" type="json">

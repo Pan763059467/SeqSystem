@@ -616,7 +616,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public String generateContract() {
         try {
              Template2Pdf template2Pdf = new Template2Pdf();
-             pdfStream= template2Pdf.createPdf(documentId);
+            pdfStream= template2Pdf.createPdf(documentId,type);
              pdfStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -633,7 +633,7 @@ public class CatalogAction extends ActionSupport implements RequestAware, Sessio
     public String generateContractRtf() {
         try {
             Template2rtf template2rtf = new Template2rtf();
-            rtfStream=template2rtf.createRtf(documentId);
+            rtfStream=template2rtf.createRtf(documentId,type);
             rtfStream.close();
         } catch (IOException e) {
             e.printStackTrace();
