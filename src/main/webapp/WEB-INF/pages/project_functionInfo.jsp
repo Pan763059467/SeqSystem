@@ -66,6 +66,39 @@
 <%--promp layer1--%>
 
 <%--promp layer2--%>
+
+<div  class="modal inmodal" id="update" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">更改需求</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><label>选择变更位置</label>
+                    <select id = "chooseFiled" class="form-control">
+                        <option name="" disabled  selected="selected">请选择</option>
+                        <option name="0">功能描述</option>
+                        <option name="1">用例过程</option>
+                        <option name="2">输入</option>
+                        <option name="3">输出</option>
+                        <option name="4">基本操作流程</option>
+                        <option name="5">备选操作流程</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>输入变更内容</label>
+                    <input id="content" type="text" maxlength="9999" placeholder="请输入变更内容" class="form-control" required="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel_update" type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button id="update_req" type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div  class="modal inmodal" id="Iter" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
@@ -295,7 +328,7 @@
         <div class="ibox-content modal-body" style="height: 800px">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>${sessionScope.iter.title}</h5>
+                    <h5>${sessionScope.iter.title}</h5><button class="label label-primary"  data-toggle="modal" data-target="#update" type="submit">更改需求</button>
                     <div class="col-md-2"></div>
                 </div>
                 <div class="ibox-content">
@@ -305,7 +338,9 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" href="tabs_panels.html#tab-8" aria-expanded="false"> 详细信息</a>
                                     </li>
-                                    <li><a data-toggle="tab" href="tabs_panels.html#tab-9" aria-expanded="true"> 变更历史</a>
+                                    <li><a data-toggle="tab" href="tabs_panels.html#tab-9" aria-expanded="true"> 状态变更</a>
+                                    </li>
+                                    <li><a data-toggle="tab" href="tabs_panels.html#tab-10" aria-expanded="true"> 需求变更</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content ">
@@ -331,6 +366,28 @@
                                         <div class="panel-body">
                                             <div class="bootstrap-table">
                                                 <table id="TrackList" data-toggle="table"
+                                                       data-classes="table table-no-bordered"
+                                                       data-click-to-select="true"
+                                                       data-search="true"
+                                                       data-show-refresh="true"
+                                                       data-show-toggle="true"
+                                                       data-show-columns="true"
+                                                       data-toolbar="#toolbar"
+                                                       data-query-params="quefryParams"
+                                                       data-pagination="true"
+                                                       data-halign="center"
+                                                       data-striped="true"
+                                                       data-page-size="5"
+                                                       data-height="600"
+                                                >
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tab-10" class="tab-pane ">
+                                        <div class="panel-body">
+                                            <div class="bootstrap-table">
+                                                <table id="updateList" data-toggle="table"
                                                        data-classes="table table-no-bordered"
                                                        data-click-to-select="true"
                                                        data-search="true"
@@ -416,7 +473,7 @@
                                         </th>
                                     </tr>
                                     <tr id="tr5" style="background: #FFFFFF" onmouseover="toshow5()" onmouseout="tomiss5()">
-                                        <th style="width: 150px;text-align: center">开始时间:</th>
+                                        <th style="width: 150px;text-align: center">开始日期:</th>
                                         <th id="th5">
                                             <s:if test='#session.iter.DATA_1==null'>
                                                 <s:property value="" default="未设置"/>
@@ -546,6 +603,23 @@
             success:function(json){
                 var TrackList = JSON.parse(json.TrackList);
                 $('#TrackList').bootstrapTable('load',TrackList);
+            },
+            error:function(){
+                swal({
+                    icon: "error"
+                });
+            }
+        }
+    );
+    $.ajax(
+        {
+            type:"get",
+            url: "project-getRequirmentList",
+            data:{id_catalog:id_catalog},
+            dataType:"json",
+            success:function(json){
+                var updateList = JSON.parse(json.updateList);
+                $('#updateList').bootstrapTable('load',updateList);
             },
             error:function(){
                 swal({

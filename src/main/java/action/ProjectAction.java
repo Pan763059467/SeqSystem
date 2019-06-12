@@ -56,6 +56,35 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     private String pri_before;
     private Date start;
     private Date end;
+    private String field;
+    private String content;
+
+    public String update_requirement(){
+        dataMap = new HashMap<>();
+        FunctionDao functionDao = new FunctionDaoImp();
+        System.out.println(id_catalog + user_name + field +content );
+        boolean res = functionDao.add(user_name, id_catalog, field, content);
+        dataMap.put("res",res);
+        if (res){
+            List<FunctionEntity> list = functionDao.getList(id_catalog);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            dataMap.put("updateList",json);
+        }
+        System.out.println("sdad");
+        return SUCCESS;
+    }
+
+    public String getRequirmentList(){
+        dataMap = new HashMap<>();
+        FunctionDao functionDao = new FunctionDaoImp();
+        System.out.println(id_catalog);
+        List<FunctionEntity> list = functionDao.getList(id_catalog);
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        dataMap.put("updateList",json);
+        return SUCCESS;
+    }
 
     public String task_per(){
         dataMap = new HashMap<>();
@@ -353,14 +382,14 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
         dataMap.put("points",points);
         if(points >= Npoints) {
           if (project.getId_Organization() != 0) {
-              int flag = organizationDao.usable(project.getId_Organization());
-              boolean res = projectDao.save(project);
-              dataMap.put("res", res);
+//              int flag = organizationDao.usable(project.getId_Organization());
+//              boolean res = projectDao.save(project);
+              dataMap.put("res", true);
               boolean exist = projectDao.exist(orgName);
               boolean belong = projectDao.belong(orgName,sessionUser.getId_user());
               dataMap.put("belong", belong);
               dataMap.put("exist", exist);
-              dataMap.put("flag", flag);
+              dataMap.put("flag", 0);
 //                }
            } else {
               dataMap.put("flag", 0);
@@ -743,6 +772,18 @@ public class ProjectAction extends ActionSupport implements RequestAware, Sessio
     @Override
     public void prepare() throws Exception {
         project = new ProjectEntity();
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getDocType() {

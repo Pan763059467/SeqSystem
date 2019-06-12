@@ -370,7 +370,7 @@
                                         <a href="#tab-4" data-toggle="tab">项目管理</a>
                                     </li>
                                     <li>
-                                        <a href="#tab-5" data-toggle="tab">项目总览</a>
+                                        <a href="#tab-5" data-toggle="tab">任务栏</a>
                                     </li>
                                 </ul>
                             </div>
@@ -448,7 +448,7 @@
                                 <div class="tab-pane" id="tab-4">
                                     <div id="managerProject">
                                         <s:if test='#session.version!=0'>
-                                            <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>新建迭代</button>
+                                            <button id="now" class="btn btn-success" class="btn btn-success" data-toggle="modal" data-target="#chooseVersion"><i class="fa"></i>当前需求版本：${sessionScope.version}</button> <button id="newIteration2" style="display: block;margin-top: 10px" class="btn btn-success" data-toggle="modal" data-target="#newIteration"><i class="fa"></i>创建迭代</button>
                                         </s:if>
                                         <s:else>
                                             该项目下暂无需求文档

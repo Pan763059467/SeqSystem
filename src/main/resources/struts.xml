@@ -193,7 +193,7 @@
             <result name="projectDocument">/mjy_index.jsp</result>
             <result name="deploy">/WEB-INF/pages/project_proInformation.jsp</result>
          <interceptor-ref name="myStack"/>
-            <allowed-methods>task_per,getTaskList,edit_time,edit_pri,edit_per,edit_iter,showVersion,displayIteration,getFunctionTrack,edit_stage,edit_w_hours,edit_f_hours,getContent,jmpFunctionInfo,getFunctionInfo,getFunctionList,newIteration,modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
+            <allowed-methods>update_requirement,getRequirmentList,task_per,getTaskList,edit_time,edit_pri,edit_per,edit_iter,showVersion,displayIteration,getFunctionTrack,edit_stage,edit_w_hours,edit_f_hours,getContent,jmpFunctionInfo,getFunctionInfo,getFunctionList,newIteration,modified,create,create_test,showOrg,chooseOrg,jmpProjectMember,jmpProjectInfo,jmpDocument,showCurrentList,showCompletedList,getProjectInfo,getProjectMember,setVPM,dismissVPM,deleteMember,inviteMember,end,alterPM,getDocument,createDoc,deploy,delete</allowed-methods>
         </action>
 
         <action name="sgroup-*" class="action.SGroupAction" method="{1}">

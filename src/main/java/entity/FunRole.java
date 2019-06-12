@@ -1,10 +1,5 @@
 package entity;
 
-/**
- * Created by DELL on 2018/1/4.
- *
- * @author MJY
- */
 public class FunRole {
     private String roleName;
     private String roleDescribe;
